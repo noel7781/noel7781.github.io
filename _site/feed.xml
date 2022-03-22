@@ -1,7 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-22T20:45:46+09:00</updated><id>/feed.xml</id><title type="html">noel7781</title><subtitle>Archive</subtitle><author><name>조성진</name></author><entry><title type="html">블로그 테스트 업로드</title><link href="/c/cpp/cpp/" rel="alternate" type="text/html" title="블로그 테스트 업로드" /><published>2022-03-22T00:00:00+09:00</published><updated>2022-03-22T00:00:00+09:00</updated><id>/c/cpp/cpp</id><content type="html" xml:base="/c/cpp/cpp/">&lt;p&gt;hello&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>noel7781</title>
+    <description>Archive</description>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 23 Mar 2022 00:04:03 +0900</pubDate>
+    <lastBuildDate>Wed, 23 Mar 2022 00:04:03 +0900</lastBuildDate>
+    <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>블로그 테스트 업로드</title>
+        <description>&lt;p&gt;hello!!&lt;/p&gt;
 
 &lt;h2 id=&quot;hello&quot;&gt;hello&lt;/h2&gt;
 
 &lt;h3 id=&quot;hello-1&quot;&gt;hello&lt;/h3&gt;
 
-&lt;h4 id=&quot;hello-2&quot;&gt;hello&lt;/h4&gt;</content><author><name>조성진</name></author><category term="[[&quot;C&quot;, &quot;Cpp&quot;]]" /><category term="A" /><category term="B" /><summary type="html">hello</summary></entry></feed>
+&lt;h4 id=&quot;hello-2&quot;&gt;hello&lt;/h4&gt;
+</description>
+        <pubDate>Tue, 22 Mar 2022 00:00:00 +0900</pubDate>
+        <link>/c/cpp/cpp/</link>
+        <guid isPermaLink="true">/c/cpp/cpp/</guid>
+        
+        <category>A</category>
+        
+        <category>B</category>
+        
+        
+        <category>C</category>
+        
+        <category>Cpp</category>
+        
+      </item>
+    
+  </channel>
+</rss>
