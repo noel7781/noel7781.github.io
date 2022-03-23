@@ -1,0 +1,29 @@
+I";
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/c/cpp/cpp/">블로그 테스트 업로드</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.03.22
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><a href="/categories/#cpp" class="page__taxonomy-item-category" rel="tag">cpp " "</a><span class="sep"> </span><a href="/categories/#c" class="page__taxonomy-item-category" rel="tag">c " "</a>
+                    
+                    
+                    <a href="/tags/#a" class="page__taxonomy-item-tag" rel="tag">A</a><span class="sep"> </span>
+                
+                    
+                    
+                    <a href="/tags/#b" class="page__taxonomy-item-tag" rel="tag">B</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+:ET

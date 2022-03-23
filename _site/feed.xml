@@ -5,12 +5,92 @@
     <description>Archive</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 23 Mar 2022 00:04:03 +0900</pubDate>
-    <lastBuildDate>Wed, 23 Mar 2022 00:04:03 +0900</lastBuildDate>
+    <pubDate>Wed, 23 Mar 2022 23:45:27 +0900</pubDate>
+    <lastBuildDate>Wed, 23 Mar 2022 23:45:27 +0900</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
     
       <item>
-        <title>블로그 테스트 업로드</title>
+        <title>도커 사용하기</title>
+        <description>&lt;h2 id=&quot;docker-알아보기&quot;&gt;Docker 알아보기&lt;/h2&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.docker.com/wp-content/uploads/2021/09/Moby-run-900x551.png.webp&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;프로그래밍 하면서 환경설정에 어려움을 겪는 경우가 많다.&lt;br /&gt;
+나 역시도 잦은 환경설정에 지치는 경우가 많다.(특히 버전문제)
+환경설정을 할 때 한번 설정해두고 그것을 이미지화 시켜서 사용한다면 환경설정에 들어가는 아까운 시간을 아낄 수 있으며 버전에 따른 문제가 발생하는 것을 방지할 수 있지 않을까? 라는 생각이 든다면 Docker를 사용해보자.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;도커를-처음-쓰게-된-이유&quot;&gt;도커를 처음 쓰게 된 이유&lt;/h3&gt;
+
+&lt;p&gt;사실 Docker를 처음 사용해본것은 작년에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C# Mono&lt;/code&gt; 라는 프로그램을 사용하기 위해서 였는데, 과제의 테스트 파일이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.exe&lt;/code&gt;형식으로 주어져 맥북에서 돌릴수가 없어 방법을 찾던 도중 어차피 굳이 삭제할 테스트용 프로그램을 로컬 PC에 설치하고 또 찾아서 지우기 귀찮을 것 같아서 Docker를 처음 사용해봤다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;귀찮은 환경설정 필요 없이 가상머신처럼 깔았다 편하게 지울수 있다! 심지어 더 빠르게 설치된다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;라고 생각하여 처음 도커를 접하게 되었다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;docker-설치&quot;&gt;Docker 설치&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.docker.com/get-started/&quot;&gt;Docker - Get Started&lt;/a&gt;에 들어가 Docker Desktop에 자신에게 맞는 운영체제를 설치하면 된다. 리눅스는 Docker Desktop이 없으므로 CLI로 설치하도록 하자.&lt;br /&gt;
+&lt;a href=&quot;https://hub.docker.com/&quot;&gt;DockerHub&lt;/a&gt;에서 자신에게 필요한 환경을 찾아 검색해 다운받을수도 있고 자신이 환경을 만들어 업로드 할수도 있다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;docker--virtual-machine&quot;&gt;Docker = Virtual Machine?&lt;/h3&gt;
+
+&lt;p&gt;처음 사용했던 시기 이후에 도커를 한동안 사용하지 않다가 다시 도커를 사용해보고 싶어서 도커에 대해 공부를 시작했는데, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C# Mono&lt;/code&gt;를 사용했을때 느낌이 마치 가상머신을 띄워 거기에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh&lt;/code&gt;에 연결한 상태의 느낌을 받았었다. 그리고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Docker hub&lt;/code&gt;에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ubuntu&lt;/code&gt;이미지가 떡하니 올라와 있는것을 보고 가상머신과 다른것이 없나? 라고 생각했었다. &lt;br /&gt;
+이론적으로 들어가면 VM은 VM마다 커널이 존재하고, Docker Container은 VM과 다르게 호스트와 커널을 공유하기 때문에, 더 가볍고 빠르다. 고 하지만 실제 사용시에 어떤식으로 다른지 궁금했다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;docker-사용기---1&quot;&gt;Docker 사용기 - 1&lt;/h3&gt;
+
+&lt;p&gt;우선 있는 이미지를 받아온다.
+&lt;img src=&quot;https://imgur.com/psGVxSW.jpg&quot; alt=&quot;&quot; /&gt;
+우측에 적힌것과 같이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker pull ubuntu&lt;/code&gt;를 사용하면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;이미지&lt;/code&gt;를 다운받을 수 있으며 Docker Desktop이 깔려있는 경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Images&lt;/code&gt;탭에서 다운받은 것을 확인할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;여기서 Docker의 용어중 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Image&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Container&lt;/code&gt;의 차이를 적자면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Image&lt;/code&gt;는 객체지향의 Class같은 개념이고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Container&lt;/code&gt;은 객체지향의 Instance같은 개념이다. 실제 환경이 담긴 이미지를 실행시키면 컨테이너가 생성되며 그런 컨테이너를 여러개 만들 수 있다.&lt;/p&gt;
+
+&lt;p&gt;cli에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker images&lt;/code&gt; 또는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker image ls&lt;/code&gt;를 통해 설치된 이미지를 확인할 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker pull &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;name&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker images 또는 docker image &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;그 이후에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker run ubuntu&lt;/code&gt;를 사용하면 아무일도 일어나지 않는다.&lt;br /&gt;
+처음에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker run&lt;/code&gt;을 사용하면 VM의 headless mode처럼 우분투 서버가 실행되어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh&lt;/code&gt;로 연결된 것 처럼 뜰것이라 생각했는데 아무일도 일어나지 않았고고, Docker의 상태를 알아볼 수 있는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker ps -a&lt;/code&gt;를 통해 확인해보니 이미 컨테이너가 종료되었다고 나온다.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;docker ps &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt;                                                                                                                 ✔  at 23:29:03 
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS                     PORTS     NAMES
+95efc6a19323   ubuntu    &lt;span class=&quot;s2&quot;&gt;&quot;bash&quot;&lt;/span&gt;    2 minutes ago   Exited &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 2 minutes ago             affectionate_matsumoto
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;아쉽게도 이런식으로 실행하면 아무것도 할 수 없고, 컨테이너가 시작과 동시에 종료된다.&lt;br /&gt;
+찾아보니 컨테이너를 사용하려면 실행 명령어에 추가적인 인자가 필요하다.&lt;br /&gt;
+그 내용은 다음 글에서!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;블로그에 처음으로 글을 쓰게 되어 시간이 생각보다 많이 걸려 다음번에 이어적고자 한다. 정리가 쉽지 않구나..&lt;/p&gt;
+</description>
+        <pubDate>Wed, 23 Mar 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/docker1/</link>
+        <guid isPermaLink="true">/til/cs/docker1/</guid>
+        
+        <category>docker</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
+    
+      <item>
+        <title>블로그 업로드 테스트</title>
         <description>&lt;p&gt;hello!!&lt;/p&gt;
 
 &lt;h2 id=&quot;hello&quot;&gt;hello&lt;/h2&gt;
@@ -20,17 +100,13 @@
 &lt;h4 id=&quot;hello-2&quot;&gt;hello&lt;/h4&gt;
 </description>
         <pubDate>Tue, 22 Mar 2022 00:00:00 +0900</pubDate>
-        <link>/c/cpp/cpp/</link>
-        <guid isPermaLink="true">/c/cpp/cpp/</guid>
+        <link>/til/hello/</link>
+        <guid isPermaLink="true">/til/hello/</guid>
         
-        <category>A</category>
-        
-        <category>B</category>
+        <category>new</category>
         
         
-        <category>C</category>
-        
-        <category>Cpp</category>
+        <category>til</category>
         
       </item>
     

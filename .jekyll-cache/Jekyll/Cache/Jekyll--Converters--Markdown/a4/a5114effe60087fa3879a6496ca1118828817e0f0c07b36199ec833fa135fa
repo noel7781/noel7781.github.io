@@ -1,0 +1,51 @@
+I"Y<h2 id="docker-알아보기">Docker 알아보기</h2>
+
+<hr />
+<p><img src="https://www.docker.com/wp-content/uploads/2021/09/Moby-run-900x551.png.webp" alt="" /></p>
+
+<p>프로그래밍 하면서 환경설정에 어려움을 겪는 경우가 많다.<br />
+나 역시도 잦은 환경설정에 지치는 경우가 많다.(특히 버전문제)
+환경설정을 할 때 한번 설정해두고 그것을 이미지화 시켜서 사용한다면 환경설정에 들어가는 아까운 시간을 아낄 수 있으며 버전에 따른 문제가 발생하는 것을 방지할 수 있지 않을까? 라는 생각이 든다면 Docker를 사용해보자.</p>
+
+<hr />
+
+<h3 id="도커를-처음-쓰게-된-이유">도커를 처음 쓰게 된 이유</h3>
+
+<p>사실 Docker를 처음 사용해본것은 작년에 <code class="language-plaintext highlighter-rouge">C# Mono</code> 라는 프로그램을 사용하기 위해서 였는데, 과제의 테스트 파일이 <code class="language-plaintext highlighter-rouge">.exe</code>형식으로 주어져 맥북에서 돌릴수가 없어 방법을 찾던 도중 어차피 굳이 삭제할 테스트용 프로그램을 로컬 PC에 설치하고 또 찾아서 지우기 귀찮을 것 같아서 Docker를 처음 사용해봤다.</p>
+
+<blockquote>
+  <p>귀찮은 환경설정 필요 없이 가상머신처럼 깔았다 편하게 지울수 있다! 심지어 더 빠르게 설치된다.</p>
+</blockquote>
+
+<p>라고 생각하여 처음 도커를 접하게 되었다.</p>
+
+<hr />
+
+<h3 id="docker-설치">Docker 설치</h3>
+
+<p><a href="https://www.docker.com/get-started/">Docker - Get Started</a>에 들어가 Docker Desktop에 자신에게 맞는 운영체제를 설치하면 된다. 리눅스는 Docker Desktop이 없으므로 CLI로 설치하도록 하자.<br />
+<a href="https://hub.docker.com/">DockerHub</a>에서 자신에게 필요한 환경을 찾아 검색해 다운받을수도 있고 자신이 환경을 만들어 업로드 할수도 있다.</p>
+
+<hr />
+
+<h3 id="docker--virtual-machine">Docker = Virtual Machine?</h3>
+
+<p>처음 사용했던 시기 이후에 도커를 한동안 사용하지 않다가 다시 도커를 사용해보고 싶어서 도커에 대해 공부를 시작했는데, <code class="language-plaintext highlighter-rouge">C# Mono</code>를 사용했을때 느낌이 마치 가상머신을 띄워 거기에 <code class="language-plaintext highlighter-rouge">ssh</code>에 연결한 상태의 느낌을 받았었다. 그리고 <code class="language-plaintext highlighter-rouge">Docker hub</code>에 <code class="language-plaintext highlighter-rouge">ubuntu</code>이미지가 떡하니 올라와 있는것을 보고 가상머신과 다른것이 없나? 라고 생각했었다. <br />
+이론적으로 들어가면 VM은 VM마다 커널이 존재하고, Docker Container은 VM과 다르게 호스트와 커널을 공유하기 때문에, 더 가볍고 빠르다. 고 하지만 실제 사용시에 어떤식으로 다른지 궁금했다.</p>
+
+<hr />
+
+<h3 id="docker-사용법">Docker 사용법</h3>
+
+<p>우선 있는 이미지를 받아온다.
+<img src="https://imgur.com/psGVxSW.jpg" alt="" />
+우측에 적힌것과 같이 <code class="language-plaintext highlighter-rouge">docker pull ubuntu</code>를 사용하면 <code class="language-plaintext highlighter-rouge">이미지</code>를 다운받을 수 있으며 Docker Desktop이 깔려있는 경우 <code class="language-plaintext highlighter-rouge">Images</code>탭에서 다운받은 것을 확인할 수 있고 cli에서는 <code class="language-plaintext highlighter-rouge">docker images</code> 또는 <code class="language-plaintext highlighter-rouge">docker image ls</code>를 통해 설치된 이미지를 확인할 수 있다.</p>
+
+<blockquote>
+  <p>$ docker pull {name}</p>
+</blockquote>
+
+<blockquote>
+  <p>$ docker images <code class="language-plaintext highlighter-rouge">or</code> docker image ls</p>
+</blockquote>
+:ET

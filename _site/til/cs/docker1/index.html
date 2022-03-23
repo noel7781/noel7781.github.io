@@ -1,0 +1,706 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>도커 사용하기 - noel7781</title>
+<meta name="description" content="Docker 알아보기">
+
+
+  <meta name="author" content="조성진">
+  
+  <meta property="article:author" content="조성진">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="noel7781">
+<meta property="og:title" content="도커 사용하기">
+<meta property="og:url" content="/til/cs/docker1/">
+
+
+  <meta property="og:description" content="Docker 알아보기">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-03-23T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-03-23T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/til/cs/docker1/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "조성진",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="noel7781 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}	  
+    });
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          noel7781 Archive
+          <span class="site-subtitle">공부 기록 보관소</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">연도별 포스트</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">조성진</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>졸업</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:noel7781@naver.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">2</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">프로그래밍 언어</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Problem Solving</span>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">CS</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs" class="">CS (1)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">TIL</span>
+            <ul>
+                
+                    
+                        <li><a href="/categories/today_i_learned" class="">TIL (2)</a></li>
+                    
+                
+                    
+                
+            </ul>
+      </li>
+      </li>
+  </ul>
+</nav>
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="도커 사용하기">
+    <meta itemprop="description" content="Docker 알아보기">
+    <meta itemprop="datePublished" content="2022-03-23T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-03-23T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/til/cs/docker1/" class="u-url" itemprop="url">도커 사용하기
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#docker-알아보기">Docker 알아보기</a><ul><li><a href="#도커를-처음-쓰게-된-이유">도커를 처음 쓰게 된 이유</a></li><li><a href="#docker-설치">Docker 설치</a></li><li><a href="#docker--virtual-machine">Docker = Virtual Machine?</a></li><li><a href="#docker-사용기---1">Docker 사용기 - 1</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="docker-알아보기">Docker 알아보기</h2>
+
+<hr />
+<p><img src="https://www.docker.com/wp-content/uploads/2021/09/Moby-run-900x551.png.webp" alt="" /></p>
+
+<p>프로그래밍 하면서 환경설정에 어려움을 겪는 경우가 많다.<br />
+나 역시도 잦은 환경설정에 지치는 경우가 많다.(특히 버전문제)
+환경설정을 할 때 한번 설정해두고 그것을 이미지화 시켜서 사용한다면 환경설정에 들어가는 아까운 시간을 아낄 수 있으며 버전에 따른 문제가 발생하는 것을 방지할 수 있지 않을까? 라는 생각이 든다면 Docker를 사용해보자.</p>
+
+<hr />
+
+<h3 id="도커를-처음-쓰게-된-이유">도커를 처음 쓰게 된 이유</h3>
+
+<p>사실 Docker를 처음 사용해본것은 작년에 <code class="language-plaintext highlighter-rouge">C# Mono</code> 라는 프로그램을 사용하기 위해서 였는데, 과제의 테스트 파일이 <code class="language-plaintext highlighter-rouge">.exe</code>형식으로 주어져 맥북에서 돌릴수가 없어 방법을 찾던 도중 어차피 굳이 삭제할 테스트용 프로그램을 로컬 PC에 설치하고 또 찾아서 지우기 귀찮을 것 같아서 Docker를 처음 사용해봤다.</p>
+
+<blockquote>
+  <p>귀찮은 환경설정 필요 없이 가상머신처럼 깔았다 편하게 지울수 있다! 심지어 더 빠르게 설치된다.</p>
+</blockquote>
+
+<p>라고 생각하여 처음 도커를 접하게 되었다.</p>
+
+<hr />
+
+<h3 id="docker-설치">Docker 설치</h3>
+
+<p><a href="https://www.docker.com/get-started/">Docker - Get Started</a>에 들어가 Docker Desktop에 자신에게 맞는 운영체제를 설치하면 된다. 리눅스는 Docker Desktop이 없으므로 CLI로 설치하도록 하자.<br />
+<a href="https://hub.docker.com/">DockerHub</a>에서 자신에게 필요한 환경을 찾아 검색해 다운받을수도 있고 자신이 환경을 만들어 업로드 할수도 있다.</p>
+
+<hr />
+
+<h3 id="docker--virtual-machine">Docker = Virtual Machine?</h3>
+
+<p>처음 사용했던 시기 이후에 도커를 한동안 사용하지 않다가 다시 도커를 사용해보고 싶어서 도커에 대해 공부를 시작했는데, <code class="language-plaintext highlighter-rouge">C# Mono</code>를 사용했을때 느낌이 마치 가상머신을 띄워 거기에 <code class="language-plaintext highlighter-rouge">ssh</code>에 연결한 상태의 느낌을 받았었다. 그리고 <code class="language-plaintext highlighter-rouge">Docker hub</code>에 <code class="language-plaintext highlighter-rouge">ubuntu</code>이미지가 떡하니 올라와 있는것을 보고 가상머신과 다른것이 없나? 라고 생각했었다. <br />
+이론적으로 들어가면 VM은 VM마다 커널이 존재하고, Docker Container은 VM과 다르게 호스트와 커널을 공유하기 때문에, 더 가볍고 빠르다. 고 하지만 실제 사용시에 어떤식으로 다른지 궁금했다.</p>
+
+<hr />
+
+<h3 id="docker-사용기---1">Docker 사용기 - 1</h3>
+
+<p>우선 있는 이미지를 받아온다.
+<img src="https://imgur.com/psGVxSW.jpg" alt="" />
+우측에 적힌것과 같이 <code class="language-plaintext highlighter-rouge">docker pull ubuntu</code>를 사용하면 <code class="language-plaintext highlighter-rouge">이미지</code>를 다운받을 수 있으며 Docker Desktop이 깔려있는 경우 <code class="language-plaintext highlighter-rouge">Images</code>탭에서 다운받은 것을 확인할 수 있다.</p>
+
+<p>여기서 Docker의 용어중 <code class="language-plaintext highlighter-rouge">Image</code>와 <code class="language-plaintext highlighter-rouge">Container</code>의 차이를 적자면 <code class="language-plaintext highlighter-rouge">Image</code>는 객체지향의 Class같은 개념이고 <code class="language-plaintext highlighter-rouge">Container</code>은 객체지향의 Instance같은 개념이다. 실제 환경이 담긴 이미지를 실행시키면 컨테이너가 생성되며 그런 컨테이너를 여러개 만들 수 있다.</p>
+
+<p>cli에서는 <code class="language-plaintext highlighter-rouge">docker images</code> 또는 <code class="language-plaintext highlighter-rouge">docker image ls</code>를 통해 설치된 이미지를 확인할 수 있다.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker pull <span class="o">{</span>name<span class="o">}</span>
+<span class="nv">$ </span>docker images 또는 docker image <span class="nb">ls</span>
+</code></pre></div></div>
+<p>그 이후에 <code class="language-plaintext highlighter-rouge">docker run ubuntu</code>를 사용하면 아무일도 일어나지 않는다.<br />
+처음에 <code class="language-plaintext highlighter-rouge">docker run</code>을 사용하면 VM의 headless mode처럼 우분투 서버가 실행되어 <code class="language-plaintext highlighter-rouge">ssh</code>로 연결된 것 처럼 뜰것이라 생각했는데 아무일도 일어나지 않았고고, Docker의 상태를 알아볼 수 있는 <code class="language-plaintext highlighter-rouge">docker ps -a</code>를 통해 확인해보니 이미 컨테이너가 종료되었다고 나온다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker ps <span class="nt">-a</span>                                                                                                                 ✔  at 23:29:03 
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS                     PORTS     NAMES
+95efc6a19323   ubuntu    <span class="s2">"bash"</span>    2 minutes ago   Exited <span class="o">(</span>0<span class="o">)</span> 2 minutes ago             affectionate_matsumoto
+</code></pre></div></div>
+
+<p>아쉽게도 이런식으로 실행하면 아무것도 할 수 없고, 컨테이너가 시작과 동시에 종료된다.<br />
+찾아보니 컨테이너를 사용하려면 실행 명령어에 추가적인 인자가 필요하다.<br />
+그 내용은 다음 글에서!</p>
+
+<hr />
+
+<p>블로그에 처음으로 글을 쓰게 되어 시간이 생각보다 많이 걸려 다음번에 이어적고자 한다. 정리가 쉽지 않구나..</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#docker" class="page__taxonomy-item p-category" rel="tag">docker</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cs" class="page__taxonomy-item p-category" rel="tag">cs</a><span class="sep">, </span>
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">til</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-03-23">March 23, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%EB%8F%84%EC%BB%A4+%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0%20%2Ftil%2Fcs%2Fdocker1%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Ftil%2Fcs%2Fdocker1%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Ftil%2Fcs%2Fdocker1%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/hello/" class="pagination--pager" title="블로그 업로드 테스트
+">이전</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/hello/" rel="permalink">블로그 업로드 테스트
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">hello!!
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 조성진. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'noel7781/noel7781.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>
