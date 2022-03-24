@@ -1,0 +1,88 @@
+I"<h2 id="도커-알아보기---2">도커 알아보기 - 2</h2>
+
+<hr />
+
+<h3 id="docker-사용기---2">Docker 사용기 - 2</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Docker run</code>을 실행하면 Docker는 독립적인 컨테이너에서 프로세스를 실행한다. 이 컨테이너는 독립적인 파일시스템, 네트워크, 프로세스 상태를 가지고 있다.</p>
+
+<p>명령어의 형태는 다음과 같다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="o">[</span>OPTIONS] IMAGE[:TAG|@DIGEST] <span class="o">[</span>COMMAND] <span class="o">[</span>ARG...]
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">docker run</code>에서는 추가적인 명령어로 실제 vm을 사용하는것 같이 attach상태 또는 백그라운드에서 작동하게 만드는 detach를 사용할 수 있고 포트매핑을 할 수있고 컨테이너의 이름을 부여하는 행위를 할 수 있고, 여러 컨테이너를 하나의 네트워크로 묶어 작동시킬 수 있다.</p>
+
+<ul>
+  <li>attach(foreground)는 기본 옵션이다.</li>
+  <li><code class="language-plaintext highlighter-rouge">-d</code> 옵션을 주면 detach(background)모드로 실행된다.</li>
+  <li><code class="language-plaintext highlighter-rouge">-i</code> 옵션을 주면 shell같은 interactive process를 사용할 수 있는데, 컨테이너 프로세스에 tty를 사용할것이므로 반드시 <code class="language-plaintext highlighter-rouge">-t</code>옵션을 더해 <code class="language-plaintext highlighter-rouge">-it</code>옵션을 사용한다.</li>
+  <li><code class="language-plaintext highlighter-rouge">-p 3000 8080</code>이라고 설정하면 로컬pc의 3000번 포트와 컨테이너의 8080포트와 매핑된다. 컨테이너는 기본적으로 여러개를 띄울 수 있고 같은 어플리케이션이라면 같은 포트번호를 가질것이다. 만약 같은 포트번호 8080을 가지는 여러 웹서버를 띄운다고 해도 상관없다. 왜냐하면 8080은 컨테이너와 외부와 연결하는 포트번호이고, 로컬pc에서 컨테이너에 연결하는 포트만 다르게 설정해주면 같은 포트번호를 가지는 컨테이너들을 사용할 수 있다.</li>
+  <li><code class="language-plaintext highlighter-rouge">--network = {name}</code> 같은 형식으로 컨테이너들을 하나의 네트워크로 해서 연결할수도 있다.</li>
+  <li><code class="language-plaintext highlighter-rouge">--name my_ubntu</code> 와 같은 형식으로 이름을 부여해 편하게 실행 및 제거할 수 있다.</li>
+</ul>
+
+<p>처음에 실행했던 명령어는 <code class="language-plaintext highlighter-rouge">docker run ubuntu</code> 였는데, 아무런 option도 command도 입력해주지 않았기 때문에 실행하자마자 역할을 끝내고 자동으로 종료한 것이다.</p>
+
+<p>컨테이너에 <code class="language-plaintext highlighter-rouge">my_ubuntu</code>라는 이름을 주고 <code class="language-plaintext highlighter-rouge">ls</code>명령어를 수행하는 방법은 다음과 같다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">--name</span> my_ubuntu ubuntu <span class="nb">ls                                                                             
+</span>bin
+boot
+dev
+etc
+home
+lib
+lib32
+lib64
+libx32
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+</code></pre></div></div>
+
+<p>그리고 vm의 터미널을 띄우는것 처럼 도커에서 명령어를 실행시키기 위한 bash shell 띄우는 방법은 다음과 같다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>docker run <span class="nt">-it</span> <span class="nt">--name</span> my_ubuntu ubuntu /bin/bash
+
+<span class="nt">---------------------------------------------------</span>
+
+root@4e0dde552341:/#
+</code></pre></div></div>
+
+<p>이렇게 실행을하면 그토록 기다렸던 bash shell을 띄울수 있다. 참고로 Docker의 container은 매우 가볍고 필요없는 것들이 기본적으로 설치가 안되있기 때문에 bash shell이 없는 이미지도 존재한다. 그런경우 <code class="language-plaintext highlighter-rouge">/bin/sh</code>로 본쉘을 띄울 수 있다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">exit</code>을 통해 원래의 cli로 돌아갈 수 있으며 Docker 컨테이너가 종료된다.</p>
+
+<p>컨테이너가 종료되면 vm과 같이 다 사라지지 않고 그자리에 존재하게 되는데, <code class="language-plaintext highlighter-rouge">docker start 이름</code> 이나 <code class="language-plaintext highlighter-rouge">docker start 컨테이너ID</code>로 컨테이너를 백그라운드에서 실행시킬 수 있다. <br />
+그리고 <code class="language-plaintext highlighter-rouge">docker attach 이름</code> 이나 <code class="language-plaintext highlighter-rouge">docker attach 컨테이너ID</code>를 통해 컨테이너에 interactive terminal을 띄운것처럼 접속이 가능하다.</p>
+
+<p>뒤에 나오는 명령어들도 이름 대신에 컨테이너ID로 대체가 가능하다. 그리고 만약 이름을 지정하지 않았다면 랜덤한 이름을 만들어주는데, 길어서 입력하기 귀찮다면 접두사가 같지 않은 한 컨테이너ID의 앞부분만 입력해도 알아서 컨테이너를 선택해준다.</p>
+
+<blockquote>
+  <p>ex) CONTAINER ID=95efc6a19323이고 컨테이너중 ID가 9로 시작하는 컨테이너가 더 없는 경우 docker [명령어] 9를 통하여 해당 컨테이너를 제어할수 있다.</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">docker logs 이름</code> 을 통해 해당 컨테이너의 로그를 확인할 수 있고, <code class="language-plaintext highlighter-rouge">docker logs -f 이름</code>을 통해서 계속 로그를 확인할 수 있다. 여기서 <code class="language-plaintext highlighter-rouge">-f</code>는 follow이다.</p>
+
+<p>이렇게 도커로 처음 공부하다보면 수많은 컨테이너와 이미지들이 생성된다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">docker ps</code>를 하면 현재 실행중인 컨테이너들을 확인할 수 있다.</p>
+
+<p>현재 실행중인 컨테이너를 종료시키는 방법은 attach후에 exit할수도 있고 <code class="language-plaintext highlighter-rouge">docker stop 이름</code>을 통해 컨테이너를 중단시킬수 있다. <br />
+하지만 종료된 컨테이너들도 용량을 차지하기 때문에, <code class="language-plaintext highlighter-rouge">docker ps -a</code>를 통하여 종료된 컨테이너들도 확인이 가능하고, <code class="language-plaintext highlighter-rouge">docker rm 이름</code>을 통해 컨테이너를 삭제할수 있다.
+컨테이너들은 이렇게 삭제가 가능하고, 이미지는 <code class="language-plaintext highlighter-rouge">docker images</code>나 <code class="language-plaintext highlighter-rouge">docker image ls</code>를 통하여 다운받아진 이미지를 조회할 수 있고 <code class="language-plaintext highlighter-rouge">docker rmi 이름</code>을 통하여 이미지를 삭제할 수 있다.</p>
+
+<hr />
+
+<p>오늘은 Docker 컨테이너의 실행과 간단히 다루는 방법등을 알아봤다. <br />
+앞으로의 계획으로는 disk와 network, dockerfile과 docker-compose등을 추가적으로 다룰 계획이다.</p>
+
+<hr />
+:ET

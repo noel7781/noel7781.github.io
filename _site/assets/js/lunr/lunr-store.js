@@ -10,4 +10,10 @@ var store = [{
         "tags": ["docker"],
         "url": "/til/cs/docker1/",
         "teaser": null
+      },{
+        "title": "도커 사용하기 - 2",
+        "excerpt":"도커 알아보기 - 2 Docker 사용기 - 2 Docker run을 실행하면 Docker는 독립적인 컨테이너에서 프로세스를 실행한다. 이 컨테이너는 독립적인 파일시스템, 네트워크, 프로세스 상태를 가지고 있다. 명령어의 형태는 다음과 같다. $ docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...] docker run에서는 추가적인 명령어로 실제 vm을 사용하는것 같이 attach상태 또는 백그라운드에서 작동하게 만드는 detach를...","categories": ["til","cs"],
+        "tags": ["docker"],
+        "url": "/til/cs/docker2/",
+        "teaser": null
       }]

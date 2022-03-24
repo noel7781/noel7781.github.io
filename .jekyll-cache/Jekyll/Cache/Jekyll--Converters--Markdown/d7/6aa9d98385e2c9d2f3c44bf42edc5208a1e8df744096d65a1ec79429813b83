@@ -1,0 +1,74 @@
+I"q
+
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/til/cs/docker2/">도커 사용하기 - 2</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.03.25
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#cs" class="page__taxonomy-item-category" rel="tag">CS </a><span class="sep"> </span>--><!-- <a href="/categories/#til" class="page__taxonomy-item-category" rel="tag">TIL </a>-->
+                    
+                    
+                    <a href="/tags/#docker" class="page__taxonomy-item-tag" rel="tag">docker</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/til/cs/docker1/">도커 사용하기</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.03.23
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#cs" class="page__taxonomy-item-category" rel="tag">CS </a><span class="sep"> </span>--><!-- <a href="/categories/#til" class="page__taxonomy-item-category" rel="tag">TIL </a>-->
+                    
+                    
+                    <a href="/tags/#docker" class="page__taxonomy-item-tag" rel="tag">docker</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/til/hello/">블로그 업로드 테스트</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.03.22
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#til" class="page__taxonomy-item-category" rel="tag">TIL </a>-->
+                    
+                    
+                    <a href="/tags/#new" class="page__taxonomy-item-tag" rel="tag">new</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+:ET
