@@ -1,0 +1,135 @@
+I"|-<h1 id="system-call">System call</h1>
+
+<hr />
+
+<h2 id="wait--wait-for-process-termination">Wait – wait for process termination</h2>
+
+<pre><code class="language-C">SYNOPSIS
+     #include &lt;sys/wait.h&gt;
+     pid_t
+     wait(int *stat_loc);
+
+     pid_t
+     wait3(int *stat_loc, int options, struct rusage *rusage);
+
+     pid_t
+     wait4(pid_t pid, int *stat_loc, int options, struct rusage *rusage);
+
+     pid_t
+     waitpid(pid_t pid, int *stat_loc, int options);
+
+DESCRIPTION
+     The wait() function suspends execution of its calling process until stat_loc information is available for a terminated child process, or a
+     signal is received.  On return from a successful wait() call, the stat_loc area contains termination information about the process that
+     exited as defined below.
+...
+</code></pre>
+<p><code class="language-plaintext highlighter-rouge">wait</code> 시스템 콜은 종료된 자식프로세스의 자원을 회수하거나 signal이 발생하기 전까지 프로세스를 suspend시킨다.</p>
+
+<hr />
+
+<h2 id="fork--create-a-new-process">Fork – create a new process</h2>
+
+<pre><code class="language-C">SYNOPSIS
+     #include &lt;unistd.h&gt;
+
+     pid_t
+     fork(void);
+
+DESCRIPTION
+     fork() causes creation of a new process.  The new process (child process) is an exact copy of the calling process (parent process) except
+     for the following:
+
+           •   The child process has a unique process ID.
+
+           •   The child process has a different parent process ID (i.e., the process ID of the parent process).
+
+           •   The child process has its own copy of the parent's descriptors.  These descriptors reference the same underlying objects, so
+               that, for instance, file pointers in file objects are shared between the child and the parent, so that an lseek(2) on a
+               descriptor in the child process can affect a subsequent read or write by the parent.  This descriptor copying is also used by the
+               shell to establish standard input and output for newly created processes as well as to set up pipes.
+
+           •   The child processes resource utilizations are set to 0; see setrlimit(2).
+
+RETURN VALUES
+     Upon successful completion, fork() returns a value of 0 to the child process and returns the process ID of the child process to the parent
+     process.  Otherwise, a value of -1 is returned to the parent process, no child process is created, and the global variable errno is set to
+     indicate the error.
+</code></pre>
+
+<p><code class="language-plaintext highlighter-rouge">fork</code> 시스템 콜은 호출시 부모 프로세스의 copy를 만들어내는데, 프로세스의 PID, PPID는 부모와 다른 값을 가지게 되고, descriptor는 부모와 자식이 같은 값을 가지게 된다(부모 프로세스의 복사본) 
+쓰레드를 만드는것과 다르게 프로세스를 새로 하나 생성한다.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;errno.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">pid</span><span class="p">;</span>
+    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"Failed to fork"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    	<span class="c1">// child</span>
+    	<span class="n">printf</span><span class="p">(</span><span class="s">"Child pid: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">getpid</span><span class="p">());</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    	<span class="c1">// parent</span>
+    	<span class="n">printf</span><span class="p">(</span><span class="s">"Parent pid: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">getpid</span><span class="p">());</span>
+    <span class="p">}</span>   
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="exec--execute-a-file">Exec – execute a file</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SYNOPSIS</span>
+     <span class="cp">#include &lt;unistd.h&gt;
+</span>
+     <span class="k">extern</span> <span class="kt">char</span> <span class="o">**</span><span class="n">environ</span><span class="p">;</span>
+
+     <span class="kt">int</span>
+     <span class="nf">execl</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">arg0</span><span class="p">,</span> <span class="p">...,</span> <span class="cm">/*, (char *)0, */</span><span class="p">);</span>
+
+     <span class="kt">int</span>
+     <span class="nf">execle</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">arg0</span><span class="p">,</span> <span class="p">...,</span> <span class="cm">/* (char *)0 char *const envp[] */</span><span class="p">);</span>
+
+     <span class="kt">int</span>
+     <span class="nf">execlp</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">file</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">arg0</span><span class="p">,</span> <span class="p">...,</span> <span class="cm">/*, (char *)0, */</span><span class="p">);</span>
+
+     <span class="kt">int</span>
+     <span class="nf">execv</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">argv</span><span class="p">[]);</span>
+
+     <span class="kt">int</span>
+     <span class="nf">execvp</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">file</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">argv</span><span class="p">[]);</span>
+
+     <span class="kt">int</span>
+     <span class="nf">execvP</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">file</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">search_path</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="k">const</span> <span class="n">argv</span><span class="p">[]);</span>
+<span class="n">DESCRIPTION</span>
+     <span class="n">The</span> <span class="n">exec</span> <span class="n">family</span> <span class="n">of</span> <span class="n">functions</span> <span class="n">replaces</span> <span class="n">the</span> <span class="n">current</span> <span class="n">process</span> <span class="n">image</span> <span class="n">with</span> <span class="n">a</span> <span class="n">new</span> <span class="n">process</span> <span class="n">image</span><span class="p">.</span>  <span class="n">The</span> <span class="n">functions</span> <span class="n">described</span> <span class="n">in</span> <span class="n">this</span> <span class="n">manual</span> <span class="n">page</span> <span class="n">are</span>
+     <span class="n">front</span><span class="o">-</span><span class="n">ends</span> <span class="k">for</span> <span class="n">the</span> <span class="n">function</span> <span class="n">execve</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span>  <span class="p">(</span><span class="n">See</span> <span class="n">the</span> <span class="n">manual</span> <span class="n">page</span> <span class="k">for</span> <span class="n">execve</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">detailed</span> <span class="n">information</span> <span class="n">about</span> <span class="n">the</span> <span class="n">replacement</span> <span class="n">of</span> <span class="n">the</span> <span class="n">current</span>
+     <span class="n">process</span><span class="p">.)</span>
+</code></pre></div></div>
+
+<p>현재 프로세스에서 다른 프로세스를 실행할때 사용하는 라이브러리 함수
+l계열은 인자를 나열하는 방식으로 전달하고 v방식은 배열형식으로 전달한다.
+p가 붙은함수는 경료를 지정해주면 현재/절대경로를 통해 탐색하고, p가 안붙은 함수는 실행파일의 이름만 적는다.
+프로그램에서 exec실행시 프로그램의 이후 적혀있는 코드들은 무의미해지고, 새로운 프로세스가 실행된다.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="s">"/bin/date"</span><span class="p">,</span>  <span class="mi">0</span><span class="p">};</span>
+    <span class="n">execvp</span><span class="p">(</span><span class="s">"/bin/date"</span><span class="p">,</span> <span class="n">argv</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"실행되지 않는 구역</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./a.out                                                                                                                                                                          
+2022년 4월 26일 화요일 15시 58분 47초 KST
+</code></pre></div></div>
+:ET

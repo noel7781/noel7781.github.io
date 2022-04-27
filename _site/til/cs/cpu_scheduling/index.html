@@ -1,0 +1,860 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>CPU 스케쥴링 - noel7781</title>
+<meta name="description" content="CPU Scheduling">
+
+
+  <meta name="author" content="조성진">
+  
+  <meta property="article:author" content="조성진">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="noel7781">
+<meta property="og:title" content="CPU 스케쥴링">
+<meta property="og:url" content="/til/cs/cpu_scheduling/">
+
+
+  <meta property="og:description" content="CPU Scheduling">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-04-24T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-04-24T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/til/cs/cpu_scheduling/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "조성진",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="noel7781 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}	  
+    });
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          noel7781 Archive
+          <span class="site-subtitle">공부 기록 보관소</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">연도별 포스트</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">조성진</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>졸업</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:noel7781@naver.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">7</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">프로그래밍 언어</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Problem Solving</span>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">CS</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs" class="">CS (6)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">TIL</span>
+            <ul>
+                
+                    
+                        <li><a href="/categories/today_i_learned" class="">TIL (7)</a></li>
+                    
+                
+                    
+                
+            </ul>
+      </li>
+      </li>
+  </ul>
+</nav>
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="CPU 스케쥴링">
+    <meta itemprop="description" content="CPU Scheduling">
+    <meta itemprop="datePublished" content="2022-04-24T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-04-24T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/til/cs/cpu_scheduling/" class="u-url" itemprop="url">CPU 스케쥴링
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#cpu-scheduling">CPU Scheduling</a><ul><li><a href="#scheduling-metrics">Scheduling Metrics</a></li><li><a href="#fifo">FIFO</a></li><li><a href="#sjf-non-preemption">SJF (Non Preemption)</a></li><li><a href="#stcf-preemption">STCF (Preemption)</a></li><li><a href="#round-robin">Round Robin</a></li><li><a href="#mlfq">MLFQ</a></li><li><a href="#stridelottery-scheduling">Stride(Lottery) Scheduling</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="cpu-scheduling">CPU Scheduling</h1>
+
+<p><code class="language-plaintext highlighter-rouge">cpu scheduling</code>이란 스케줄링 정책에 선택된 프로세스에게 CPU time을 할당하는 것이다.</p>
+
+<hr />
+
+<h2 id="scheduling-metrics">Scheduling Metrics</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Turnaround time</code> : 작업이 도착한 시간부터 완료될때까지의 시간
+    <blockquote>
+      <p>T~turnaround~ = T~completion~ - T~arrival~</p>
+    </blockquote>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">Fairness</code> : 공정성</li>
+  <li><code class="language-plaintext highlighter-rouge">Response time</code> : 작업이 도착한 시간부터 처음 실행될때까지 걸리는 시간
+    <blockquote>
+      <p>T~response~ = T~firstrun~ - T~arrival~</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>등..</p>
+
+<hr />
+
+<h2 id="fifo">FIFO</h2>
+
+<p>먼저 도착한 프로세스를 먼저실행, <code class="language-plaintext highlighter-rouge">FCFS(first come first serve)</code>라고도 한다.</p>
+
+<p>간단하고 직관적임.</p>
+
+<p>단점: 모든 프로세스가 동일한 시간동안 동작하지 않는다면, <code class="language-plaintext highlighter-rouge">Convoy effect(CPU 사용시간이 긴 프로세스에 의해 사용시간이 짧은 프로세스들이 오래 기다리는 현상)</code> 발생</p>
+
+<hr />
+
+<h2 id="sjf-non-preemption">SJF (Non Preemption)</h2>
+
+<p>가장 짧은 Job(Process) 먼저 실행하는 정책.</p>
+
+<p>단점: 짧은 프로세스가 나중에 들어오면 <code class="language-plaintext highlighter-rouge">Turnaround time 증가</code></p>
+
+<hr />
+
+<h2 id="stcf-preemption">STCF (Preemption)</h2>
+
+<p>SJF에서 짧은 Process가 들어올 시 뺏어서 실행.</p>
+
+<p>장점: Turnaround time good</p>
+
+<p>단점: 긴 프로세스는 starvation에 빠질 수 있다. 응답시간이 좋지 않다.</p>
+
+<hr />
+
+<h2 id="round-robin">Round Robin</h2>
+
+<p>Process를 시분할 하여 일정 time quantum동안 실행하고 다음프로세스 실행하는 방식.</p>
+
+<p>장점: 응답시간 매우 좋음.</p>
+
+<p>단점: Tuaround time bad</p>
+
+<blockquote>
+  <p><strong>trade-off</strong>
+시분할을 짧게하면 -&gt; 응답시간 더 좋아지나, <code class="language-plaintext highlighter-rouge">Context Switch</code> overhead
+시분할을 길게하면 -&gt; <code class="language-plaintext highlighter-rouge">Context Switch</code>비용 감소하나, 응답시간 나빠짐</p>
+</blockquote>
+
+<hr />
+
+<h2 id="mlfq">MLFQ</h2>
+
+<p>과거를 통해 미래를 예측하는 방법 사용
+<code class="language-plaintext highlighter-rouge">Turnaround time</code>과 <code class="language-plaintext highlighter-rouge">Response time</code>의 적절한 조화로 최선의 해결책을 찾고자 하는 방법.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Multi level Feedback Queue</code>로 여러 level의 queue가 존재하는데, 우선순위가 높은 큐부터 실행하고, 같은 큐 내부에서는 <code class="language-plaintext highlighter-rouge">Round Robin</code>으로 스케쥴링함.</p>
+
+<p>문제점: <code class="language-plaintext highlighter-rouge">interactive process</code>들은 high priority로 두게 되는데, 만약 너무 많은 high priority 프로세스 존재시에 starvation 발생 -&gt; <code class="language-plaintext highlighter-rouge">priority boost</code> 와 <code class="language-plaintext highlighter-rouge">Lower priority =&gt; Longer Time quantum</code>을 통해 조절</p>
+
+<hr />
+
+<h2 id="stridelottery-scheduling">Stride(Lottery) Scheduling</h2>
+
+<p>Fairness를 중요시하는 시스템에서 사용할 수 있는 design (To Gurantee that job obtain a certain percentage of CPU Time)</p>
+
+<p><code class="language-plaintext highlighter-rouge">Stride and Pass</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">Tickets and Currency</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">Ticket</code>은 프로세스에게 할당된 자원을 의미한다. <code class="language-plaintext highlighter-rouge">Ticket</code>이 크면 <code class="language-plaintext highlighter-rouge">Stride</code>가 작고, <code class="language-plaintext highlighter-rouge">Ticket</code>이 작으면 <code class="language-plaintext highlighter-rouge">Stride</code>가 크다.
+<code class="language-plaintext highlighter-rouge">Pass</code>는 현재까지 지나온 거리를 의미</p>
+
+<p>새로운 프로세스 추가시 현재 Pass값의 최솟값을 주면 공정성 보장</p>
+
+<hr />
+
+<p>2022.04.25 조성진 -END-</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#os" class="page__taxonomy-item p-category" rel="tag">OS</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cs" class="page__taxonomy-item p-category" rel="tag">cs</a><span class="sep">, </span>
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">til</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-04-24">April 24, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=CPU+%EC%8A%A4%EC%BC%80%EC%A5%B4%EB%A7%81%20%2Ftil%2Fcs%2Fcpu_scheduling%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Ftil%2Fcs%2Fcpu_scheduling%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Ftil%2Fcs%2Fcpu_scheduling%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/cs/systemcall/" class="pagination--pager" title="시스템콜(wait, fork, exec)
+">이전</a>
+    
+    
+      <a href="/til/cs/process_thread/" class="pagination--pager" title="프로세스와 쓰레드
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/ipc/" rel="permalink">IPC(Inter process communication)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">IPC (Inter Process Communication)
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/process_thread/" rel="permalink">프로세스와 쓰레드
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">프로세스와 쓰레드
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/systemcall/" rel="permalink">시스템콜(wait, fork, exec)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">System call
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/d2ockers/" rel="permalink">도커 알아보기 - 2
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Docker 알아보기 - 2
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 조성진. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'noel7781/noel7781.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

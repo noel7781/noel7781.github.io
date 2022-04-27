@@ -1,0 +1,293 @@
+I"jn<h1 id="ipc-inter-process-communication">IPC (Inter Process Communication)</h1>
+
+<p><code class="language-plaintext highlighter-rouge">IPC</code>란 <code class="language-plaintext highlighter-rouge">Inter Process Communication</code>의 약자로 서로 다른 프로세스끼리의 통신하는 방법을 다루게 된다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">IPC</code>의 종류는 다음과 같다.</p>
+<ol>
+  <li>PIPE</li>
+  <li>Named PIPE</li>
+  <li>Shared Memory</li>
+  <li>Memory Map</li>
+  <li>Message Queue</li>
+  <li>Socket</li>
+</ol>
+
+<p>기본 개념 및 코드를 사용하여 정리해보고자 한다.</p>
+
+<hr />
+
+<h2 id="pipe">PIPE</h2>
+
+<p><code class="language-plaintext highlighter-rouge">PIPE</code>는 부모-자식 프로세스간의 데이터 공유를 위해 사용하며, 단방향이다. 리눅스에서는 파이프를 파일로 생각하기 때문에 <code class="language-plaintext highlighter-rouge">read</code>나 <code class="language-plaintext highlighter-rouge">write</code> 호출 가능하다. 단방향 통신을 지원한다.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;string.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">fd</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+    <span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">512</span><span class="p">];</span>
+    <span class="kt">char</span><span class="o">*</span> <span class="n">message</span> <span class="o">=</span> <span class="s">"Hi! Pipe!"</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"pipe"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"fork"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// fd[0] : read, fd[1] : write</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">message</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Child send message to parent</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Wait for child data</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">));</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Received From child : %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+<h2 id="named-pipe">Named PIPE</h2>
+
+<p>위의 소개한 방법이 익명 파이프인데, <code class="language-plaintext highlighter-rouge">mkfifo</code>를 통해 이름을 가진 파일을 만들고 <code class="language-plaintext highlighter-rouge">pipe</code>의 이름만 알면 통신이 가능한 단방향 통신을 지원한다.
+굳이 부모-자식 프로세스 관계가 아니라도 통신이 가능하다.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-</span><span class="n">reader</span> <span class="n">part</span><span class="o">-</span>
+<span class="cp">#include &lt;fcntl.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+</span>
+<span class="cp">#define PIPENAME "./named_pipe"
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">512</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">fd</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">nread</span><span class="p">,</span> <span class="n">rc</span><span class="p">;</span>
+
+  <span class="c1">//이미 파이프가 존재하면 삭제</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">access</span><span class="p">(</span><span class="n">PIPENAME</span><span class="p">,</span><span class="n">F_OK</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">unlink</span><span class="p">(</span><span class="n">PIPENAME</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/* named pipe 생성하기 */</span>
+  <span class="k">if</span> <span class="p">((</span><span class="n">rc</span> <span class="o">=</span> <span class="n">mkfifo</span><span class="p">(</span><span class="n">PIPENAME</span><span class="p">,</span><span class="mo">0666</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"fail to make named pipe</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">((</span><span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">PIPENAME</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"fail to open named pipe</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">nread</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">)))</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">"fail to read</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+      <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">nread</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"done</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"received: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">buffer</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-</span><span class="n">writer</span> <span class="n">part</span><span class="o">-</span>
+<span class="cp">#include &lt;fcntl.h&gt;
+#include &lt;sys/stat.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+</span>
+<span class="cp">#define PIPENAME "./named_pipe"
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">512</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">fd</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">nread</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">((</span><span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">PIPENAME</span><span class="p">,</span> <span class="n">O_WRONLY</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"fail to open named pipe</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">snprintf</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="s">"Message[%i] Send!"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">nread</span> <span class="o">=</span> <span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">)))</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">"fail to call write()</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+<h2 id="shared-memory">Shared Memory</h2>
+<p><img src="https://imgur.com/FBAOHQN.jpg" alt="sharedmemory" />
+프로세스간의 공유메모리를 설정하고, 그 메모리를 통해 통신을 하는 방법으로, 공유메모리는 커널에 의해 관리되고 PIPE와는 다르게 양방향 통신을 지원한다. 
+POSIX 공유 메모리는 메모리에 매핑된 파일, 즉 파일의 공유메모리 영역을 갖는 파일로 구성되고, 프로세스는 공유 메모리 객체를 <code class="language-plaintext highlighter-rouge">shm_open</code>을 통해 생성한다.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">producer</span>
+<span class="cp">#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;sys/mman.h&gt;
+#include &lt;sys/stat.h&gt;
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="cm">/* the size (in bytes) of shared memory object */</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">SIZE</span> <span class="o">=</span> <span class="mi">4096</span><span class="p">;</span>
+  <span class="cm">/* name of the shared memory object */</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span> <span class="o">=</span> <span class="s">"OS"</span><span class="p">;</span>
+  <span class="cm">/* strings written to shared memory */</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">message_0</span> <span class="o">=</span> <span class="s">"Hello"</span><span class="p">;</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">message_1</span> <span class="o">=</span> <span class="s">"World!"</span><span class="p">;</span>
+  <span class="cm">/* shared memory file descriptor */</span>
+  <span class="kt">int</span> <span class="n">shm_fd</span><span class="p">;</span>
+  <span class="cm">/* pointer to shared memory obect */</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
+  <span class="cm">/* create the shared memory object */</span>
+  <span class="n">shm_fd</span> <span class="o">=</span> <span class="n">shm_open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">O_CREAT</span><span class="o">|</span><span class="n">O_RDWR</span><span class="p">,</span> <span class="mo">0666</span><span class="p">);</span>
+  <span class="cm">/* configure the size of the shared memory object */</span>
+  <span class="n">ftruncate</span><span class="p">(</span><span class="n">shm_fd</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">);</span>
+  <span class="cm">/* memory map the shared memory object */</span>
+  <span class="n">ptr</span> <span class="o">=</span> <span class="n">mmap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">PROT_WRITE</span><span class="p">,</span> <span class="n">MAP_SHARED</span><span class="p">,</span> <span class="n">shm_fd</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="cm">/* write to the shared memory object */</span>
+  <span class="n">sprintf</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span><span class="s">"%s"</span><span class="p">,</span><span class="n">message_0</span><span class="p">);</span>
+  <span class="n">ptr</span> <span class="o">+=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message_0</span><span class="p">);</span>
+  <span class="n">sprintf</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span><span class="s">"%s"</span><span class="p">,</span><span class="n">message_1</span><span class="p">);</span>
+  <span class="n">ptr</span> <span class="o">+=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">message_1</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">consumer</span>
+<span class="cp">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;sys/mman.h&gt;
+#include &lt;sys/stat.h&gt;
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="cm">/* the size (in bytes) of shared memory object */</span>
+  <span class="k">const</span> <span class="kt">int</span> <span class="n">SIZE</span> <span class="o">=</span> <span class="mi">4096</span><span class="p">;</span>
+  <span class="cm">/* name of the shared memory object */</span>
+  <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span> <span class="o">=</span> <span class="s">"OS"</span><span class="p">;</span>
+  <span class="cm">/* shared memory file descriptor */</span>
+  <span class="kt">int</span> <span class="n">shm_fd</span><span class="p">;</span>
+  <span class="cm">/* pointer to shared memory obect */</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">;</span>
+  <span class="cm">/* open the shared memory object */</span>
+  <span class="n">shm_fd</span> <span class="o">=</span> <span class="n">shm_open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="p">,</span> <span class="mo">0666</span><span class="p">);</span>
+  <span class="cm">/* memory map the shared memory object */</span>
+  <span class="n">ptr</span> <span class="o">=</span> <span class="n">mmap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">,</span> <span class="n">PROT_READ</span><span class="p">,</span> <span class="n">MAP_SHARED</span><span class="p">,</span> <span class="n">shm_fd</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="cm">/* read from the shared memory object */</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">ptr</span><span class="p">);</span>
+  <span class="cm">/* remove the shared memory object */</span>
+  <span class="n">shm_unlink</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+<h2 id="memory-map">Memory Map</h2>
+
+<p>메모리 맵 파일을 통해 프로세스의 가상 메모리 주소공간에 파일을 매핑한 뒤 가상 메모리 주소에 직접 접근하는 것으로 파일 읽기/쓰기를 한다. 메모리에서 작업하므로 파일에서 작업하는 경우보다 빠르다. <code class="language-plaintext highlighter-rouge">POSIX</code>의 경우 <code class="language-plaintext highlighter-rouge">mmap</code>이라는 함수를 통해 메모리 맵 파일 기능을 사용할 수 있다.</p>
+
+<hr />
+<h2 id="message-queue">Message Queue</h2>
+
+<p>메시지 큐는 구조체 기반으로 통신하는 방법으로, 단방향 통신을 지원한다.
+큐를 사용하여 먼저 들어간 데이터가 먼저 나오는 선입선출 방식으로 순서가 유지된다.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">server</span>
+<span class="cp">#include &lt;mqueue.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="n">mq_attr</span> <span class="n">attr</span><span class="p">;</span>
+    <span class="n">attr</span><span class="p">.</span><span class="n">mq_maxmsg</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">attr</span><span class="p">.</span><span class="n">mq_msgsize</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">mqd_t</span> <span class="n">mfd</span><span class="p">;</span>
+
+    <span class="n">mfd</span> <span class="o">=</span> <span class="n">mq_open</span><span class="p">(</span><span class="s">"/my_mq"</span><span class="p">,</span> <span class="n">O_WRONLY</span><span class="p">,</span> <span class="mo">0666</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">attr</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">mfd</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"open error"</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span><span class="p">((</span><span class="n">mq_send</span><span class="p">(</span><span class="n">mfd</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">value</span><span class="p">,</span> <span class="n">attr</span><span class="p">.</span><span class="n">mq_msgsize</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">"send error"</span><span class="p">);</span>
+            <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">value</span> <span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;stdlib.h&gt;
+#include &lt;fcntl.h&gt;
+#include &lt;mqueue.h&gt;
+#include &lt;stdio.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">struct</span> <span class="n">mq_attr</span> <span class="n">attr</span><span class="p">;</span>
+    <span class="n">attr</span><span class="p">.</span><span class="n">mq_maxmsg</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">attr</span><span class="p">.</span><span class="n">mq_msgsize</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+
+    <span class="n">mqd_t</span> <span class="n">mfd</span><span class="p">;</span>
+
+    <span class="n">mfd</span> <span class="o">=</span> <span class="n">mq_open</span><span class="p">(</span><span class="s">"/my_mq"</span><span class="p">,</span> <span class="n">O_RDWR</span> <span class="o">|</span> <span class="n">O_CREAT</span><span class="p">,</span>  <span class="mo">0666</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">attr</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mfd</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">"open error"</span><span class="p">);</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+            <span class="k">if</span><span class="p">((</span><span class="n">mq_receive</span><span class="p">(</span><span class="n">mfd</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">value</span><span class="p">,</span> <span class="n">attr</span><span class="p">.</span><span class="n">mq_msgsize</span><span class="p">,</span><span class="nb">NULL</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="p">{</span>
+                    <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">"Read Data %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>  
+</code></pre></div></div>
+
+<hr />
+<h2 id="socket">Socket</h2>
+
+<p>소켓은 네트워크 환경에서 프로세스간 통신에 사용한다.
+소켓은 양 통신의 끝단을 의미하는데, 네트워크 상에서 통신하는 프로세스들은 각각 소켓을 가진다. 소켓은 IP주소에 포트번호를 가지게 된다.</p>
+
+<hr />
+:ET
