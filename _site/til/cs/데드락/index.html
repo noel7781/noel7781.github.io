@@ -1,0 +1,902 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Dealock - noel7781</title>
+<meta name="description" content="데드락">
+
+
+  <meta name="author" content="조성진">
+  
+  <meta property="article:author" content="조성진">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="noel7781">
+<meta property="og:title" content="Dealock">
+<meta property="og:url" content="/til/cs/%EB%8D%B0%EB%93%9C%EB%9D%BD/">
+
+
+  <meta property="og:description" content="데드락">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-01T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-05-01T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/til/cs/%EB%8D%B0%EB%93%9C%EB%9D%BD/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "조성진",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="noel7781 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}	  
+    });
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          noel7781 Archive
+          <span class="site-subtitle">공부 기록 보관소</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">연도별 포스트</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">조성진</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>졸업</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:noel7781@naver.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">11</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">프로그래밍 언어</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Problem Solving</span>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">CS</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs" class="">CS (10)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">TIL</span>
+            <ul>
+                
+                    
+                        <li><a href="/categories/today_i_learned" class="">TIL (11)</a></li>
+                    
+                
+                    
+                
+            </ul>
+      </li>
+      </li>
+  </ul>
+</nav>
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Dealock">
+    <meta itemprop="description" content="데드락">
+    <meta itemprop="datePublished" content="2022-05-01T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-05-01T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/til/cs/%EB%8D%B0%EB%93%9C%EB%9D%BD/" class="u-url" itemprop="url">Dealock
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#데드락">데드락</a><ul><li><a href="#교착상태는-왜-발생조건">교착상태는 왜 발생조건</a></li><li><a href="#교착상태의-예방">교착상태의 예방</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="데드락">데드락</h1>
+
+<p>데드락(교착상태)란 둘 이상의 프로세스가 다른 프로세스가 점유하고 있는 자원을 서로 기다릴 때 무한 대기에 빠지는 상황을 말한다.</p>
+
+<blockquote>
+  <p>Thread 1
+Lock(L1);
+Lock(L2);</p>
+</blockquote>
+
+<blockquote>
+  <p>Thread 2
+Lock(L2);
+Lock(L1);</p>
+</blockquote>
+
+<p>데드락에 관한 상황 예를 보면 Thread1은 L1락을 획득한 후에 L2락을 획득하고, Thread2는 L2락을 획득하고 L1락을 획득하는 상황이라고 가정해보자.</p>
+
+<p>쓰레드의 실행순서가 
+<code class="language-plaintext highlighter-rouge">T1 Lock(L1) -&gt; T1 Lock(L2) -&gt; T1 UnLock(L2) -&gt; T1 UnLock(L1) -&gt; T2 Lock(L1) -&gt; T2 Lock(L2) -&gt; T2 UnLock(L2) -&gt; T2 UnLock(L1)</code>이나 
+<code class="language-plaintext highlighter-rouge">T2 Lock(L1) -&gt; T2 Lock(L2) -&gt; T2 UnLock(L2) -&gt; T2 UnLock(L1) -&gt; T1 Lock(L1) -&gt; T1 Lock(L2) -&gt; T1 UnLock(L2) -&gt; T1 UnLock(L1</code>와 같은 순서대로 쓰레드가 실행된다면 문제가 발생하지 않는다.</p>
+
+<p>하지만 스케쥴링은 어떻게 일어날지 예측할 수 없다.
+<code class="language-plaintext highlighter-rouge">T1 Lock(L1) -&gt; T2 Lock(L2) -&gt; T1 Lock(L2)</code>나 <code class="language-plaintext highlighter-rouge">T2 Lock(L2) -&gt; T1 Lock (L1) -&gt; T1 Lock(L2)</code>등 여러 상황에서 다른 쓰레드의 락이 해제되기를 기다리면서 불행히도 영원히 기다리게 되는 현상이 발생할 수 있다.</p>
+
+<hr />
+
+<h2 id="교착상태는-왜-발생조건">교착상태는 왜 발생조건</h2>
+
+<p>교착상태가 발생하기 위해서는 다음과 같은 4가지 조건을 만족해야하며, 네 조건중 하나라도 만족시키지 않는다면 교착상태는 발생하지 않는다.</p>
+
+<blockquote>
+  <ol>
+    <li>상호 배제(Mutual Exclusion)</li>
+  </ol>
+</blockquote>
+
+<p>임계 영역의 실행을 독자적으로 가능하게 한다.</p>
+
+<blockquote>
+  <ol>
+    <li>점유대기 (Hold and wait)</li>
+  </ol>
+</blockquote>
+
+<p>쓰레드가 자신에게 할당된 자원(이미 획득한 락)을 점유한 채로 다른 자원(획득하고자 하는 락)을 대기한다.</p>
+
+<blockquote>
+  <ol>
+    <li>비선점 (No preemption)</li>
+  </ol>
+</blockquote>
+
+<p>자원(락)을 점유하고 있는 쓰레드로부터 자원을 강제적으로 뺏을 수 없다.</p>
+
+<blockquote>
+  <ol>
+    <li>환형 대기(Circular wait)</li>
+  </ol>
+</blockquote>
+
+<p>각 쓰레드는 다음 쓰레드가 요청한 자원(락)을 갖고있는 쓰레드들과 cycle이 존재한다.</p>
+
+<hr />
+
+<h2 id="교착상태의-예방">교착상태의 예방</h2>
+
+<blockquote>
+  <ol>
+    <li>상호 배제(Mutual Exclusion)</li>
+  </ol>
+</blockquote>
+
+<p>상호 배제 자체를 없애는 방법은 어려운 일이다. 하지만 <code class="language-plaintext highlighter-rouge">atomic instruction</code>과 <code class="language-plaintext highlighter-rouge">lock free</code>자료구조를 이용해서 명시적 락이 필요없는 자료구조를 만들 수 있다.
+여기서 생각할 수 있는 가장 간단한 예시를 생각해보면, lock을 이용해서 counter값을 증가시키는 예제를 기존에 본적이 있다. 그것을 lock을 사용하지 않고 만들어보자.
+gcc에는 builtin atomic instrunction들이 존재한다.
+<a href="https://gcc.gnu.org/onlinedocs/gcc-4.1.0/gcc/Atomic-Builtins.html">gcc atomic operation</a>
+그중 <code class="language-plaintext highlighter-rouge">Compare And Swap(CAS)</code>를 사용한다. <code class="language-plaintext highlighter-rouge">CAS</code>는 현재 addr의 값이 dest와 같으면, addr의 값을 newval로 바꾸고 1을 리턴하고, 같지 않으면 0을 리턴한다.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">compare_and_swap</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">addr</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">dest</span><span class="p">,</span> <span class="kt">int</span> <span class="n">newval</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">addr</span> <span class="o">==</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">newval</span><span class="p">;</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>그러면 값의 증가를 다음과 같이 할 수 있다.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">AtomicIncrement</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">value</span><span class="p">,</span> <span class="kt">int</span> <span class="n">amount</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">old</span> <span class="o">=</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="n">compare_and_swap</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">old</span><span class="o">+</span><span class="n">amount</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>락을 획득하고 값을 갱신하고 락을 해제하는 대신에 이 코드는 <code class="language-plaintext highlighter-rouge">CAS</code> builtin atomic function을 사용하여 값에 새로운 값을 갱신하도록 반복적으로 시도한다. 이와 같은 코드를 사용하면 락을 획득할 필요가 없으며, 무한루프는 발생할 수 있지만 교착상태가 발생할 수 없다.</p>
+
+<blockquote>
+  <ol>
+    <li>점유대기 (Hold and wait)</li>
+  </ol>
+</blockquote>
+
+<p>점유대기는 원자적으로 모든 락을 단번에 획득하도록 하면 예방할 수 있다.
+Lock L1, L2, L3를 획득하고자 한다면, L1부터 락을 획득하는것이 아니라, 모든 쓰레드가 자원을 가져가기 전에 자원을 가져가겠다고 알리는 Lock을 하나 더 만드는 것이다(Prevention Lock)
+그렇게 하면, prevention lock을 획득한 상태에서만 자원을 획득할 수 있고 다음과 같은 프로세스로 자원을 획득한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lock(prevention)
+lock(L1)
+lock(L2)
+lock(L3)
+unlock(prevention)
+</code></pre></div></div>
+
+<p>prevention lock을 획득한 쓰레드만 자원을 요청할 수 있으므로 교착상태의 가능성을 차단한다.
+이 해법은 문제점잉많은데, 필요한 락들을 정확히 파악해야 하고 그 자원(락)들을 미리 획득해야한다. 락이 실제로 필요할 때 요청하는것이 아니라 미리 모든 락을 획득하고 시작하기 때문에 병행성이 저하되는 문제가 있다.</p>
+
+<blockquote>
+  <ol>
+    <li>비선점 (No preemption)</li>
+  </ol>
+</blockquote>
+
+<p>락을 해제하기 전까지는 락을 보유하고 있기 때문에 다른 쓰레드가 자원을 이용할 수 없고, 문제가 많이 발생한다. 왜냐하면 다른 쓰레드들도 락을 보유한 상태로 다른 락을 대기하기 때문이다. 많은 쓰레드 라이브러리들이 이런 상황을 피할수 있도록 방법을 제공해주는데, <code class="language-plaintext highlighter-rouge">trylock()</code>의 경우 락을 획득할 수 있다면 자원을 획득하고, 다른 쓰레드가 락을 가지고 있는 상태라면 나중에 다시 시도하라고 알리는 값을 리턴해 사용자에게 알린다.
+이 방법을 사용하면 교착상태 가능성이 없고 획득 순서에도 영향을 받지 않는 락 획득방법을 만들 수 있다.
+그러나, 교착상태 대신에 교착상태와 유사한 <code class="language-plaintext highlighter-rouge">livelock(무한반복)</code>이라는 새로운 문제가 생긴다. 쓰레드 들이 순서대로 시도하기를 영원히 반복하면서, 코드를 반복 실행하지만 계속해서 실패하는 경우 데드락은 아니지만 실제 progress도 생기지 않기 때문에 무한 반복하게 된다. 이에 대한 해법으로는 반복에 대한 지연시간을 무작위로 조절하는 등으로 반복 간섭 확률을 줄일 수 있다.</p>
+
+<blockquote>
+  <ol>
+    <li>환형 대기(Circular wait)</li>
+  </ol>
+</blockquote>
+
+<p>가장 실용적인 교착상태 예방 기법(가장 자주 사용되기도 하는)은 순환대기가 발생하지 않도록 락 코드를 작성하는 것이다.
+필요한 락들을 조사해 모든 락들에 대해 <code class="language-plaintext highlighter-rouge">전체 순서(total ordering)</code>을 정하는 것이다.
+예를 들어 <code class="language-plaintext highlighter-rouge">L1</code>과 <code class="language-plaintext highlighter-rouge">L2</code>가 있을 경우, 무조건 <code class="language-plaintext highlighter-rouge">L1</code>을 획득해야만 <code class="language-plaintext highlighter-rouge">L2</code>를 획득하도록 만들면 교착상태를 피할 수 있다. 
+하지만 락의 갯수가 너무 많을 수 있고 시스템이 복잡할 경우 <code class="language-plaintext highlighter-rouge">부분 순서(partial ordering)</code>을 정해 <code class="language-plaintext highlighter-rouge">L_k</code>가 <code class="language-plaintext highlighter-rouge">L_t</code>보다는 먼저 획득해야 한다 등의 규칙을 정할수도 있다.
+이 순서는 관례이기 때문에 숙련되지 않은 개발자가 이 관례를 무시하고 코드를 개발할 경우 교착상태가 발생할 수 있고, 락의 순서을 정의하기 위해서 코드와 다양한 루틴간 상호관계를 이해해야 한다. 작은 실수만 해도 교착상태가 발생할 수 있다.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#os" class="page__taxonomy-item p-category" rel="tag">OS</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cs" class="page__taxonomy-item p-category" rel="tag">cs</a><span class="sep">, </span>
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">til</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-05-01">May 1, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Dealock%20%2Ftil%2Fcs%2F%25EB%258D%25B0%25EB%2593%259C%25EB%259D%25BD%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Ftil%2Fcs%2F%25EB%258D%25B0%25EB%2593%259C%25EB%259D%25BD%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Ftil%2Fcs%2F%25EB%258D%25B0%25EB%2593%259C%25EB%259D%25BD%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/cs/race_condition_%EC%84%B8%EB%A7%88%ED%8F%AC%EC%96%B4_%EB%AE%A4%ED%85%8D%EC%8A%A4/" class="pagination--pager" title="Race Condition &amp; Mutex, Semaphore
+">이전</a>
+    
+    
+      <a href="/til/cs/%EB%A9%94%EB%AA%A8%EB%A6%AC/" class="pagination--pager" title="Memory
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/%EB%A9%94%EB%AA%A8%EB%A6%AC/" rel="permalink">Memory
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">메모리
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/race_condition_%EC%84%B8%EB%A7%88%ED%8F%AC%EC%96%B4_%EB%AE%A4%ED%85%8D%EC%8A%A4/" rel="permalink">Race Condition &amp; Mutex, Semaphore
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Race condition, Semaphore, Mutex
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/" rel="permalink">Operating System
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">운영체제
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/ipc/" rel="permalink">IPC(Inter process communication)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">IPC (Inter Process Communication)
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 조성진. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'noel7781/noel7781.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

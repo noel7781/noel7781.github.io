@@ -5,9 +5,399 @@
     <description>Archive</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 27 Apr 2022 16:07:18 +0900</pubDate>
-    <lastBuildDate>Wed, 27 Apr 2022 16:07:18 +0900</lastBuildDate>
+    <pubDate>Wed, 04 May 2022 20:34:37 +0900</pubDate>
+    <lastBuildDate>Wed, 04 May 2022 20:34:37 +0900</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>Memory</title>
+        <description>&lt;h1 id=&quot;메모리&quot;&gt;메모리&lt;/h1&gt;
+
+&lt;p&gt;메모리는 다른 장치와 용어상으로 혼동될수 있으나, 대체로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;주기억장치&lt;/code&gt;를 말하며 특히 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RAM&lt;/code&gt;을 말한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/c/c6/%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B3%84%EC%B8%B5%EA%B5%AC%EC%A1%B0%EA%B7%B8%EB%A6%BC1.png&quot; alt=&quot;mem_hierarchy&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;다음과 같은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;memory hierarchy&lt;/code&gt;에서 위로갈수록 빠르고 용량이 적고, 아래로 갈수록 용량이 크고 느리다. 우리가 프로그램을 실행할때 기록된 모든 내용이나 정보를 매번 디스크연산을 통해 가지고 오게 되면 매우 느리다. CPU가 조금더 빨리 데이터에 접근하기 위해 메모리를 사용한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;os의-메모리-관리&quot;&gt;OS의 메모리 관리&lt;/h2&gt;
+
+&lt;p&gt;고전적인 OS는 물리메모리 전체에 OS와 실행시킬 단 하나의 프로세스를 메모리에 올려서 프로세스를 실행했다.
+ 메모리의 크기도 크지 않았던 시절이지만 상상만 해도 엄청 느리고 비효율적이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://imgur.com/sXfzOSA.jpg&quot; alt=&quot;mem1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;시간이 지난 후 여러 프로세스들을 물리메모리 상에 올려서 실행하는 방법이 나온다. 효율성이 올라갔지만 이때부터 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;protection issue&lt;/code&gt;가 생기기 시작했다. 
+ 현재 프로세스를 실행하다가 다른 프로세스의 메모리를 건드려 값을 수정하는등의 행위를 막아야 했다.
+ &lt;img src=&quot;https://imgur.com/IP6sbEU.jpg&quot; alt=&quot;mem2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이러한 이유로 OS는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Address Space(주소 공간)&lt;/code&gt;라는 물리메모리의 가상화를 만들었고, 이 주소 공간은 실행중인 프로세스의 모든 정보를 담고 있도록 했다.
+ &lt;img src=&quot;https://imgur.com/0g9Es59.jpg&quot; alt=&quot;addr_space&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;그리고 모든 프로세스는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;가상 메모리&lt;/code&gt;를 사용하도록 하고, 실제 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;물리 메모리&lt;/code&gt;로의 translation은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OS&lt;/code&gt;가 담당한다. 하지만 소프트웨어 상에서 주소변환을 하면 너무 느리기 때문에, 하드웨어의 도움을 받아서 처리한다. (registers, TLB, page-table)&lt;/p&gt;
+
+&lt;p&gt;하지만 실제로 주소공간은 가상적인 메모리이고, 물리메모리의 매핑되는 경우 가상메모리의 크기를 벗어나면 다른 프로세스 메모리에 접근할 수 있으므로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Base and Bound Register&lt;/code&gt;을 통해, 현재 접근하는 메모리의 주소를 계산해서 적법한 메모리 접근인지 판단한 후 실행한다.
+ &lt;img src=&quot;https://imgur.com/4OWSQgO.jpg&quot; alt=&quot;bbregister&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이러한 방법을 사용하면, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;External fragmentation(외부 단편화)'&lt;/code&gt;가 발생하게 되는데,&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://imgur.com/S7t1ZmY.jpg&quot; alt=&quot;ext&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;외부 단편화란
+다음과 같이 프로세스의 크기가 제각각 다른데, 필요한 부분마다 할당되고 해제되다보니 마지막 부분의 남는 공간을 더하면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Process 11&lt;/code&gt;을 메모리공간에 할당할 수 있으나, 각각의 공간은 새로운 프로세스를 로드하기에 너무 공간이 작아, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Process 11&lt;/code&gt;을 메모리에 올리지 못한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이에 대한 해결책으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Segmentation&lt;/code&gt;을 사용하게 되는데, 프로세스의 메모리에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Code, Stack, Data Heap&lt;/code&gt;이 있으므로 영역마다 나눠서 따로 메모리에 올리고, 각각의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Base and Bound register&lt;/code&gt;을 이용하여 위의 방법처럼 처리를 할 수있다. 하지만 여전히 외부단편화 문제가 발생하란, 이 영역을 압축시키는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Compaction&lt;/code&gt;은 비용이 너무 크다.(프로세스를 멈추고, data를 어딘가에 복사해두고 segment register값들을 새로운 주소로 바꾼다)&lt;/p&gt;
+
+&lt;p&gt;또한 Heap영역같이 동적으로 변하는 메모리에는 실제 사용하는 메모리보다 더 많은 메모리를 할당해야 하는데 이런 경우에
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Internal framgentation(내부 단편화)&lt;/code&gt;가 발생한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;내부 단편화란
+ 할당받은 공간에 비해 사용중인 공간의 크기가 작다면, 그 차이만큼은 노는공간(의미없는 공간)이 되고, 낭비하는 공간이 된다. 
+ ex) 4096KB만큼의 주소공간을 할당받은 프로세스의 실제 사용하는 주소공간이 10KB일 경우 4086KB는 사용하지 않아 낭비된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이러한 문제점들을 해결하기 위해 실행되는 프로세스 공간만 나누는게 아니라, 실제 물리메모리를 일정한 크기로 자르는 방법인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Paging&lt;/code&gt;이 제안된다.&lt;/p&gt;
+
+&lt;p&gt;프로세스를 일정한 크기인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;page&lt;/code&gt;라는 고정된 크기로 자르고, 물리메모리도 동일한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;page&lt;/code&gt;단위로 자른다.
+이러면 두개의 메모리 크기가 동일하기 때문에 각 주소공간의 페이지번호와 물리메모리의 페이지번호를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Page table&lt;/code&gt;을 통해 매핑시켜주는 방법이 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Paging&lt;/code&gt;이다. 이런 방법을 사용하면 쉽게 메모리 관리를 할 수 있고, 힙과 스택이 어디로 자라는지 등의 상세내용을 알 필요가 없다.
+&lt;img src=&quot;https://imgur.com/ambhRkE.jpg&quot; alt=&quot;addr_translate&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;이러한 매핑 작업을 하는 페이지 테이블도 물리메모리에 존재하게 되는데, 먼저 페이지테이블을 보고 실제 물리페이지의 주소를 알 수 있기때문에 느리다는 단점이 존재한다.
+따라서 하드웨어 캐시를 이용하여, 페이지 주소변환을 빠르게 수행한다.
+&lt;img src=&quot;https://imgur.com/iB52STm.jpg&quot; alt=&quot;tlb&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 02 May 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/%EB%A9%94%EB%AA%A8%EB%A6%AC/</link>
+        <guid isPermaLink="true">/til/cs/%EB%A9%94%EB%AA%A8%EB%A6%AC/</guid>
+        
+        <category>OS</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
+    
+      <item>
+        <title>Dealock</title>
+        <description>&lt;h1 id=&quot;데드락&quot;&gt;데드락&lt;/h1&gt;
+
+&lt;p&gt;데드락(교착상태)란 둘 이상의 프로세스가 다른 프로세스가 점유하고 있는 자원을 서로 기다릴 때 무한 대기에 빠지는 상황을 말한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Thread 1
+Lock(L1);
+Lock(L2);&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Thread 2
+Lock(L2);
+Lock(L1);&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;데드락에 관한 상황 예를 보면 Thread1은 L1락을 획득한 후에 L2락을 획득하고, Thread2는 L2락을 획득하고 L1락을 획득하는 상황이라고 가정해보자.&lt;/p&gt;
+
+&lt;p&gt;쓰레드의 실행순서가 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T1 Lock(L1) -&amp;gt; T1 Lock(L2) -&amp;gt; T1 UnLock(L2) -&amp;gt; T1 UnLock(L1) -&amp;gt; T2 Lock(L1) -&amp;gt; T2 Lock(L2) -&amp;gt; T2 UnLock(L2) -&amp;gt; T2 UnLock(L1)&lt;/code&gt;이나 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T2 Lock(L1) -&amp;gt; T2 Lock(L2) -&amp;gt; T2 UnLock(L2) -&amp;gt; T2 UnLock(L1) -&amp;gt; T1 Lock(L1) -&amp;gt; T1 Lock(L2) -&amp;gt; T1 UnLock(L2) -&amp;gt; T1 UnLock(L1&lt;/code&gt;와 같은 순서대로 쓰레드가 실행된다면 문제가 발생하지 않는다.&lt;/p&gt;
+
+&lt;p&gt;하지만 스케쥴링은 어떻게 일어날지 예측할 수 없다.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T1 Lock(L1) -&amp;gt; T2 Lock(L2) -&amp;gt; T1 Lock(L2)&lt;/code&gt;나 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;T2 Lock(L2) -&amp;gt; T1 Lock (L1) -&amp;gt; T1 Lock(L2)&lt;/code&gt;등 여러 상황에서 다른 쓰레드의 락이 해제되기를 기다리면서 불행히도 영원히 기다리게 되는 현상이 발생할 수 있다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;교착상태는-왜-발생조건&quot;&gt;교착상태는 왜 발생조건&lt;/h2&gt;
+
+&lt;p&gt;교착상태가 발생하기 위해서는 다음과 같은 4가지 조건을 만족해야하며, 네 조건중 하나라도 만족시키지 않는다면 교착상태는 발생하지 않는다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;상호 배제(Mutual Exclusion)&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;임계 영역의 실행을 독자적으로 가능하게 한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;점유대기 (Hold and wait)&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;쓰레드가 자신에게 할당된 자원(이미 획득한 락)을 점유한 채로 다른 자원(획득하고자 하는 락)을 대기한다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;비선점 (No preemption)&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;자원(락)을 점유하고 있는 쓰레드로부터 자원을 강제적으로 뺏을 수 없다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;환형 대기(Circular wait)&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;각 쓰레드는 다음 쓰레드가 요청한 자원(락)을 갖고있는 쓰레드들과 cycle이 존재한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;교착상태의-예방&quot;&gt;교착상태의 예방&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;상호 배제(Mutual Exclusion)&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;상호 배제 자체를 없애는 방법은 어려운 일이다. 하지만 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;atomic instruction&lt;/code&gt;과 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lock free&lt;/code&gt;자료구조를 이용해서 명시적 락이 필요없는 자료구조를 만들 수 있다.
+여기서 생각할 수 있는 가장 간단한 예시를 생각해보면, lock을 이용해서 counter값을 증가시키는 예제를 기존에 본적이 있다. 그것을 lock을 사용하지 않고 만들어보자.
+gcc에는 builtin atomic instrunction들이 존재한다.
+&lt;a href=&quot;https://gcc.gnu.org/onlinedocs/gcc-4.1.0/gcc/Atomic-Builtins.html&quot;&gt;gcc atomic operation&lt;/a&gt;
+그중 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Compare And Swap(CAS)&lt;/code&gt;를 사용한다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CAS&lt;/code&gt;는 현재 addr의 값이 dest와 같으면, addr의 값을 newval로 바꾸고 1을 리턴하고, 같지 않으면 0을 리턴한다.&lt;/p&gt;
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;compare_and_swap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;그러면 값의 증가를 다음과 같이 할 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;AtomicIncrement&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;old&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compare_and_swap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;old&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;old&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;락을 획득하고 값을 갱신하고 락을 해제하는 대신에 이 코드는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CAS&lt;/code&gt; builtin atomic function을 사용하여 값에 새로운 값을 갱신하도록 반복적으로 시도한다. 이와 같은 코드를 사용하면 락을 획득할 필요가 없으며, 무한루프는 발생할 수 있지만 교착상태가 발생할 수 없다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;점유대기 (Hold and wait)&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;점유대기는 원자적으로 모든 락을 단번에 획득하도록 하면 예방할 수 있다.
+Lock L1, L2, L3를 획득하고자 한다면, L1부터 락을 획득하는것이 아니라, 모든 쓰레드가 자원을 가져가기 전에 자원을 가져가겠다고 알리는 Lock을 하나 더 만드는 것이다(Prevention Lock)
+그렇게 하면, prevention lock을 획득한 상태에서만 자원을 획득할 수 있고 다음과 같은 프로세스로 자원을 획득한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lock(prevention)
+lock(L1)
+lock(L2)
+lock(L3)
+unlock(prevention)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;prevention lock을 획득한 쓰레드만 자원을 요청할 수 있으므로 교착상태의 가능성을 차단한다.
+이 해법은 문제점잉많은데, 필요한 락들을 정확히 파악해야 하고 그 자원(락)들을 미리 획득해야한다. 락이 실제로 필요할 때 요청하는것이 아니라 미리 모든 락을 획득하고 시작하기 때문에 병행성이 저하되는 문제가 있다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;비선점 (No preemption)&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;락을 해제하기 전까지는 락을 보유하고 있기 때문에 다른 쓰레드가 자원을 이용할 수 없고, 문제가 많이 발생한다. 왜냐하면 다른 쓰레드들도 락을 보유한 상태로 다른 락을 대기하기 때문이다. 많은 쓰레드 라이브러리들이 이런 상황을 피할수 있도록 방법을 제공해주는데, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;trylock()&lt;/code&gt;의 경우 락을 획득할 수 있다면 자원을 획득하고, 다른 쓰레드가 락을 가지고 있는 상태라면 나중에 다시 시도하라고 알리는 값을 리턴해 사용자에게 알린다.
+이 방법을 사용하면 교착상태 가능성이 없고 획득 순서에도 영향을 받지 않는 락 획득방법을 만들 수 있다.
+그러나, 교착상태 대신에 교착상태와 유사한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;livelock(무한반복)&lt;/code&gt;이라는 새로운 문제가 생긴다. 쓰레드 들이 순서대로 시도하기를 영원히 반복하면서, 코드를 반복 실행하지만 계속해서 실패하는 경우 데드락은 아니지만 실제 progress도 생기지 않기 때문에 무한 반복하게 된다. 이에 대한 해법으로는 반복에 대한 지연시간을 무작위로 조절하는 등으로 반복 간섭 확률을 줄일 수 있다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;환형 대기(Circular wait)&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;가장 실용적인 교착상태 예방 기법(가장 자주 사용되기도 하는)은 순환대기가 발생하지 않도록 락 코드를 작성하는 것이다.
+필요한 락들을 조사해 모든 락들에 대해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;전체 순서(total ordering)&lt;/code&gt;을 정하는 것이다.
+예를 들어 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;L1&lt;/code&gt;과 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;L2&lt;/code&gt;가 있을 경우, 무조건 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;L1&lt;/code&gt;을 획득해야만 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;L2&lt;/code&gt;를 획득하도록 만들면 교착상태를 피할 수 있다. 
+하지만 락의 갯수가 너무 많을 수 있고 시스템이 복잡할 경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;부분 순서(partial ordering)&lt;/code&gt;을 정해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;L_k&lt;/code&gt;가 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;L_t&lt;/code&gt;보다는 먼저 획득해야 한다 등의 규칙을 정할수도 있다.
+이 순서는 관례이기 때문에 숙련되지 않은 개발자가 이 관례를 무시하고 코드를 개발할 경우 교착상태가 발생할 수 있고, 락의 순서을 정의하기 위해서 코드와 다양한 루틴간 상호관계를 이해해야 한다. 작은 실수만 해도 교착상태가 발생할 수 있다.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 01 May 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/%EB%8D%B0%EB%93%9C%EB%9D%BD/</link>
+        <guid isPermaLink="true">/til/cs/%EB%8D%B0%EB%93%9C%EB%9D%BD/</guid>
+        
+        <category>OS</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
+    
+      <item>
+        <title>Race Condition &amp; Mutex, Semaphore</title>
+        <description>&lt;h1 id=&quot;race-condition-semaphore-mutex&quot;&gt;Race condition, Semaphore, Mutex&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;race-condition&quot;&gt;Race condition&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Race condition&lt;/code&gt;이란 경쟁하는 상태를 나타내는 말로, 멀티쓰레드 환경에서의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;race condition&lt;/code&gt;은 두개 이상의 프로세스가 공용 데이터에 접근하는데, 접근 순서에 따라 결과가 달라지는 현상을 뜻하고 데이터베이스 환경에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;race condition&lt;/code&gt;은 2개 이상의 execution이 같은 데이터에 접근하며 접근순서에 따라 결과가 달라지는 현상을 말한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;race condition&lt;/code&gt;은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;read-only&lt;/code&gt; 연산에 대해 발생하지 않는다. 2개 이상의 프로세스, 쓰레드 혹은 execution에 대하여 그중 하나가 적어도 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;write&lt;/code&gt;연산을 하는 경우 발생하게 된다.&lt;/p&gt;
+
+&lt;p&gt;가장 흔히 볼수 있는 예제로 지난번에 정리했던 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;프로세스&amp;amp;쓰레드&lt;/code&gt; 글의 cnt를 증가시키는 예제가 있다.&lt;/p&gt;
+
+&lt;p&gt;이러한 상황을 해결하기 위하여 &lt;strong&gt;공유자원&lt;/strong&gt;의 사용을 독점적으로 보장해준다면, 문제가 발생하지 않는다. 그런 영역을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Critical section&lt;/code&gt;이라고 하고, 이 영역을 보장해주기 위한 방법이 필요하다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;semaphore&quot;&gt;Semaphore&lt;/h2&gt;
+
+&lt;p&gt;세마포어란 공유 자원에 여러 프로세스의 접근을 막는 방법중 하나다. 공유 자원에 접근할 수 있는 프로세스의 최대 허용치 만큼 동시에 여러 프로세스가 접근할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;세마포어 S는 정수값을 가지는 변수이며, 다음과 같이 P와 V라는 명령에 의해서만 접근할 수 있다. (P와 V는 각각 try와 increment를 뜻하는 네덜란드어 Proberen과 Verhogen의 머릿글자를 딴 것이다.)&lt;/p&gt;
+
+&lt;p&gt;P는 임계 구역에 들어가기 전에 수행되고, V는 임계 구역에서 나올 때 수행된다. 이때 변수 값을 수정하는 연산은 모두 원자성을 만족해야 한다. 다시 말해, 한 프로세스(또는 스레드)에서 세마포어 값을 변경하는 동안 다른 프로세스가 동시에 이 값을 변경해서는 안 된다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;최초로 제시된 방법은 busy waiting을 통한 방법이다(https://ko.wikipedia.org/wiki/%EC%84%B8%EB%A7%88%ED%8F%AC%EC%96%B4)
+ P(S) {
+     while S &amp;lt;=0; // 아무것도 하지 않음 (반복문)
+     S--;
+ }
+
+ V(S) {
+     S++;
+ }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;최초 방법의 단점을 보완한 방법으로서 재움 큐를 활용하여 프로세스를 재우는 방식이다.(https://ko.wikipedia.org/wiki/%EC%84%B8%EB%A7%88%ED%8F%AC%EC%96%B4)
+ P(S) {
+     S--;
+     if S &amp;lt; 0
+         // 이 프로세스를 재움 큐에 추가 (잠 듦)
+ }
+
+ V(S) {
+     S++;
+     if S &amp;lt;= 0
+         // 재움 큐로부터 프로세스를 제거 (깨어남)
+ }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;최초의 방법은 busy waiting을 통해 while반복문을 계속 확인하는 방식이였으나, 방법을 개선하여 sleep and wakeup 방식으로 세마포어를 사용할 수 있다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;mutex&quot;&gt;Mutex&lt;/h2&gt;
+
+&lt;p&gt;뮤텍스란 binary semaphore와 같은 개념으로 1개의 쓰레드만이 공유자원에 접근할 수 있도록 만드는 방법을 말한다. lock과 unlock을 통해 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Critical section&lt;/code&gt;의 실행하는 쓰레드를 1개로 보장한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Lock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;unlock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// Critical section 보호하기 위한 lock&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Lock&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getAndAddOne&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Critical secion 진입&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;finally&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;c1&quot;&gt;// Critical secion 탈출&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;unlock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;추상적으로 lock을 표현한 코드인데, 좋은 lock 알고리즘을 생각해보면 다음과 같다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Mutual Exclusion을 보장해야 한다. 한 쓰레드가 작업하고 있을때 다른 쓰레드가 같은 section에서 작업하면 안된다.&lt;/li&gt;
+  &lt;li&gt;공정성(fairness)를 보장해야한다. 락을 전혀 얻지 못해 기아상태에 빠지는 경우가 발생하는지 봐야한다.&lt;/li&gt;
+  &lt;li&gt;성능, 락 사용 시간적 오버헤드를 평가해야 한다. 락을 획득하고 경쟁할떄의 성능을 따져봐야 한다.&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        <pubDate>Sat, 30 Apr 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/race_condition_%EC%84%B8%EB%A7%88%ED%8F%AC%EC%96%B4_%EB%AE%A4%ED%85%8D%EC%8A%A4/</link>
+        <guid isPermaLink="true">/til/cs/race_condition_%EC%84%B8%EB%A7%88%ED%8F%AC%EC%96%B4_%EB%AE%A4%ED%85%8D%EC%8A%A4/</guid>
+        
+        <category>OS</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
+    
+      <item>
+        <title>Operating System</title>
+        <description>&lt;h1 id=&quot;운영체제&quot;&gt;운영체제&lt;/h1&gt;
+
+&lt;p&gt;운영체제란 컴퓨터 시스템의 자원들을 효율적으로 관리하며, 사용자가 컴퓨터를 편리하고, 효과적으로 사용할 수 있도록 환경을 제공하는 여러 프로그램의 모임이다. 다른 프로그램이 실행되기 쉽게 도와주고, 프로그램끼리 메모리 공유를 도와주고, 장치간의 연결을 가능하게 해주는 책임이 있다.&lt;/p&gt;
+
+&lt;p&gt;그리고 이러한 목적을 위해&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;CPU 가상화&lt;/li&gt;
+  &lt;li&gt;메모리 가상화&lt;/li&gt;
+  &lt;li&gt;Concurrency&lt;/li&gt;
+  &lt;li&gt;Persistence&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;를 지원한다.&lt;/p&gt;
+
+&lt;p&gt;각각의 운영체제가 하는 일들은 기존 포스트와, 이후 포스트들에서 내용을 추가한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;interrupt&quot;&gt;Interrupt&lt;/h2&gt;
+
+&lt;p&gt;인터럽트란 CPU가 프로그램을 실행하고 있을 때, 입출력 하드웨어 장치의 요청이나 예외상황이 발생하여 처리가 필요할 경우 CPU에게 알려 처리할수 있도록 하는것이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;소프트웨어-인터럽트&quot;&gt;소프트웨어 인터럽트&lt;/h3&gt;
+
+&lt;p&gt;만약 프로세스가 OS를 통하지 않고 시스템 자원을 사용할 수있다고 생각해보자. 그러면 악성 프로그램이 시스템 자원을 전부 차지해버리거나, 시스템의 자원을 다 삭제해도 막을 방법이 없을것이다.&lt;/p&gt;
+
+&lt;p&gt;다음과 같은 상황들 때문에 운영체제는 프로세스가 시스템 자원에 직접 접근하는 행위를 막는다. 
+ 그리고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;User mode&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Kernel mode&lt;/code&gt;로 나누어 시스템 자원에 직접 접근하는 행위는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Kernel mode&lt;/code&gt;를 통해서만 수행될 수 있도록 제어한다. 
+ 이러한 시스템 자원이 필요한 경우 프로세스는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;System call(or trap)&lt;/code&gt;을 통하여 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;User mode&lt;/code&gt;에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Kernel mode&lt;/code&gt;로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mode switch&lt;/code&gt;를 하게 되고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;OS&lt;/code&gt;가 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;syscall&lt;/code&gt;에 대한 handling &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Interrupt Descriptor table&lt;/code&gt;을 통해 적절하게 처리하게 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://imgur.com/ja9Xqg7.jpg&quot; alt=&quot;User_Kernel stack&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;하드웨어-인터럽트&quot;&gt;하드웨어 인터럽트&lt;/h3&gt;
+
+&lt;p&gt;CPU가 프로그램을 실행하고 있을때 입출력 등의 장치에서 예외사항이나 이벤트가 발생하는 경우에 CPU에게 알려 처리할 수 있도록 하는것을 말한다.&lt;/p&gt;
+
+&lt;p&gt;이러한 하드웨어, 소프트웨어 인터럽트가 발생하게 되면 프로세스는 현재까지 수행중이던 상태를 해당 프로세스의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PCB&lt;/code&gt;에 저장한다.
+PC 레지스터에 다음에 실행할 명령어의 주소를 저장하고, 인터럽트 벡터테이블의 ISR주소를 얻어 service routine을 실행한다. 해당 처리가 끝나게 되면 저장했던 프로세스 정보를 다시 로드하고, 인터럽트가 호출된 부분부터 다시 코드실행을 이어서 진행한다.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 29 Apr 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/</link>
+        <guid isPermaLink="true">/til/cs/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/</guid>
+        
+        <category>OS</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
     
       <item>
         <title>IPC(Inter process communication)</title>

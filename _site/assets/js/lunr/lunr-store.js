@@ -40,4 +40,28 @@ var store = [{
         "tags": ["OS"],
         "url": "/til/cs/ipc/",
         "teaser": null
+      },{
+        "title": "Operating System",
+        "excerpt":"운영체제 운영체제란 컴퓨터 시스템의 자원들을 효율적으로 관리하며, 사용자가 컴퓨터를 편리하고, 효과적으로 사용할 수 있도록 환경을 제공하는 여러 프로그램의 모임이다. 다른 프로그램이 실행되기 쉽게 도와주고, 프로그램끼리 메모리 공유를 도와주고, 장치간의 연결을 가능하게 해주는 책임이 있다. 그리고 이러한 목적을 위해 CPU 가상화 메모리 가상화 Concurrency Persistence 를 지원한다. 각각의 운영체제가 하는 일들은...","categories": ["til","cs"],
+        "tags": ["OS"],
+        "url": "/til/cs/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/",
+        "teaser": null
+      },{
+        "title": "Race Condition & Mutex, Semaphore",
+        "excerpt":"Race condition, Semaphore, Mutex Race condition Race condition이란 경쟁하는 상태를 나타내는 말로, 멀티쓰레드 환경에서의 race condition은 두개 이상의 프로세스가 공용 데이터에 접근하는데, 접근 순서에 따라 결과가 달라지는 현상을 뜻하고 데이터베이스 환경에서 race condition은 2개 이상의 execution이 같은 데이터에 접근하며 접근순서에 따라 결과가 달라지는 현상을 말한다. race condition은 read-only 연산에 대해...","categories": ["til","cs"],
+        "tags": ["OS"],
+        "url": "/til/cs/race_condition_%EC%84%B8%EB%A7%88%ED%8F%AC%EC%96%B4_%EB%AE%A4%ED%85%8D%EC%8A%A4/",
+        "teaser": null
+      },{
+        "title": "Dealock",
+        "excerpt":"데드락 데드락(교착상태)란 둘 이상의 프로세스가 다른 프로세스가 점유하고 있는 자원을 서로 기다릴 때 무한 대기에 빠지는 상황을 말한다. Thread 1 Lock(L1); Lock(L2); Thread 2 Lock(L2); Lock(L1); 데드락에 관한 상황 예를 보면 Thread1은 L1락을 획득한 후에 L2락을 획득하고, Thread2는 L2락을 획득하고 L1락을 획득하는 상황이라고 가정해보자. 쓰레드의 실행순서가 T1 Lock(L1) -&gt; T1...","categories": ["til","cs"],
+        "tags": ["OS"],
+        "url": "/til/cs/%EB%8D%B0%EB%93%9C%EB%9D%BD/",
+        "teaser": null
+      },{
+        "title": "Memory",
+        "excerpt":"메모리 메모리는 다른 장치와 용어상으로 혼동될수 있으나, 대체로 주기억장치를 말하며 특히 RAM을 말한다. 다음과 같은 memory hierarchy에서 위로갈수록 빠르고 용량이 적고, 아래로 갈수록 용량이 크고 느리다. 우리가 프로그램을 실행할때 기록된 모든 내용이나 정보를 매번 디스크연산을 통해 가지고 오게 되면 매우 느리다. CPU가 조금더 빨리 데이터에 접근하기 위해 메모리를 사용한다. OS의...","categories": ["til","cs"],
+        "tags": ["OS"],
+        "url": "/til/cs/%EB%A9%94%EB%AA%A8%EB%A6%AC/",
+        "teaser": null
       }]

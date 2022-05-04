@@ -1,0 +1,820 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Memory - noel7781</title>
+<meta name="description" content="메모리">
+
+
+  <meta name="author" content="조성진">
+  
+  <meta property="article:author" content="조성진">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="noel7781">
+<meta property="og:title" content="Memory">
+<meta property="og:url" content="/til/cs/%EB%A9%94%EB%AA%A8%EB%A6%AC/">
+
+
+  <meta property="og:description" content="메모리">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-02T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-05-02T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/til/cs/%EB%A9%94%EB%AA%A8%EB%A6%AC/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "조성진",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="noel7781 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}	  
+    });
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          noel7781 Archive
+          <span class="site-subtitle">공부 기록 보관소</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">연도별 포스트</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">조성진</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>졸업</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:noel7781@naver.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">11</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">프로그래밍 언어</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Problem Solving</span>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">CS</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs" class="">CS (10)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">TIL</span>
+            <ul>
+                
+                    
+                        <li><a href="/categories/today_i_learned" class="">TIL (11)</a></li>
+                    
+                
+                    
+                
+            </ul>
+      </li>
+      </li>
+  </ul>
+</nav>
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Memory">
+    <meta itemprop="description" content="메모리">
+    <meta itemprop="datePublished" content="2022-05-02T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-05-02T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/til/cs/%EB%A9%94%EB%AA%A8%EB%A6%AC/" class="u-url" itemprop="url">Memory
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#메모리">메모리</a><ul><li><a href="#os의-메모리-관리">OS의 메모리 관리</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="메모리">메모리</h1>
+
+<p>메모리는 다른 장치와 용어상으로 혼동될수 있으나, 대체로 <code class="language-plaintext highlighter-rouge">주기억장치</code>를 말하며 특히 <code class="language-plaintext highlighter-rouge">RAM</code>을 말한다.</p>
+
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B3%84%EC%B8%B5%EA%B5%AC%EC%A1%B0%EA%B7%B8%EB%A6%BC1.png" alt="mem_hierarchy" /></p>
+
+<p>다음과 같은 <code class="language-plaintext highlighter-rouge">memory hierarchy</code>에서 위로갈수록 빠르고 용량이 적고, 아래로 갈수록 용량이 크고 느리다. 우리가 프로그램을 실행할때 기록된 모든 내용이나 정보를 매번 디스크연산을 통해 가지고 오게 되면 매우 느리다. CPU가 조금더 빨리 데이터에 접근하기 위해 메모리를 사용한다.</p>
+
+<hr />
+
+<h2 id="os의-메모리-관리">OS의 메모리 관리</h2>
+
+<p>고전적인 OS는 물리메모리 전체에 OS와 실행시킬 단 하나의 프로세스를 메모리에 올려서 프로세스를 실행했다.
+ 메모리의 크기도 크지 않았던 시절이지만 상상만 해도 엄청 느리고 비효율적이다.</p>
+
+<p><img src="https://imgur.com/sXfzOSA.jpg" alt="mem1" /></p>
+
+<p>시간이 지난 후 여러 프로세스들을 물리메모리 상에 올려서 실행하는 방법이 나온다. 효율성이 올라갔지만 이때부터 <code class="language-plaintext highlighter-rouge">protection issue</code>가 생기기 시작했다. 
+ 현재 프로세스를 실행하다가 다른 프로세스의 메모리를 건드려 값을 수정하는등의 행위를 막아야 했다.
+ <img src="https://imgur.com/IP6sbEU.jpg" alt="mem2" /></p>
+
+<p>이러한 이유로 OS는 <code class="language-plaintext highlighter-rouge">Address Space(주소 공간)</code>라는 물리메모리의 가상화를 만들었고, 이 주소 공간은 실행중인 프로세스의 모든 정보를 담고 있도록 했다.
+ <img src="https://imgur.com/0g9Es59.jpg" alt="addr_space" /></p>
+
+<p>그리고 모든 프로세스는 <code class="language-plaintext highlighter-rouge">가상 메모리</code>를 사용하도록 하고, 실제 <code class="language-plaintext highlighter-rouge">물리 메모리</code>로의 translation은 <code class="language-plaintext highlighter-rouge">OS</code>가 담당한다. 하지만 소프트웨어 상에서 주소변환을 하면 너무 느리기 때문에, 하드웨어의 도움을 받아서 처리한다. (registers, TLB, page-table)</p>
+
+<p>하지만 실제로 주소공간은 가상적인 메모리이고, 물리메모리의 매핑되는 경우 가상메모리의 크기를 벗어나면 다른 프로세스 메모리에 접근할 수 있으므로 <code class="language-plaintext highlighter-rouge">Base and Bound Register</code>을 통해, 현재 접근하는 메모리의 주소를 계산해서 적법한 메모리 접근인지 판단한 후 실행한다.
+ <img src="https://imgur.com/4OWSQgO.jpg" alt="bbregister" /></p>
+
+<p>이러한 방법을 사용하면, <code class="language-plaintext highlighter-rouge">External fragmentation(외부 단편화)'</code>가 발생하게 되는데,</p>
+
+<p><img src="https://imgur.com/S7t1ZmY.jpg" alt="ext" /></p>
+
+<ul>
+  <li>외부 단편화란
+다음과 같이 프로세스의 크기가 제각각 다른데, 필요한 부분마다 할당되고 해제되다보니 마지막 부분의 남는 공간을 더하면 <code class="language-plaintext highlighter-rouge">Process 11</code>을 메모리공간에 할당할 수 있으나, 각각의 공간은 새로운 프로세스를 로드하기에 너무 공간이 작아, <code class="language-plaintext highlighter-rouge">Process 11</code>을 메모리에 올리지 못한다.</li>
+</ul>
+
+<p>이에 대한 해결책으로 <code class="language-plaintext highlighter-rouge">Segmentation</code>을 사용하게 되는데, 프로세스의 메모리에는 <code class="language-plaintext highlighter-rouge">Code, Stack, Data Heap</code>이 있으므로 영역마다 나눠서 따로 메모리에 올리고, 각각의 <code class="language-plaintext highlighter-rouge">Base and Bound register</code>을 이용하여 위의 방법처럼 처리를 할 수있다. 하지만 여전히 외부단편화 문제가 발생하란, 이 영역을 압축시키는 <code class="language-plaintext highlighter-rouge">Compaction</code>은 비용이 너무 크다.(프로세스를 멈추고, data를 어딘가에 복사해두고 segment register값들을 새로운 주소로 바꾼다)</p>
+
+<p>또한 Heap영역같이 동적으로 변하는 메모리에는 실제 사용하는 메모리보다 더 많은 메모리를 할당해야 하는데 이런 경우에
+ <code class="language-plaintext highlighter-rouge">Internal framgentation(내부 단편화)</code>가 발생한다.</p>
+
+<ul>
+  <li>내부 단편화란
+ 할당받은 공간에 비해 사용중인 공간의 크기가 작다면, 그 차이만큼은 노는공간(의미없는 공간)이 되고, 낭비하는 공간이 된다. 
+ ex) 4096KB만큼의 주소공간을 할당받은 프로세스의 실제 사용하는 주소공간이 10KB일 경우 4086KB는 사용하지 않아 낭비된다.</li>
+</ul>
+
+<p>이러한 문제점들을 해결하기 위해 실행되는 프로세스 공간만 나누는게 아니라, 실제 물리메모리를 일정한 크기로 자르는 방법인 <code class="language-plaintext highlighter-rouge">Paging</code>이 제안된다.</p>
+
+<p>프로세스를 일정한 크기인 <code class="language-plaintext highlighter-rouge">page</code>라는 고정된 크기로 자르고, 물리메모리도 동일한 <code class="language-plaintext highlighter-rouge">page</code>단위로 자른다.
+이러면 두개의 메모리 크기가 동일하기 때문에 각 주소공간의 페이지번호와 물리메모리의 페이지번호를 <code class="language-plaintext highlighter-rouge">Page table</code>을 통해 매핑시켜주는 방법이 <code class="language-plaintext highlighter-rouge">Paging</code>이다. 이런 방법을 사용하면 쉽게 메모리 관리를 할 수 있고, 힙과 스택이 어디로 자라는지 등의 상세내용을 알 필요가 없다.
+<img src="https://imgur.com/ambhRkE.jpg" alt="addr_translate" /></p>
+
+<p>이러한 매핑 작업을 하는 페이지 테이블도 물리메모리에 존재하게 되는데, 먼저 페이지테이블을 보고 실제 물리페이지의 주소를 알 수 있기때문에 느리다는 단점이 존재한다.
+따라서 하드웨어 캐시를 이용하여, 페이지 주소변환을 빠르게 수행한다.
+<img src="https://imgur.com/iB52STm.jpg" alt="tlb" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#os" class="page__taxonomy-item p-category" rel="tag">OS</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cs" class="page__taxonomy-item p-category" rel="tag">cs</a><span class="sep">, </span>
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">til</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-05-02">May 2, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Memory%20%2Ftil%2Fcs%2F%25EB%25A9%2594%25EB%25AA%25A8%25EB%25A6%25AC%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Ftil%2Fcs%2F%25EB%25A9%2594%25EB%25AA%25A8%25EB%25A6%25AC%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Ftil%2Fcs%2F%25EB%25A9%2594%25EB%25AA%25A8%25EB%25A6%25AC%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/cs/%EB%8D%B0%EB%93%9C%EB%9D%BD/" class="pagination--pager" title="Dealock
+">이전</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/%EB%8D%B0%EB%93%9C%EB%9D%BD/" rel="permalink">Dealock
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">데드락
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/race_condition_%EC%84%B8%EB%A7%88%ED%8F%AC%EC%96%B4_%EB%AE%A4%ED%85%8D%EC%8A%A4/" rel="permalink">Race Condition &amp; Mutex, Semaphore
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Race condition, Semaphore, Mutex
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/" rel="permalink">Operating System
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">운영체제
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/ipc/" rel="permalink">IPC(Inter process communication)
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">IPC (Inter Process Communication)
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 조성진. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'noel7781/noel7781.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>
