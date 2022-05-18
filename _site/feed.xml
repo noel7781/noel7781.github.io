@@ -5,9 +5,264 @@
     <description>Archive</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 04 May 2022 20:34:37 +0900</pubDate>
-    <lastBuildDate>Wed, 04 May 2022 20:34:37 +0900</lastBuildDate>
+    <pubDate>Wed, 18 May 2022 21:49:18 +0900</pubDate>
+    <lastBuildDate>Wed, 18 May 2022 21:49:18 +0900</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>서브넷</title>
+        <description>&lt;h1 id=&quot;서브넷&quot;&gt;서브넷&lt;/h1&gt;
+
+&lt;p&gt;서브넷은 네트워크를 논리적으로 분할한 것으로, 21세기에 가까워질수록 IPv4 주소의 고갈이 현실화되었고 각국의 NIC(Network Information Center)에서는 이를 최대한 늦추기 위하여 각 라우터가 브로드캐스팅하는 로컬 네트워크 영역에 공인 IP 대역을 호스트가 필요한 만큼만 할당하려는 노력을 하였다.&lt;/p&gt;
+
+&lt;p&gt;이러한 NIC 기관의 요구에 맞춰서 IETF에서는 로컬 네트워크 내부에서 접속한 호스트의 IP 대역을 외부 네트워크와 명확하게 구분할 수 있는 수단을 표준화하였고 이것이 서브넷 마스크(Subnet Mask)다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;서브넷-마스크&quot;&gt;서브넷 마스크&lt;/h2&gt;
+
+&lt;p&gt;서브넷은 IP주소로 네트워크 영역을 부분적으로 나눈 부분 네트워크를 말하며, 서브넷을 만들때 사용하는것이 서브넷 마스크이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ex) 192.168.122.0을 2진수로 바꾸면 11000000 10101000 01111010 00000101이다. 여기서 Class구별법이나 CIDR을 사용하여 bitwise AND 계산을 한 부분이 network address, 그 뒷부분이 host address이다.&lt;/code&gt;&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;class&lt;/th&gt;
+      &lt;th&gt;범위&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;A&lt;/td&gt;
+      &lt;td&gt;0.0.0.0 ~ 127.255.255.255&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;B&lt;/td&gt;
+      &lt;td&gt;128.0.0.0 ~ 191.255.255.255&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;C&lt;/td&gt;
+      &lt;td&gt;192.0.0.0 ~ 223.255.255.255&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;D&lt;/td&gt;
+      &lt;td&gt;224.0.0.0 ~ 239.255.255.255&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;E&lt;/td&gt;
+      &lt;td&gt;240.0.0.0 ~ 255.255.255.255&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;D,E클래스는 멀티클래스 용도로 사용되는 IP주소이며 실제 IP주소가 할당되지 않는다.&lt;/p&gt;
+
+&lt;p&gt;이외에도 특별한 역할을 하는 IP들이 있다.
+|IP|역할|
+|–|—|
+|0.0.0.0|네트워크 시작주소|
+|255.255.255.255|브로드캐스트 주소|
+|127.0.0.1|Loop back 주소|&lt;/p&gt;
+
+&lt;p&gt;하지만 이런식으로 class별로 IP를 할당하니, A, B클래스는 IP의 주소가 너무 많이 남고, 효율적으로 사용하지 못하는 문제가 발생하였다. 그래서, 기존의 클래스형식이 아디라 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CIDR&lt;/code&gt;로 클래스를 더 잘게 나눠 사용하여 IP를 조금더 효율적으로 배분하게 되었다.&lt;/p&gt;
+
+&lt;p&gt;CIDR은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt;로 표시를 하며 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt;뒤의 숫자가 서브넷 마스크의 2진수로 표현시 1의 개수이다.&lt;/p&gt;
+
+&lt;p&gt;만약 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A.B.C.D/26&lt;/code&gt;이라는 IP를 가지는 네트워크의 호스트 수는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2^(32-26) = 64&lt;/code&gt;개의 호스트를 가질 수 있다.&lt;/p&gt;
+
+&lt;p&gt;기존에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A클래스&lt;/code&gt;라고 하면 하나의 네트워크에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2^24 = 16777216&lt;/code&gt;이라는 엄청난 수의 호스트가 사용할 수 있었고, 사용하지 않으면 다 낭비되는 IP주소가 될 수 있었는데, CIDR를 사용하여 IP주소의 네트워크 영역, 호스트영역을 유연하게 나누어 사용하고 있다.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 18 May 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/%EC%84%9C%EB%B8%8C%EB%84%B7/</link>
+        <guid isPermaLink="true">/til/cs/%EC%84%9C%EB%B8%8C%EB%84%B7/</guid>
+        
+        <category>Network</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
+    
+      <item>
+        <title>OSI 7계층</title>
+        <description>&lt;h1 id=&quot;osi-7계층&quot;&gt;OSI 7계층&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;네트워크-역사-간단-요약&quot;&gt;네트워크 역사 간단 요약&lt;/h2&gt;
+
+&lt;p&gt;현대의 인터넷은 다른사람과의 의사소통이 발전된 형태이다.
+지금의 랩탑과 핸드폰과 달리 이전에는 컴퓨팅 머신의 크기가 매우 컸고, 특별한 환경을 요구했는데, 오퍼레이터가 관리할 수 있는 특별한 장소에 둬야 했다.
+근거리의 컴퓨터와 통신을 가능하게 해준 기술이 가장 유명한 것중 하나인 Ethernet 이다.
+1969년 ARPANET설립 (세계 최초의 패킷 스위칭 네트워크, 현재 인터넷의 원형)
+1973년도에 표준화된 프로토콜 정립.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;7계층&quot;&gt;7계층&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://imgur.com/OyDl8wI.jpg&quot; alt=&quot;osi&quot; /&gt;
+다음 그림과 같은 7개의 계층으로 되어있다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;물리계층&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;데이터링크층&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;네트워크층&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;전송계층&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;세션계층&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;표현계층&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;응용계층&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;각 계층에서의 예시와 전송되는 단위와 프로토콜을 나타내는 표를 보면 다음과 같다.
+&lt;img src=&quot;https://imgur.com/4UGWqyd.jpg&quot; alt=&quot;osi7&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;물리-계층&quot;&gt;물리 계층&lt;/h3&gt;
+&lt;p&gt;물리 계층(Physical Layer, 1계층)은 OSI 모델의 맨 밑에 있는 계층으로서, 네트워크 데이터가 전송되는 물리적인 매체이다. 데이터는 0과 1의 비트열로 ON, OFF의 전기적 신호 상태로 이루어져 있다. 이 계층은 전압, 허브, 네트워크 어댑터, 중계기 및 케이블 사양을 비롯해 사용된 모든 하드웨어의 물리적 및 전기적 특성을 정의한다. 물리 계층은 연결을 설정 및 종료하고 통신 자원을 공유하는 수단을 제공하며 디지털에서 아날로그로 또는 그 반대로 신호를 변환하는 역할을 한다. OSI 모델에서 가장 복잡한 계층으로 간주된다.&lt;/p&gt;
+
+&lt;h3 id=&quot;데이터링크-계층&quot;&gt;데이터링크 계층&lt;/h3&gt;
+&lt;p&gt;데이터링크 계층(DataLink Layer, 2계층)은 물리적인 네트워크를 통해 데이터를 전송하는 수단을 제공한다. 1홉 통신을 담당한다고도 말한다. 홉(hop)은 컴퓨터 네트워크에서 노드에서 다음 노드로 가는 경로를 말한다. 1홉 통신이면 한 라우터에서 그다음 라우터까지의 경로를 말한다. 주목적은 물리적인 장치를 식별하는 데 사용할 수 있는 주소 지정 체계를 제공하는 것이다. 데이터 링크 계층은 포인트 투 포인트 간의 신뢰성 있는 전송을 보장하기 위한 계층으로 CRC 기반의 오류 제어와 흐름 제어가 필요하다. 네트워크 위의 개체들 간 데이터를 전달하고 물리 계층에서 발생할 수 있는 오류를 찾아내고 수정하는 데 필요한 기능적, 절차적 수단을 제공한다. 이 계층의 예시를 들자면 브리지 및 스위치 그리고 이더넷 등이 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;네트워크-계층&quot;&gt;네트워크 계층&lt;/h3&gt;
+&lt;p&gt;네트워크 계층(Network Layer, 3계층)에서는 2홉 이상의 통신(멀티 홉 통신)을 담당한다. OSI 7 계층에서 가장 복잡한 계층 중 하나로서 실제 네트워크 간에 데이터 라우팅을 담당한다. 이때 라우팅이란 어떤 네트워크 안에서 통신 데이터를 짜여진 알고리즘에 의해 최대한 빠르게 보낼 최적의 경로를 선택하는 과정을 라우팅이라고 한다. 네트워크 계층은 네트워크 호스트의 논리 주소 지정(ex : ip 주소 사용)을 확인한다. 또한 데이터 스트림을 더 작은 단위로 분할하고 경우에 따라 오류를 감지해 처리한다. 그리고 여러 개의 노드를 거칠 때마다 경로를 찾아주는 역할을 하는 계층으로서 다양한 길이의 데이터를 네트워크들을 통해 전달하고 그 과정에서 전송 계층이 요구하는 서비스 품질을 제공하기 위한 기능적, 절차적 수단을 제공한다. 네트워크 계층은 라우팅, 흐름 제어, 세그멘테이션, 오류제어, 인터네트워킹 등을 수행한다. 라우터가 3계층에서 동작하고, 3계층에서 동작하는 스위치도 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;전송-계층&quot;&gt;전송 계층&lt;/h3&gt;
+&lt;p&gt;전송 계층(Transport Layer, 4계층)의 주목적은 하위 계층에 신뢰할 수 있는 데이터 전송 서비스를 제공하는 것이다. 컴퓨터와 컴퓨터 간에 신뢰성 있는 데이터를 서로 주고받을 수 있도록 해주어 상위 계층들이 데이터 전달의 유효성이나 효율성을 생각하지 않도록 부담을 덜어주는데, 이때 시퀀스 넘버 기반의 오류 제어 방식을 사용한다. 흐름 제어, 분할/분리 및 오류 제어를 통해 전송 계층은 데이터가 오류 없이 점-대-점으로 전달되게 하는데 신뢰할 수 있는 데이터 전송을 보장하는 것은 매우 번거롭기에 OSI 모델은 전체 계층을 사용한다. 전송 계층은 연결형 프로토콜과 비 연결형 프로토콜을 모두 사용한다. 전송 계층의 예로는 특정 방화벽이나 프록시 서버가 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;세션-계층&quot;&gt;세션 계층&lt;/h3&gt;
+&lt;p&gt;세션 계층(Session Layer, 5계층)에서는 두 컴퓨터 간의 대화나 세션을 관리하며, 포트(Port)연결이라고도 한다. 모든 통신 장치 간에 연결을 설정하고 관리 및 종료하고 또한 연결이 전이중(Full duplex / 양방향)인지 반이중(half duplex / 단방향)인지 여부를 확인하고 체크 포인팅과 유휴, 재시작 과정 등을 수행하며 호스트가 갑자기 중지되지 않고 정상적으로 호스트를 연결하는 데 책임이 있다. 즉 이 계층에서는 TCP/IP 세션을 만들고 없애고 통신하는 사용자들을 동기화하고 오류 복구 명령들을 일괄적으로 다루며 통신을 하기 위한 세션을 확립, 유지, 중단하는 작업을 수행한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;표현-계층&quot;&gt;표현 계층&lt;/h3&gt;
+&lt;p&gt;표현 계층(Presentation Layer, 6계층)에서는 응용 계층으로부터 전달받은 데이터를 읽을 수 있는 형식으로 변환하는데 표현 계층은 응용 계층의 부담을 덜어주는 역할이 되기도 한다. 응용 계층으로부터 전송받거나 응용 계층으로 전달해야 할 데이터의 인코딩과 디코딩이 이 계층에서 이루어진다. 그리고 표현 계층은 데이터를 안전하게 사용하기 위해서 암호화와 복호화를 하는데 이 작업도 표현 계층에서 이루어진다. 예를 들면 유니코드(UTF-8)로 인코딩 되어있는 문서를 ASCII로 인코딩 된 문서로 변환하려 할 때 이 계층에서 변환이 이루어진다.&lt;/p&gt;
+
+&lt;h3 id=&quot;응용-계층&quot;&gt;응용 계층&lt;/h3&gt;
+&lt;p&gt;응용 계층(Application Layer, 7계층)에서는 OSI 7계층 모델에서 최상위 계층으로 사용자가 네트워크 자원에 접근하는 방법을 제공한다. 그리고 계층 7은 최종적으로 사용자가 볼 수 있는 유일한 계층으로 모든 네트워크 활동의 기반이 되는 인터페이스를 제공하는데, 즉 사용자가 실행하는 응용 프로그램들이 계층 7에 속한다고 보면 된다. 예를 들면 가상 터미널인 텔넷(telnet), 구글의 크롬(chrome), 이메일(전자우편), 데이터베이스 관리 등의 서비스를 제공한다. 사용자와 가장 가까운 계층이다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;tcpip-4계층&quot;&gt;TCP/IP 4계층&lt;/h2&gt;
+
+&lt;p&gt;수많은 프로그램들이 인터넷으로 통신하는데 기반이 되는 프로토콜이다. 아파넷(ARPANET)이 개발되고 인터넷이 발전해나가는 과정에서 대부분의 데이터 통신이 TCP와 IP 기반으로 이루어졌기 때문에 다양한 프로토콜이 개발된 시점에서도 사실상 인터넷 프로토콜을 대표하는 용어로 사용 중이다. 이를 이용해서 컴퓨터를 연결하는 체계를 이더넷(Ethernet)이라고 부른다. TCP/IP 4 계층의 목적은 인터넷에 연결된 서로 다른 기종의 컴퓨터들이 데이터를 주고받을 수 있도록 하는 인터넷 표준 프로토콜을 만드는 것에 있다. 또한, OSI 참조 모델을 기반으로 상업적이고 실무적으로 이용될 수 있도록 단순화된 현실화의 과정에서 채택된 모형이다. 응용 계층(Application Layer), 전송 계층(Transport Layer), 인터넷 계층(Internet Layer), 네트워크 액세스 계층(Network Access Area Layer)으로 구성되어 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://imgur.com/prjjKGp.jpg&quot; alt=&quot;tcp/ip&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Reference
+http://wiki.hash.kr/index.php/OSI_7_계층
+https://www.ahnlab.com/kr/site/securityinfo/secunews/secuNewsView.do?curPage=80&amp;amp;seq=7026&lt;/p&gt;
+</description>
+        <pubDate>Tue, 17 May 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/OSI-7%EA%B3%84%EC%B8%B5/</link>
+        <guid isPermaLink="true">/til/cs/OSI-7%EA%B3%84%EC%B8%B5/</guid>
+        
+        <category>Network</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
+    
+      <item>
+        <title>Page replacement policy</title>
+        <description>&lt;h1 id=&quot;page-replacement-policy&quot;&gt;Page Replacement Policy&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;가상 메모리 관리 측면에서 보면 비어 있는 메모리가 많을수록 작업이 간단하다. 하지만 빈 메모리 공간이 거의 없게되면, 운영체제는 memory pressure을 해소하기 위해 다른 페이지들을 강제적으로 paging out하여 활발히 사용중인 페이지들을 위한 공간을 확보한다.
+ 내보낼 페이지의 선택은 운영체제의 교체정책(&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;replacement policy&lt;/code&gt;)을 따르게 된다.
+ 과거의 시스템들은 물리 메모리의 크기가 작았기 때문에 초기 가상 메모리 시스템의 가장 중요한 역할 중 하나가 바로 이 교체 정책이었다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;내보낼 페이지를 어떻게 결정하는가&lt;/strong&gt; 를 정해야한다.&lt;/p&gt;
+
+&lt;p&gt;시스템의 전체 페이지들 중 일부분만이 메인 메모리에 유지된다는 것을 가정하면, 메인 메모리는 시스템의 가상 메모리 페이지를 가져다 놓기 위한 캐시로 생각될 수 있고, 캐시를 위한 교체 정책의 목표는 캐시 미스를 최소화 하는 것이다. 즉, 캐시 히트의 비율을 최대한 늘리는 것이다.&lt;/p&gt;
+
+&lt;p&gt;캐시 히트와 미스의 횟수을 안다면 프로그램의 평균 메모리 접근 시간을 계산할 수 있다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMAT, average memory access time&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AMAT = (P_hit * T_M) + (P_miss * T_D)&lt;/code&gt;
+ 여기서 T_M은 메모리 접근 비용을 나타내고, T_D는 디스크 접근 비용, P_hit은 캐시에서 데이터 항목을 찾을 확률을 말하며 P_miss는 데이터를 못찾을(미스) 확률을 말한다. P_miss + P_hit = 1.0을 만족한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;cache-miss&quot;&gt;Cache miss&lt;/h2&gt;
+
+&lt;p&gt;잠깐 캐시미스가 일어나는 3가지 경우를 보자면&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Cold miss(= compulsory miss)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Capacity miss&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Conflict miss&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;로 3C라고 불리는데, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cold miss&lt;/code&gt;는 데이터에 처음 접근할때, 아직 데이터에 접근하지 않았으므로 cold상태라서 cache miss가 발생하는 경우를 말한다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;capacity miss&lt;/code&gt;는 캐시메모리의 용량이 꽉차고 나면 기존의 캐시메모리에 있는 값을 지우고 새로 캐싱해야하는 경우를 말한다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Conflict miss&lt;/code&gt;는 cache메모리 설계에 따라 빠르게 해시값으로 저장되거나 불러올 주소를 정해 값을 불러오고자 할때, 캐시메모리 상에는 공간이 남을 수 있어도 그 자리의 값을 지우고 다시 쓰는 경우를 말한다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;## Replacement Policy&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;### Optimial Replacement Policy&lt;/p&gt;
+
+&lt;p&gt;이론적으로 캐시미스를 가장 최소화하는 방법으로, 가장 나중에 접근될 페이지를 교체하는 것이 최적이며, 가장 적은 회수의 미스를 발생시킨다는 방법을 말한다.
+ 말만 들어도 가장 좋은 방법임이 분명하나, 불행하게도 일반적으로 미래를 알 수 없기 때문에 최적 기법의 구현은 불가능하다. 
+ 따라서 다른 교체정책의 목표는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Optimal Replacement Policy&lt;/code&gt;에 근접할수록 좋은 방법이라고 할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;### FIFO&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FIFO&lt;/code&gt;는 잘 알다시피 먼저 들어온 것이 먼저 나간다는 선입선출 교체방식으로, 구현하기 매우 쉽다는 장점을 가지고 있다. 하지만 실제로 사용할 경우 최적의 경우와 비교하여 눈에띄게 성능이 좋지 않다고 한다.&lt;/p&gt;
+
+&lt;p&gt;### Random&lt;/p&gt;
+
+&lt;p&gt;또다른 교체 방법으론 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Random&lt;/code&gt;하게 페이지를 교체하는 방법이다. FIFO와 마찬가지로 구현하기는 쉽지만 내보낼 블럭을 제대로 선택하려는 노력을 하지 않는다. 수천번 수행하여 확인한 결과로 FIFO보다는 약간 더 좋은 성능을 보이며 최적의 방법보다는 약간 나쁜 성능을 보인다고 한다. 랜덤이기 때문에 더 좋을때도 있고 더 나쁠때도 있다.&lt;/p&gt;
+
+&lt;p&gt;### LRU &amp;amp; LFU&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LRU&lt;/code&gt;란 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Least recently used&lt;/code&gt;의 약자이고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;LFU&lt;/code&gt;란 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Least frequently used&lt;/code&gt;로, 프로세스 스케쥴링 할때 사용했던 아이디어를 사용한다. 우선 미래를 알 수 없는건 어떤 교체정책이나 같은데, 미래에 대한 예측을 위해 과거의 정보를 활용하는 것이다. 그리고 이 정책의 가정은 어떤 프로그램이 가까운 과거에 한 페이지를 접근했다면 가까운 미래에 같은 페이지를 다시 접근할 확률이 높다고 가정한다. 이와 유사한 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MRU(Most Recently Used)&lt;/code&gt;방식, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MFU(Most Frequently Used)&lt;/code&gt;방식도 존재하지만 페이지 교체 정책상에서 사용했을때 이러한  정책들은 잘 동작하지 않는다고 한다. 왜냐하면 대부분의 프로그램들에서 관찰되는 지역성 접근 특성을 사용하지 않고 오히려 무시하기 때문이다.&lt;/p&gt;
+
+&lt;p&gt;여기서 지역성이란 2가지 종류를 말하는데, 
+ 첫번째는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;공간지역성(spatial locality)&lt;/code&gt;이고 다른 하나는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;시간 지역성(temporal locality)&lt;/code&gt;이다. 공간 지역성이란 어떤 페이지 P가 접근되었다면 그 페이지 주변의 페이지(P-1 or P+1)이 참조되는 경향이 있다는 것을 말한다. 시간 지역성이란 가까운 과거에 참조되었던 페이지는 가까운 미래에 다시 접근되는 경향이 있다는 것을 말한다. 어떠한 종류의 캐시든 설계할 때 지역성을 고려하는 것이 좋다.&lt;/p&gt;
+
+&lt;p&gt;마지막으로 80대 20 워크로드의 성능평과 결과 그래프와 함께 글을 마친다. 80대 20 워크로드는 20% 페이지들에서 80%의 참조(인기 페이지)가 발생하고, 나머지 80%의 페이지에서 20%의 참조만(비인기 페이지) 발생하는 경우이다.
+ &lt;img src=&quot;https://imgur.com/gJp1m3b.jpg&quot; alt=&quot;80-20&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 13 May 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/%ED%8E%98%EC%9D%B4%EC%A7%80%EA%B5%90%EC%B2%B4%EC%A0%95%EC%B1%85/</link>
+        <guid isPermaLink="true">/til/cs/%ED%8E%98%EC%9D%B4%EC%A7%80%EA%B5%90%EC%B2%B4%EC%A0%95%EC%B1%85/</guid>
+        
+        <category>OS</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
     
       <item>
         <title>Memory</title>

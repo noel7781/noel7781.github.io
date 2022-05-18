@@ -1,4 +1,76 @@
-I"�$
+I"3
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/til/cs/%EC%84%9C%EB%B8%8C%EB%84%B7/">서브넷</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.05.18
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#cs" class="page__taxonomy-item-category" rel="tag">CS </a><span class="sep"> </span>--><!-- <a href="/categories/#til" class="page__taxonomy-item-category" rel="tag">TIL </a>-->
+                    
+                    
+                    <a href="/tags/#network" class="page__taxonomy-item-tag" rel="tag">Network</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/til/cs/OSI-7%EA%B3%84%EC%B8%B5/">OSI 7계층</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.05.17
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#cs" class="page__taxonomy-item-category" rel="tag">CS </a><span class="sep"> </span>--><!-- <a href="/categories/#til" class="page__taxonomy-item-category" rel="tag">TIL </a>-->
+                    
+                    
+                    <a href="/tags/#network" class="page__taxonomy-item-tag" rel="tag">Network</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/til/cs/%ED%8E%98%EC%9D%B4%EC%A7%80%EA%B5%90%EC%B2%B4%EC%A0%95%EC%B1%85/">Page replacement policy</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.05.13
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#cs" class="page__taxonomy-item-category" rel="tag">CS </a><span class="sep"> </span>--><!-- <a href="/categories/#til" class="page__taxonomy-item-category" rel="tag">TIL </a>-->
+                    
+                    
+                    <a href="/tags/#os" class="page__taxonomy-item-tag" rel="tag">OS</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+
 <div class="list__item">
     <article class="archive-item">
         <div>
@@ -231,6 +303,30 @@
                     
                     
                     <a href="/tags/#docker" class="page__taxonomy-item-tag" rel="tag">docker</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/til/hello/">블로그 업로드 테스트</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.03.22
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#til" class="page__taxonomy-item-category" rel="tag">TIL </a>-->
+                    
+                    
+                    <a href="/tags/#new" class="page__taxonomy-item-tag" rel="tag">new</a>
                 
             </span>
         </span>

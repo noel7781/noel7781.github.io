@@ -1,0 +1,62 @@
+I"\<h1 id="서브넷">서브넷</h1>
+
+<p>서브넷은 네트워크를 논리적으로 분할한 것으로, 21세기에 가까워질수록 IPv4 주소의 고갈이 현실화되었고 각국의 NIC(Network Information Center)에서는 이를 최대한 늦추기 위하여 각 라우터가 브로드캐스팅하는 로컬 네트워크 영역에 공인 IP 대역을 호스트가 필요한 만큼만 할당하려는 노력을 하였다.</p>
+
+<p>이러한 NIC 기관의 요구에 맞춰서 IETF에서는 로컬 네트워크 내부에서 접속한 호스트의 IP 대역을 외부 네트워크와 명확하게 구분할 수 있는 수단을 표준화하였고 이것이 서브넷 마스크(Subnet Mask)다.</p>
+
+<hr />
+
+<h2 id="서브넷-마스크">서브넷 마스크</h2>
+
+<p>서브넷은 IP주소로 네트워크 영역을 부분적으로 나눈 부분 네트워크를 말하며, 서브넷을 만들때 사용하는것이 서브넷 마스크이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">ex) 192.168.122.0을 2진수로 바꾸면 11000000 10101000 01111010 00000101이다. 여기서 Class구별법이나 CIDR을 사용하여 bitwise AND 계산을 한 부분이 network address, 그 뒷부분이 host address이다.</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>class</th>
+      <th>범위</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A</td>
+      <td>0.0.0.0 ~ 127.255.255.255</td>
+    </tr>
+    <tr>
+      <td>B</td>
+      <td>128.0.0.0 ~ 191.255.255.255</td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td>192.0.0.0 ~ 223.255.255.255</td>
+    </tr>
+    <tr>
+      <td>D</td>
+      <td>224.0.0.0 ~ 239.255.255.255</td>
+    </tr>
+    <tr>
+      <td>E</td>
+      <td>240.0.0.0 ~ 255.255.255.255</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>D,E클래스는 멀티클래스 용도로 사용되는 IP주소이며 실제 IP주소가 할당되지 않는다.</p>
+
+<p>이외에도 특별한 역할을 하는 IP들이 있다.
+|IP|역할|
+|–|—|
+|0.0.0.0|네트워크 시작주소|
+|255.255.255.255|브로드캐스트 주소|
+|127.0.0.1|Loop back 주소|</p>
+
+<p>하지만 이런식으로 class별로 IP를 할당하니, A, B클래스는 IP의 주소가 너무 많이 남고, 효율적으로 사용하지 못하는 문제가 발생하였다. 그래서, 기존의 클래스형식이 아디라 <code class="language-plaintext highlighter-rouge">CIDR</code>로 클래스를 더 잘게 나눠 사용하여 IP를 조금더 효율적으로 배분하게 되었다.</p>
+
+<p>CIDR은 <code class="language-plaintext highlighter-rouge">/</code>로 표시를 하며 <code class="language-plaintext highlighter-rouge">/</code>뒤의 숫자가 서브넷 마스크의 2진수로 표현시 1의 개수이다.</p>
+
+<p>만약 <code class="language-plaintext highlighter-rouge">A.B.C.D/26</code>이라는 IP를 가지는 네트워크의 호스트 수는 <code class="language-plaintext highlighter-rouge">2^(32-26) = 64</code>개의 호스트를 가질 수 있다.</p>
+
+<p>기존에는 <code class="language-plaintext highlighter-rouge">A클래스</code>라고 하면 하나의 네트워크에 <code class="language-plaintext highlighter-rouge">2^24 = 16777216</code>이라는 엄청난 수의 호스트가 사용할 수 있었고, 사용하지 않으면 다 낭비되는 IP주소가 될 수 있었는데, CIDR를 사용하여 IP주소의 네트워크 영역, 호스트영역을 유연하게 나누어 사용하고 있다.</p>
+:ET

@@ -64,4 +64,22 @@ var store = [{
         "tags": ["OS"],
         "url": "/til/cs/%EB%A9%94%EB%AA%A8%EB%A6%AC/",
         "teaser": null
+      },{
+        "title": "Page replacement policy",
+        "excerpt":"Page Replacement Policy 가상 메모리 관리 측면에서 보면 비어 있는 메모리가 많을수록 작업이 간단하다. 하지만 빈 메모리 공간이 거의 없게되면, 운영체제는 memory pressure을 해소하기 위해 다른 페이지들을 강제적으로 paging out하여 활발히 사용중인 페이지들을 위한 공간을 확보한다. 내보낼 페이지의 선택은 운영체제의 교체정책(replacement policy)을 따르게 된다. 과거의 시스템들은 물리 메모리의 크기가 작았기...","categories": ["til","cs"],
+        "tags": ["OS"],
+        "url": "/til/cs/%ED%8E%98%EC%9D%B4%EC%A7%80%EA%B5%90%EC%B2%B4%EC%A0%95%EC%B1%85/",
+        "teaser": null
+      },{
+        "title": "OSI 7계층",
+        "excerpt":"OSI 7계층 네트워크 역사 간단 요약 현대의 인터넷은 다른사람과의 의사소통이 발전된 형태이다. 지금의 랩탑과 핸드폰과 달리 이전에는 컴퓨팅 머신의 크기가 매우 컸고, 특별한 환경을 요구했는데, 오퍼레이터가 관리할 수 있는 특별한 장소에 둬야 했다. 근거리의 컴퓨터와 통신을 가능하게 해준 기술이 가장 유명한 것중 하나인 Ethernet 이다. 1969년 ARPANET설립 (세계 최초의 패킷...","categories": ["til","cs"],
+        "tags": ["Network"],
+        "url": "/til/cs/OSI-7%EA%B3%84%EC%B8%B5/",
+        "teaser": null
+      },{
+        "title": "서브넷",
+        "excerpt":"서브넷 서브넷은 네트워크를 논리적으로 분할한 것으로, 21세기에 가까워질수록 IPv4 주소의 고갈이 현실화되었고 각국의 NIC(Network Information Center)에서는 이를 최대한 늦추기 위하여 각 라우터가 브로드캐스팅하는 로컬 네트워크 영역에 공인 IP 대역을 호스트가 필요한 만큼만 할당하려는 노력을 하였다. 이러한 NIC 기관의 요구에 맞춰서 IETF에서는 로컬 네트워크 내부에서 접속한 호스트의 IP 대역을 외부 네트워크와...","categories": ["til","cs"],
+        "tags": ["Network"],
+        "url": "/til/cs/%EC%84%9C%EB%B8%8C%EB%84%B7/",
+        "teaser": null
       }]

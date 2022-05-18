@@ -1,0 +1,67 @@
+I"i<h1 id="page-replacement-policy">Page Replacement Policy</h1>
+
+<hr />
+
+<p>가상 메모리 관리 측면에서 보면 비어 있는 메모리가 많을수록 작업이 간단하다. 하지만 빈 메모리 공간이 거의 없게되면, 운영체제는 memory pressure을 해소하기 위해 다른 페이지들을 강제적으로 paging out하여 활발히 사용중인 페이지들을 위한 공간을 확보한다.
+ 내보낼 페이지의 선택은 운영체제의 교체정책(<code class="language-plaintext highlighter-rouge">replacement policy</code>)을 따르게 된다.
+ 과거의 시스템들은 물리 메모리의 크기가 작았기 때문에 초기 가상 메모리 시스템의 가장 중요한 역할 중 하나가 바로 이 교체 정책이었다.</p>
+
+<p><strong>내보낼 페이지를 어떻게 결정하는가</strong> 를 정해야한다.</p>
+
+<p>시스템의 전체 페이지들 중 일부분만이 메인 메모리에 유지된다는 것을 가정하면, 메인 메모리는 시스템의 가상 메모리 페이지를 가져다 놓기 위한 캐시로 생각될 수 있고, 캐시를 위한 교체 정책의 목표는 캐시 미스를 최소화 하는 것이다. 즉, 캐시 히트의 비율을 최대한 늘리는 것이다.</p>
+
+<p>캐시 히트와 미스의 횟수을 안다면 프로그램의 평균 메모리 접근 시간을 계산할 수 있다. <code class="language-plaintext highlighter-rouge">AMAT, average memory access time</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">AMAT = (P_hit * T_M) + (P_miss * T_D)</code>
+ 여기서 T_M은 메모리 접근 비용을 나타내고, T_D는 디스크 접근 비용, P_hit은 캐시에서 데이터 항목을 찾을 확률을 말하며 P_miss는 데이터를 못찾을(미스) 확률을 말한다. P_miss + P_hit = 1.0을 만족한다.</p>
+
+<hr />
+
+<h2 id="cache-miss">Cache miss</h2>
+
+<p>잠깐 캐시미스가 일어나는 3가지 경우를 보자면</p>
+
+<ol>
+  <li>
+    <p>Cold miss(= compulsory miss)</p>
+  </li>
+  <li>
+    <p>Capacity miss</p>
+  </li>
+  <li>
+    <p>Conflict miss</p>
+  </li>
+</ol>
+
+<p>로 3C라고 불리는데, <code class="language-plaintext highlighter-rouge">cold miss</code>는 데이터에 처음 접근할때, 아직 데이터에 접근하지 않았으므로 cold상태라서 cache miss가 발생하는 경우를 말한다. <code class="language-plaintext highlighter-rouge">capacity miss</code>는 캐시메모리의 용량이 꽉차고 나면 기존의 캐시메모리에 있는 값을 지우고 새로 캐싱해야하는 경우를 말한다. <code class="language-plaintext highlighter-rouge">Conflict miss</code>는 cache메모리 설계에 따라 빠르게 해시값으로 저장되거나 불러올 주소를 정해 값을 불러오고자 할때, 캐시메모리 상에는 공간이 남을 수 있어도 그 자리의 값을 지우고 다시 쓰는 경우를 말한다.</p>
+
+<hr />
+
+<p>## Replacement Policy</p>
+
+<hr />
+
+<p>### Optimial Replacement Policy</p>
+
+<p>이론적으로 캐시미스를 가장 최소화하는 방법으로, 가장 나중에 접근될 페이지를 교체하는 것이 최적이며, 가장 적은 회수의 미스를 발생시킨다는 방법을 말한다.
+ 말만 들어도 가장 좋은 방법임이 분명하나, 불행하게도 일반적으로 미래를 알 수 없기 때문에 최적 기법의 구현은 불가능하다. 
+ 따라서 다른 교체정책의 목표는 <code class="language-plaintext highlighter-rouge">Optimal Replacement Policy</code>에 근접할수록 좋은 방법이라고 할 수 있다.</p>
+
+<p>### FIFO</p>
+
+<p><code class="language-plaintext highlighter-rouge">FIFO</code>는 잘 알다시피 먼저 들어온 것이 먼저 나간다는 선입선출 교체방식으로, 구현하기 매우 쉽다는 장점을 가지고 있다. 하지만 실제로 사용할 경우 최적의 경우와 비교하여 눈에띄게 성능이 좋지 않다고 한다.</p>
+
+<p>### Random</p>
+
+<p>또다른 교체 방법으론 <code class="language-plaintext highlighter-rouge">Random</code>하게 페이지를 교체하는 방법이다. FIFO와 마찬가지로 구현하기는 쉽지만 내보낼 블럭을 제대로 선택하려는 노력을 하지 않는다. 수천번 수행하여 확인한 결과로 FIFO보다는 약간 더 좋은 성능을 보이며 최적의 방법보다는 약간 나쁜 성능을 보인다고 한다. 랜덤이기 때문에 더 좋을때도 있고 더 나쁠때도 있다.</p>
+
+<p>### LRU &amp; LFU</p>
+
+<p><code class="language-plaintext highlighter-rouge">LRU</code>란 <code class="language-plaintext highlighter-rouge">Least recently used</code>의 약자이고 <code class="language-plaintext highlighter-rouge">LFU</code>란 <code class="language-plaintext highlighter-rouge">Least frequently used</code>로, 프로세스 스케쥴링 할때 사용했던 아이디어를 사용한다. 우선 미래를 알 수 없는건 어떤 교체정책이나 같은데, 미래에 대한 예측을 위해 과거의 정보를 활용하는 것이다. 그리고 이 정책의 가정은 어떤 프로그램이 가까운 과거에 한 페이지를 접근했다면 가까운 미래에 같은 페이지를 다시 접근할 확률이 높다고 가정한다. 이와 유사한 <code class="language-plaintext highlighter-rouge">MRU(Most Recently Used)</code>방식, <code class="language-plaintext highlighter-rouge">MFU(Most Frequently Used)</code>방식도 존재하지만 페이지 교체 정책상에서 사용했을때 이러한  정책들은 잘 동작하지 않는다고 한다. 왜냐하면 대부분의 프로그램들에서 관찰되는 지역성 접근 특성을 사용하지 않고 오히려 무시하기 때문이다.</p>
+
+<p>여기서 지역성이란 2가지 종류를 말하는데, 
+ 첫번째는 <code class="language-plaintext highlighter-rouge">공간지역성(spatial locality)</code>이고 다른 하나는 <code class="language-plaintext highlighter-rouge">시간 지역성(temporal locality)</code>이다. 공간 지역성이란 어떤 페이지 P가 접근되었다면 그 페이지 주변의 페이지(P-1 or P+1)이 참조되는 경향이 있다는 것을 말한다. 시간 지역성이란 가까운 과거에 참조되었던 페이지는 가까운 미래에 다시 접근되는 경향이 있다는 것을 말한다. 어떠한 종류의 캐시든 설계할 때 지역성을 고려하는 것이 좋다.</p>
+
+<p>마지막으로 80대 20 워크로드의 성능평과 결과 그래프와 함께 글을 마친다. 80대 20 워크로드는 20% 페이지들에서 80%의 참조(인기 페이지)가 발생하고, 나머지 80%의 페이지에서 20%의 참조만(비인기 페이지) 발생하는 경우이다.
+ <img src="https://imgur.com/gJp1m3b.jpg" alt="80-20" /></p>
+:ET
