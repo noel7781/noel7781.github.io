@@ -82,4 +82,28 @@ var store = [{
         "tags": ["Network"],
         "url": "/til/cs/%EC%84%9C%EB%B8%8C%EB%84%B7/",
         "teaser": null
+      },{
+        "title": "TCP와 UDP",
+        "excerpt":"TCP 와 UDP TCP와 UDP는 OSI 7계층 내 전송계층 프로토콜이다. 두 프로토콜의 특징들을 알아보자. TCP TCP는 transmission control protocol로 전송을 제어하는 프로토콜이라는 의미를 가지고 있다. TCP는 IP와 함께 사용되어 연결형 서비스를 지원한다. 1대1 통신 방식이고 서로 연결된 이후 통신을 할 수 있다. 그리고 연결을 하기위해 연결수립과정에서 3 way handshake를 통해...","categories": ["til","cs"],
+        "tags": ["Network"],
+        "url": "/til/cs/TCP_UDP/",
+        "teaser": null
+      },{
+        "title": "TCP Handshake",
+        "excerpt":"TCP Hanshake TCP는 연결지향 프로토콜이다. 연결을 수립할 때 3 way handshake를 통해 연결설정을 하고 4 way handshake를 통해 연결을 끊는다. 이 두가지 연결설정과 연결해제에 대해 알아본다. 3 way handshake 클라이언트는 서버에 접속을 요청하는 SYN(seq=x) 패킷을 보낸다. 서버는 클라이언트의 요청인 SYN(seq=x)를 받고 클라이언트에게 요청을 확인했고 클라이언트 측에 확인요청을 보내는 ACK(x+1), SYN(y)이...","categories": ["til","cs"],
+        "tags": ["Network"],
+        "url": "/til/cs/TCP_handshake/",
+        "teaser": null
+      },{
+        "title": "HTTP 버전별 특징",
+        "excerpt":"HTTP의 버전별 변화 HTTP HTTP는 www에 내재된 프로토콜이다. HTTP는 처음 발명된 이후로 본래의 단순함을 지키면서 확장성 위에서 만들어지도록 많은 수정을 겪어왔다. 초기 HTTP의 발명에는 인터넷 상의 하이퍼텍스트 시스템을 만들기 위해 제안되었는데, 초기단계에 사용되던 HTTP 프로토콜은 매우 간단했으며 이후 HTTP/0.9버전으로 불리고, 원-라인 프로토콜로 불리기도 했습니다. HTTP/0.9 - 원-라인 프로토콜 HTTP 초기버전에는...","categories": ["til","cs"],
+        "tags": ["Network"],
+        "url": "/til/cs/HTTP_VERSION/",
+        "teaser": null
+      },{
+        "title": "HTTP와 HTTPS",
+        "excerpt":"HTTP and HTTPS HTTP HTTP(hyper text transfer protocol)은 서버와 클라이언트 상에서 어떻게 메시지를 교환할지를 정해놓은 규칙이다. 요청과 응답으로 구성되어 있으며 일반적으로 80포트를 사용한다. 웹브라우저 상의 맨앞에 http://, https://가 바로 이 프로토콜을 사용해서 정보를 교환하겠다는 표시이다. HTTP의 응답은 다음과 같다. GET /index.html HTTP/1.1 HOST: www.naver.com 물론 조금더 많은 내용들이 헤더에 포함된다....","categories": ["til","cs"],
+        "tags": ["Network"],
+        "url": "/til/cs/HTTP_HTTPS/",
+        "teaser": null
       }]

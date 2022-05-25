@@ -1,0 +1,940 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HTTP 버전별 특징 - noel7781</title>
+<meta name="description" content="HTTP의 버전별 변화">
+
+
+  <meta name="author" content="조성진">
+  
+  <meta property="article:author" content="조성진">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="noel7781">
+<meta property="og:title" content="HTTP 버전별 특징">
+<meta property="og:url" content="/til/cs/HTTP_VERSION/">
+
+
+  <meta property="og:description" content="HTTP의 버전별 변화">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-05-23T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-05-23T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/til/cs/HTTP_VERSION/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "조성진",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="noel7781 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}	  
+    });
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          noel7781 Archive
+          <span class="site-subtitle">공부 기록 보관소</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">연도별 포스트</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">조성진</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>졸업</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:noel7781@naver.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">18</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">프로그래밍 언어</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Problem Solving</span>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">CS</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs" class="">CS (17)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">TIL</span>
+            <ul>
+                
+                    
+                        <li><a href="/categories/today_i_learned" class="">TIL (18)</a></li>
+                    
+                
+                    
+                
+            </ul>
+      </li>
+      </li>
+  </ul>
+</nav>
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HTTP 버전별 특징">
+    <meta itemprop="description" content="HTTP의 버전별 변화">
+    <meta itemprop="datePublished" content="2022-05-23T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-05-23T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/til/cs/HTTP_VERSION/" class="u-url" itemprop="url">HTTP 버전별 특징
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#http의-버전별-변화">HTTP의 버전별 변화</a><ul><li><a href="#http">HTTP</a></li><li><a href="#http09---원-라인-프로토콜">HTTP/0.9 - 원-라인 프로토콜</a></li><li><a href="#http10---확장성-만들기">HTTP/1.0 - 확장성 만들기</a></li><li><a href="#http11---표준-프로토콜">HTTP/1.1 - 표준 프로토콜</a></li><li><a href="#http2---더-나은-성능을-위한-프로토콜">HTTP/2 - 더 나은 성능을 위한 프로토콜</a></li><li><a href="#http3---http-over-quic">HTTP/3 - HTTP over QUIC</a></li><li><a href="#reference">Reference</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="http의-버전별-변화">HTTP의 버전별 변화</h1>
+
+<hr />
+
+<h2 id="http">HTTP</h2>
+
+<p><code class="language-plaintext highlighter-rouge">HTTP</code>는 www에 내재된 프로토콜이다. HTTP는 처음 발명된 이후로 본래의 단순함을 지키면서 확장성 위에서 만들어지도록 많은 수정을 겪어왔다.</p>
+
+<p>초기 <code class="language-plaintext highlighter-rouge">HTTP</code>의 발명에는 인터넷 상의 하이퍼텍스트 시스템을 만들기 위해 제안되었는데, 초기단계에 사용되던 HTTP 프로토콜은 매우 간단했으며 이후 HTTP/0.9버전으로 불리고, 원-라인 프로토콜로 불리기도 했습니다.</p>
+
+<hr />
+
+<h2 id="http09---원-라인-프로토콜">HTTP/0.9 - 원-라인 프로토콜</h2>
+
+<p>HTTP 초기버전에는 버전 번호가 없었다. HTTP/0.9는 이후에 차후 버전과 구별하기 위해 0.9로 불리게 되었고, 이 버전은 극히 단순하다. 요청은 단일 라인으로 구성되며 리소스에 대한 경로로 가능한 메서드는 <code class="language-plaintext highlighter-rouge">GET</code>이 유일했다.</p>
+
+<pre><code class="language-HTTP">GET /mypage.html
+</code></pre>
+
+<p>응답 또한 극도로 단순한 파일 내용 자체로만 구성되었다.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;HTML&gt;</span>
+A very simple page
+<span class="nt">&lt;/HTML&gt;</span>
+</code></pre></div></div>
+
+<p>이후 버전들과 다르게 HTTP 헤더가 없었는데, 이는 HTML파일만 전송될 수 있으며 다른 유형의 문서는 전송될 수 없음을 의미했고, 상태 혹은 오류코드도 없었다. 문제가 발생한 경우 특정 html파일이 사람이 처리할 수 있도록 해당 파일 내부에 문제에 대한 설명과 함께 전송되었다.</p>
+
+<hr />
+
+<h2 id="http10---확장성-만들기">HTTP/1.0 - 확장성 만들기</h2>
+
+<p>HTTP/0.9는 매우 제한적이였어서, 브라우저와 서버 모두 융통성을 가지도록 빠르게 확장되었다.</p>
+
+<ul>
+  <li>버전 정보가 같이 전송되가 시작했다.</li>
+  <li>상태 코드 라인 또한 응답의 시작에 붙어 전송되고 브라우저가 요청에 대한 성공과 실패를 알 수 있고 결과에 대한 동작을 할 수 있게 되었다.</li>
+  <li>HTTP 헤더 개념은 요청과 응답 모두를 위해 도입되어 메타데이터 전송을 허용하고 프로토콜을 극도로 유연하고 확장 가능하도록 만들었다.</li>
+  <li>새로운 HTTP 헤더의 도움으로 HTML파일 외의 다른 문서들을 전송하는 기능이 추가되었다. (<code class="language-plaintext highlighter-rouge">Content-Type</code>)</li>
+</ul>
+
+<p>HTTP/1.0의 요청과 응답은 다음과 같이 생겼다.</p>
+
+<pre><code class="language-HTTP">GET /mypage.html HTTP/1.0
+User-Agent: NCSA_Mosaic/2.0 (Windows 3.1)
+
+200 OK
+Date: Tue, 15 Nov 1994 08:12:31 GMT
+Server: CERN/3.0 libwww/2.17
+Content-Type: text/html
+&lt;HTML&gt;
+A page with an image
+  &lt;IMG SRC="/myimage.gif"&gt;
+&lt;/HTML&gt;
+</code></pre>
+
+<pre><code class="language-HTTP">GET /myimage.gif HTTP/1.0
+User-Agent: NCSA_Mosaic/2.0 (Windows 3.1)
+
+200 OK
+Date: Tue, 15 Nov 1994 08:12:32 GMT
+Server: CERN/3.0 libwww/2.17
+Content-Type: text/gif
+(image content)
+</code></pre>
+
+<hr />
+
+<h2 id="http11---표준-프로토콜">HTTP/1.1 - 표준 프로토콜</h2>
+
+<p>HTTP의 첫번째 표준 버전인 HTTP/1.1은 HTTP/1.0이 나온지 몇 달 안되서 1997년 초에 공개되었다. 그리고 15년 넘게 확장되었다.</p>
+
+<p>HTTP/1.1은 모호함을 명확하게 하고 많은 개선사항을 도입했다.</p>
+
+<ul>
+  <li>커넥션이 재사용될 수 있게 되었다. (<code class="language-plaintext highlighter-rouge">keep-alive default</code>)</li>
+  <li>파이프라이닝을 추가하여 첫번째 요청에 대한 응답이 완전히 전송되기 이전에 두번째 요청을 가능케 하여 커뮤니케이션의 레이턴시를 낮췄다.</li>
+  <li>현재 웹 보안 모델은 HTTP가 만들어진 이후에 개발되었으므로, <code class="language-plaintext highlighter-rouge">Same origin policy</code>정책을 사용했었다. 후에 <code class="language-plaintext highlighter-rouge">CORS</code>문제를 해결하기 위해 확장을 추가하였다.</li>
+</ul>
+
+<p>다음은 하나의 단일 커넥션을 통한 요청의 전형적인 흐름 예시이다.</p>
+
+<pre><code class="language-HTTP">GET /en-US/docs/Glossary/Simple_header HTTP/1.1
+Host: developer.mozilla.org
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://developer.mozilla.org/en-US/docs/Glossary/Simple_header
+
+200 OK
+Connection: Keep-Alive
+Content-Encoding: gzip
+Content-Type: text/html; charset=utf-8
+Date: Wed, 20 Jul 2016 10:55:30 GMT
+Etag: "547fa7e369ef56031dd3bff2ace9fc0832eb251a"
+Keep-Alive: timeout=5, max=1000
+Last-Modified: Tue, 19 Jul 2016 00:59:33 GMT
+Server: Apache
+Transfer-Encoding: chunked
+Vary: Cookie, Accept-Encoding
+
+(content)
+
+
+GET /static/img/header-background.png HTTP/1.1
+Host: developer.mozilla.org
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://developer.mozilla.org/en-US/docs/Glossary/Simple_header
+
+200 OK
+Age: 9578461
+Cache-Control: public, max-age=315360000
+Connection: keep-alive
+Content-Length: 3077
+Content-Type: image/png
+Date: Thu, 31 Mar 2016 13:34:46 GMT
+Last-Modified: Wed, 21 Oct 2015 18:27:50 GMT
+Server: Apache
+
+(image content of 3077 bytes)
+</code></pre>
+
+<hr />
+
+<h2 id="http2---더-나은-성능을-위한-프로토콜">HTTP/2 - 더 나은 성능을 위한 프로토콜</h2>
+
+<p>시간이 지나면서 웹 페이지는 매우 복잡해졌다. 디스플레이 되는 시각적 미디어의 양에 덧붙여 상호작용을 추가하기 위한 스크립트의 양과 크기가 점점 많아지고, 더 많은 데이터들이 더 많은 요청에 의해 전송되고 있다.
+그런데, HTTP/1.1은 올바른 순서로 전송되는 요청을 필요로 하게 되는데 이는 많은 양의 오버헤드를 발생시킨다.</p>
+
+<p>그 결과로 HTTP/2 프로토콜이 만들어지는데, HTTP/1.1과 다른 몇가지 근본적인 차이점이 있다.</p>
+
+<ul>
+  <li>
+    <p>HTTP/2는 텍스트 프로토콜이라기 보다는 이진 프로토콜이다. 더이상 읽을 수도 없고 수작업을 만들어낼 수 없다. 이러한 결점에 대한 보상으로 새로운 최적화 기술이 구현될 수 있다고 한다.</p>
+  </li>
+  <li>
+    <p>병렬 요청이 동일한 커넥션 상에서 다루어질 수 있는 다중화 프로토콜로, 순서를 제거해주고 HTTP/1.x 프로토콜의 제약사항을 막아준다.</p>
+  </li>
+  <li>
+    <p>전송된 데이터의 분명한 중복과 그런 데이터로부터 유발된 불필요한 오버헤드를 제거하면서, 연속된 요청 사이의 매우 유사한 내용으로 존재하는 헤더들을 압축시킨다.</p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="http3---http-over-quic">HTTP/3 - HTTP over QUIC</h2>
+
+<p>HTTP의 다음 메이저 버전인 HTTP/3에서는 전송 계층 부분에 TCP/TLS 대신 QUIC가 사용된다. 모든 웹브라우저에서 구현되지 않았고 브라우저 호환성을 확인해야한다.</p>
+
+<p>Quick UDP Internet Connection 또는 QUIC은 UDP 상에 구현된 실험적인 다중 전송 프로토콜로 TCP 및 웹 애플리케이션 전송을 개선하기 위한 방법을 위해 Google에서 실험적으로 개발한 프로토콜이다.</p>
+
+<p>TCP는 많은 운영 체제 커널에 내장되어 있기 때문에 변경사항을 실험하고 수정을 구현하는 것에 시간이 많이드는 과정이기에, QUIC을 만들어 개발자는 더 빠르게 실험을 할 수 있고, 새로운 것을 시도할 수 있게 되었습니다.</p>
+
+<p>QUIC은 HTTP/2의 의미론적 지원을 위해 설계되었습니다. 멀티플랙싱, 흐름 제어, 보안 및 혼잡 제어를 제공해줍니다.</p>
+
+<p>QUIC의 중요한 기능은 다음과 같다.</p>
+
+<ul>
+  <li>연결 설정 시간 단축</li>
+  <li>혼잡 제어 개선</li>
+  <li>Head of Line Blocking 없는 멀티플렉싱</li>
+  <li>전달 오류 수정</li>
+  <li>연결 마이그레이션</li>
+</ul>
+
+<p>현재 QUIC를 지원하는 브라우저와 서버는 그리 많지 않다.</p>
+
+<hr />
+
+<h2 id="reference">Reference</h2>
+<p>https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP</p>
+
+<p>https://developer.mozilla.org/ko/docs/Glossary/QUIC</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#network" class="page__taxonomy-item p-category" rel="tag">Network</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cs" class="page__taxonomy-item p-category" rel="tag">cs</a><span class="sep">, </span>
+    
+      <a href="/categories/#til" class="page__taxonomy-item p-category" rel="tag">til</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-05-23">May 23, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=HTTP+%EB%B2%84%EC%A0%84%EB%B3%84+%ED%8A%B9%EC%A7%95%20%2Ftil%2Fcs%2FHTTP_VERSION%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Ftil%2Fcs%2FHTTP_VERSION%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Ftil%2Fcs%2FHTTP_VERSION%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/til/cs/TCP_handshake/" class="pagination--pager" title="TCP Handshake
+">이전</a>
+    
+    
+      <a href="/til/cs/HTTP_HTTPS/" class="pagination--pager" title="HTTP와 HTTPS
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/HTTP_HTTPS/" rel="permalink">HTTP와 HTTPS
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">HTTP and HTTPS
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/TCP_handshake/" rel="permalink">TCP Handshake
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">TCP Hanshake
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/TCP_UDP/" rel="permalink">TCP와 UDP
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          최대 1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">TCP 와 UDP
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/til/cs/%EC%84%9C%EB%B8%8C%EB%84%B7/" rel="permalink">서브넷
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          1 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">서브넷
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 조성진. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'noel7781/noel7781.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

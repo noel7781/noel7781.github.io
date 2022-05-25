@@ -5,9 +5,447 @@
     <description>Archive</description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 18 May 2022 21:49:18 +0900</pubDate>
-    <lastBuildDate>Wed, 18 May 2022 21:49:18 +0900</lastBuildDate>
+    <pubDate>Wed, 25 May 2022 11:25:45 +0900</pubDate>
+    <lastBuildDate>Wed, 25 May 2022 11:25:45 +0900</lastBuildDate>
     <generator>Jekyll v4.2.0</generator>
+    
+      <item>
+        <title>HTTP와 HTTPS</title>
+        <description>&lt;h1 id=&quot;http-and-https&quot;&gt;HTTP and HTTPS&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;http&quot;&gt;HTTP&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTP(hyper text transfer protocol)&lt;/code&gt;은 서버와 클라이언트 상에서 어떻게 메시지를 교환할지를 정해놓은 규칙이다. 요청과 응답으로 구성되어 있으며 일반적으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;80&lt;/code&gt;포트를 사용한다.&lt;/p&gt;
+
+&lt;p&gt;웹브라우저 상의 맨앞에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://&lt;/code&gt;가 바로 이 프로토콜을 사용해서 정보를 교환하겠다는 표시이다.&lt;/p&gt;
+
+&lt;p&gt;HTTP의 응답은 다음과 같다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-HTTP&quot;&gt;GET /index.html HTTP/1.1
+HOST: www.naver.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;물론 조금더 많은 내용들이 헤더에 포함된다.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-HTTP&quot;&gt;:authority: www.naver.com
+:method: GET
+:path: /
+:scheme: https
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+accept-encoding: gzip, deflate, br
+accept-language: ko-KR,ko;q=0.9
+cookie: NNB=IYCMYUICU6FWE
+sec-ch-ua: &quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Chromium&quot;;v=&quot;101&quot;, &quot;Google Chrome&quot;;v=&quot;101&quot;
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: &quot;macOS&quot;
+sec-fetch-dest: document
+sec-fetch-mode: navigate
+sec-fetch-site: none
+sec-fetch-user: ?1
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.64 Safari/537.36
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;이런 HTTP 프로토콜은 애플리케이션 프로토콜로 OSI 7계층의 마지막 프로토콜로, IP/TCP계층 위에 존재한다. 하지만 HTTP는 암호화되지 않은 평문 데이터를 전송하는 프로토콜이였기 때문에, HTTP를 통해 내가 보낸 데이터의 도/감청이 가능하고 제3자가 임의로 수정해서 나에게 보내줘도 이것이 위조되었는지 알수있는 방법이 없다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;https&quot;&gt;HTTPS&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTPS(hyper text transfer protocol secure)&lt;/code&gt;는 http에 데이터 암호화가 추가된 프로토콜이다. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTPS&lt;/code&gt;는 포트번호 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;443&lt;/code&gt;을 사용하게 된다.&lt;/p&gt;
+
+&lt;p&gt;HTTPS는 데이터를 암호화하여 보안을 챙기는데, 대칭키 암호화와 비대칭키 암호화 두가지를 다 사용한다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;대칭키 암호화
+    &lt;ul&gt;
+      &lt;li&gt;클라이언트와 서버가 동일한 키를 통해 암호화/복호화&lt;/li&gt;
+      &lt;li&gt;계산속도가 엄청 빠름&lt;/li&gt;
+      &lt;li&gt;동일한 키 나눠갖을 방법이 필요&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;비대칭키 암호화
+    &lt;ul&gt;
+      &lt;li&gt;클라이언트와 서버가 각각 공개키와 비밀키를 가지고 암호화/ 복호화 진행&lt;/li&gt;
+      &lt;li&gt;비밀키를 뺏기면 보안에 문제가 생기지만 그외의 경우에 보안이 좋음(계산 엄청 오래걸림)&lt;/li&gt;
+      &lt;li&gt;대칭키 암호화에 비해 속도가 느림&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://imgur.com/zXHA53R.jpg&quot; alt=&quot;비대칭&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;HTTPS는 대칭키 암호화방식과 비대칭키 암호화 방식을 모두 사용하여 서로의 장점을 이용하는 프로토콜이다. 대칭키 알고리즘은 빠르지만 키를 나눠가지는 과정에서 도청당하여 키를 뺏길 우려가 있다. 비대칭키 알고리즘은 그부분에서는 안전하지만 속도가 느리다. 따라서 대칭키를 공유하는 과정을 비대칭키 암호화를 통해 나눠가지는 방법을 택한다.&lt;/p&gt;
+
+&lt;p&gt;실제 HTTPS 연결 과정이 성립되는 흐름을 살펴보자.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;클라이언트(브라우저)가 서버로 최초 연결을 시도함&lt;/li&gt;
+  &lt;li&gt;서버는 공개키(인증서)를 브라우저에게 보낸다.&lt;/li&gt;
+  &lt;li&gt;브라우저는 인증서의 유효성을 검사하고 세션키를 발급한다.&lt;/li&gt;
+  &lt;li&gt;브라우저는 세션키를 보관하며 추가로 서버의 공개키를 세션키로 암호화하여 서버로 전송한다.&lt;/li&gt;
+  &lt;li&gt;서버는 개인키로 암호화된 세션키를 복호화하여 세션키를 얻는다.&lt;/li&gt;
+  &lt;li&gt;클라이언트와 서버는 동일한 세션키를 공유하므로 데이터를 전달할 때 세션키(대칭키)로 암호화/복호화 할 수 있다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이 과정을 보면 중간에 인증서를 사용하게 되는데, 서버가 비대칭키를 발급받는 과정에서, 서버는 클라이언트와 세션키를 공유하기 위한 공개키를 생성해야 하는데 일반적으로 인증된 기관(CA)에 공개키를 전송하여 인증서를 발급받는다.&lt;/p&gt;
+
+&lt;p&gt;인증서는 CA의 개인키로 암호화 되었기 때문에 신뢰성을 확보할 수 있고 클라이언트는 기업의 공개키로 데이터를 암호화 하였기 때문에 해당 공개키의 쌍을 가진 기업만 비밀키로 복호화 하여 원본 데이터를 얻을 수 있다. 여기서 인증서에는 기업의 공개키가 포함되어 있다.&lt;/p&gt;
+
+&lt;p&gt;만약 브라우저에 인증된 CA기관 정보들이 사전에 등록되어 있는 인증된 CA기관이 아닐경우 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;NOT SECURE&lt;/code&gt;라는 형태로 브라우저에 표시된다.&lt;/p&gt;
+
+&lt;p&gt;과거에는 HTTPS를 사용하면 속도가 느려졌다고 하지만 오늘날에는 크게 차이가 없다고 한다.
+하지만 HTTPS는 인증서를 발급하고 유지하기 위한 추가 비용이 발생한다.&lt;/p&gt;
+
+&lt;p&gt;보안을 중요하다면 당연히 HTTPS를 사용하는게 좋을것이다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;p&gt;https://mangkyu.tistory.com/98&lt;/p&gt;
+</description>
+        <pubDate>Tue, 24 May 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/HTTP_HTTPS/</link>
+        <guid isPermaLink="true">/til/cs/HTTP_HTTPS/</guid>
+        
+        <category>Network</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
+    
+      <item>
+        <title>HTTP 버전별 특징</title>
+        <description>&lt;h1 id=&quot;http의-버전별-변화&quot;&gt;HTTP의 버전별 변화&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;http&quot;&gt;HTTP&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTP&lt;/code&gt;는 www에 내재된 프로토콜이다. HTTP는 처음 발명된 이후로 본래의 단순함을 지키면서 확장성 위에서 만들어지도록 많은 수정을 겪어왔다.&lt;/p&gt;
+
+&lt;p&gt;초기 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTP&lt;/code&gt;의 발명에는 인터넷 상의 하이퍼텍스트 시스템을 만들기 위해 제안되었는데, 초기단계에 사용되던 HTTP 프로토콜은 매우 간단했으며 이후 HTTP/0.9버전으로 불리고, 원-라인 프로토콜로 불리기도 했습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;http09---원-라인-프로토콜&quot;&gt;HTTP/0.9 - 원-라인 프로토콜&lt;/h2&gt;
+
+&lt;p&gt;HTTP 초기버전에는 버전 번호가 없었다. HTTP/0.9는 이후에 차후 버전과 구별하기 위해 0.9로 불리게 되었고, 이 버전은 극히 단순하다. 요청은 단일 라인으로 구성되며 리소스에 대한 경로로 가능한 메서드는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GET&lt;/code&gt;이 유일했다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-HTTP&quot;&gt;GET /mypage.html
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;응답 또한 극도로 단순한 파일 내용 자체로만 구성되었다.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;HTML&amp;gt;&lt;/span&gt;
+A very simple page
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/HTML&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이후 버전들과 다르게 HTTP 헤더가 없었는데, 이는 HTML파일만 전송될 수 있으며 다른 유형의 문서는 전송될 수 없음을 의미했고, 상태 혹은 오류코드도 없었다. 문제가 발생한 경우 특정 html파일이 사람이 처리할 수 있도록 해당 파일 내부에 문제에 대한 설명과 함께 전송되었다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;http10---확장성-만들기&quot;&gt;HTTP/1.0 - 확장성 만들기&lt;/h2&gt;
+
+&lt;p&gt;HTTP/0.9는 매우 제한적이였어서, 브라우저와 서버 모두 융통성을 가지도록 빠르게 확장되었다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;버전 정보가 같이 전송되가 시작했다.&lt;/li&gt;
+  &lt;li&gt;상태 코드 라인 또한 응답의 시작에 붙어 전송되고 브라우저가 요청에 대한 성공과 실패를 알 수 있고 결과에 대한 동작을 할 수 있게 되었다.&lt;/li&gt;
+  &lt;li&gt;HTTP 헤더 개념은 요청과 응답 모두를 위해 도입되어 메타데이터 전송을 허용하고 프로토콜을 극도로 유연하고 확장 가능하도록 만들었다.&lt;/li&gt;
+  &lt;li&gt;새로운 HTTP 헤더의 도움으로 HTML파일 외의 다른 문서들을 전송하는 기능이 추가되었다. (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Content-Type&lt;/code&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;HTTP/1.0의 요청과 응답은 다음과 같이 생겼다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-HTTP&quot;&gt;GET /mypage.html HTTP/1.0
+User-Agent: NCSA_Mosaic/2.0 (Windows 3.1)
+
+200 OK
+Date: Tue, 15 Nov 1994 08:12:31 GMT
+Server: CERN/3.0 libwww/2.17
+Content-Type: text/html
+&amp;lt;HTML&amp;gt;
+A page with an image
+  &amp;lt;IMG SRC=&quot;/myimage.gif&quot;&amp;gt;
+&amp;lt;/HTML&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-HTTP&quot;&gt;GET /myimage.gif HTTP/1.0
+User-Agent: NCSA_Mosaic/2.0 (Windows 3.1)
+
+200 OK
+Date: Tue, 15 Nov 1994 08:12:32 GMT
+Server: CERN/3.0 libwww/2.17
+Content-Type: text/gif
+(image content)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;http11---표준-프로토콜&quot;&gt;HTTP/1.1 - 표준 프로토콜&lt;/h2&gt;
+
+&lt;p&gt;HTTP의 첫번째 표준 버전인 HTTP/1.1은 HTTP/1.0이 나온지 몇 달 안되서 1997년 초에 공개되었다. 그리고 15년 넘게 확장되었다.&lt;/p&gt;
+
+&lt;p&gt;HTTP/1.1은 모호함을 명확하게 하고 많은 개선사항을 도입했다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;커넥션이 재사용될 수 있게 되었다. (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;keep-alive default&lt;/code&gt;)&lt;/li&gt;
+  &lt;li&gt;파이프라이닝을 추가하여 첫번째 요청에 대한 응답이 완전히 전송되기 이전에 두번째 요청을 가능케 하여 커뮤니케이션의 레이턴시를 낮췄다.&lt;/li&gt;
+  &lt;li&gt;현재 웹 보안 모델은 HTTP가 만들어진 이후에 개발되었으므로, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Same origin policy&lt;/code&gt;정책을 사용했었다. 후에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CORS&lt;/code&gt;문제를 해결하기 위해 확장을 추가하였다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;다음은 하나의 단일 커넥션을 통한 요청의 전형적인 흐름 예시이다.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-HTTP&quot;&gt;GET /en-US/docs/Glossary/Simple_header HTTP/1.1
+Host: developer.mozilla.org
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://developer.mozilla.org/en-US/docs/Glossary/Simple_header
+
+200 OK
+Connection: Keep-Alive
+Content-Encoding: gzip
+Content-Type: text/html; charset=utf-8
+Date: Wed, 20 Jul 2016 10:55:30 GMT
+Etag: &quot;547fa7e369ef56031dd3bff2ace9fc0832eb251a&quot;
+Keep-Alive: timeout=5, max=1000
+Last-Modified: Tue, 19 Jul 2016 00:59:33 GMT
+Server: Apache
+Transfer-Encoding: chunked
+Vary: Cookie, Accept-Encoding
+
+(content)
+
+
+GET /static/img/header-background.png HTTP/1.1
+Host: developer.mozilla.org
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://developer.mozilla.org/en-US/docs/Glossary/Simple_header
+
+200 OK
+Age: 9578461
+Cache-Control: public, max-age=315360000
+Connection: keep-alive
+Content-Length: 3077
+Content-Type: image/png
+Date: Thu, 31 Mar 2016 13:34:46 GMT
+Last-Modified: Wed, 21 Oct 2015 18:27:50 GMT
+Server: Apache
+
+(image content of 3077 bytes)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;http2---더-나은-성능을-위한-프로토콜&quot;&gt;HTTP/2 - 더 나은 성능을 위한 프로토콜&lt;/h2&gt;
+
+&lt;p&gt;시간이 지나면서 웹 페이지는 매우 복잡해졌다. 디스플레이 되는 시각적 미디어의 양에 덧붙여 상호작용을 추가하기 위한 스크립트의 양과 크기가 점점 많아지고, 더 많은 데이터들이 더 많은 요청에 의해 전송되고 있다.
+그런데, HTTP/1.1은 올바른 순서로 전송되는 요청을 필요로 하게 되는데 이는 많은 양의 오버헤드를 발생시킨다.&lt;/p&gt;
+
+&lt;p&gt;그 결과로 HTTP/2 프로토콜이 만들어지는데, HTTP/1.1과 다른 몇가지 근본적인 차이점이 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;HTTP/2는 텍스트 프로토콜이라기 보다는 이진 프로토콜이다. 더이상 읽을 수도 없고 수작업을 만들어낼 수 없다. 이러한 결점에 대한 보상으로 새로운 최적화 기술이 구현될 수 있다고 한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;병렬 요청이 동일한 커넥션 상에서 다루어질 수 있는 다중화 프로토콜로, 순서를 제거해주고 HTTP/1.x 프로토콜의 제약사항을 막아준다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;전송된 데이터의 분명한 중복과 그런 데이터로부터 유발된 불필요한 오버헤드를 제거하면서, 연속된 요청 사이의 매우 유사한 내용으로 존재하는 헤더들을 압축시킨다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;http3---http-over-quic&quot;&gt;HTTP/3 - HTTP over QUIC&lt;/h2&gt;
+
+&lt;p&gt;HTTP의 다음 메이저 버전인 HTTP/3에서는 전송 계층 부분에 TCP/TLS 대신 QUIC가 사용된다. 모든 웹브라우저에서 구현되지 않았고 브라우저 호환성을 확인해야한다.&lt;/p&gt;
+
+&lt;p&gt;Quick UDP Internet Connection 또는 QUIC은 UDP 상에 구현된 실험적인 다중 전송 프로토콜로 TCP 및 웹 애플리케이션 전송을 개선하기 위한 방법을 위해 Google에서 실험적으로 개발한 프로토콜이다.&lt;/p&gt;
+
+&lt;p&gt;TCP는 많은 운영 체제 커널에 내장되어 있기 때문에 변경사항을 실험하고 수정을 구현하는 것에 시간이 많이드는 과정이기에, QUIC을 만들어 개발자는 더 빠르게 실험을 할 수 있고, 새로운 것을 시도할 수 있게 되었습니다.&lt;/p&gt;
+
+&lt;p&gt;QUIC은 HTTP/2의 의미론적 지원을 위해 설계되었습니다. 멀티플랙싱, 흐름 제어, 보안 및 혼잡 제어를 제공해줍니다.&lt;/p&gt;
+
+&lt;p&gt;QUIC의 중요한 기능은 다음과 같다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;연결 설정 시간 단축&lt;/li&gt;
+  &lt;li&gt;혼잡 제어 개선&lt;/li&gt;
+  &lt;li&gt;Head of Line Blocking 없는 멀티플렉싱&lt;/li&gt;
+  &lt;li&gt;전달 오류 수정&lt;/li&gt;
+  &lt;li&gt;연결 마이그레이션&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;현재 QUIC를 지원하는 브라우저와 서버는 그리 많지 않다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;p&gt;https://developer.mozilla.org/ko/docs/Web/HTTP/Basics_of_HTTP/Evolution_of_HTTP&lt;/p&gt;
+
+&lt;p&gt;https://developer.mozilla.org/ko/docs/Glossary/QUIC&lt;/p&gt;
+</description>
+        <pubDate>Mon, 23 May 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/HTTP_VERSION/</link>
+        <guid isPermaLink="true">/til/cs/HTTP_VERSION/</guid>
+        
+        <category>Network</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
+    
+      <item>
+        <title>TCP Handshake</title>
+        <description>&lt;h1 id=&quot;tcp-hanshake&quot;&gt;TCP Hanshake&lt;/h1&gt;
+
+&lt;p&gt;TCP는 연결지향 프로토콜이다.
+연결을 수립할 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3 way handshake&lt;/code&gt;를 통해 연결설정을 하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4 way handshake&lt;/code&gt;를 통해 연결을 끊는다.&lt;/p&gt;
+
+&lt;p&gt;이 두가지 연결설정과 연결해제에 대해 알아본다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;3-way-handshake&quot;&gt;3 way handshake&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://imgur.com/VtbzBPF.jpg&quot; alt=&quot;3way&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;클라이언트는 서버에 접속을 요청하는 SYN(seq=x) 패킷을 보낸다.&lt;/li&gt;
+  &lt;li&gt;서버는 클라이언트의 요청인 SYN(seq=x)를 받고 클라이언트에게 요청을 확인했고 클라이언트 측에 확인요청을 보내는 ACK(x+1), SYN(y)이 설정된 패킷을 보낸다.&lt;/li&gt;
+  &lt;li&gt;클라이언트는 서버의 SYN패킷에 대한 응답으로 ACK(y+1)를 서버로 보내게 된다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이렇게 3번의 패킷 교환을 통해 연결을 하겠다는 클라이언트와 서버 간의 통신이 이뤄지고, 이후 통신이 진행된다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;4-way-handshake&quot;&gt;4 way handshake&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://imgur.com/kxhktnP.jpg&quot; alt=&quot;4way&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;클라이언트가 연결이 더이상 필요 없을때 연결을 종료하겠다는 FIN 패킷을 서버에 전송한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;서버는 클라이언트의 FIN 패킷을 받고 확인 메시지로 ACK패킷을 전송한다. 그리고 통신이 끝날때까지 기다리는데 이 상태를 CLOSE_WAIT이라고 한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;서버에서 연결을 종료할 준비가 되면 연결해지를 위해 클라이언트에게 FIN 패킷을 전송한다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;클라이언트는 FIN 패킷을 확인했다는 ACK 패킷을 서버에 보낸다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;이후 클라이언트의 ACK를 받은 서버는 소켓을 닫고, 클라이언트는 서버로부터 아직 받지 못한 데이터가 있을것을 대비하여 일정시간 세션을 남겨놓고 잉여 패킷을 기다리는 과정을 거친다. (TIME_WAIT) 서버에서 전송한 패킷이 지연으로 FIN패킷보다 늦게 도착하는 상황이 있을수 있기 때문이다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;sequence-number&quot;&gt;Sequence Number&lt;/h3&gt;
+
+&lt;p&gt;클라이언트와 서버가 통신할 때 SYN패킷에는 Sequence number을 사용하는데, 가장 처음 sequence number을 ISN이라고 한다. 이때 ISN은 0부터 시작하는것이 아니라 랜덤한 수로 시작하게 되는데, 그 이유는 연결을 맺을 때 사용되는 포트는 유한 범위 내에서 사용되고 시간이 지나면 재사용된다. 그래서 통신 과정에서 과거에 사용된 포트번호 쌍을 사용하게 되는 경우가 발생할 수 있는데 서버에서 SYN패킷의 sequence number을 확인했을때 순차적인 수가 전송되면 이전의 연결에서 오는 패킷으로 인식할 수도 있기 때문에, ISN을 랜덤하게 시작한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://blog.kakaocdn.net/dn/cuyGD3/btqwOmkFcPl/C1kwYqOkqQeSdbDaplBDdK/img.png&quot; alt=&quot;seq&quot; /&gt;
+출처: https://nogan.tistory.com/22&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;REFERENCE&lt;/h2&gt;
+&lt;p&gt;https://gyoogle.dev/blog/computer-science/network/TCP%203%20way%20handshake%20&amp;amp;%204%20way%20handshake.html&lt;/p&gt;
+
+&lt;p&gt;https://www.geeksforgeeks.org/tcp-connection-termination/&lt;/p&gt;
+
+&lt;p&gt;https://nogan.tistory.com/22&lt;/p&gt;
+</description>
+        <pubDate>Sat, 21 May 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/TCP_handshake/</link>
+        <guid isPermaLink="true">/til/cs/TCP_handshake/</guid>
+        
+        <category>Network</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
+    
+      <item>
+        <title>TCP와 UDP</title>
+        <description>&lt;h1 id=&quot;tcp-와-udp&quot;&gt;TCP 와 UDP&lt;/h1&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TCP&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UDP&lt;/code&gt;는 OSI 7계층 내 전송계층 프로토콜이다. 두 프로토콜의 특징들을 알아보자.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;tcp&quot;&gt;TCP&lt;/h2&gt;
+
+&lt;p&gt;TCP는 transmission control protocol로 전송을 제어하는 프로토콜이라는 의미를 가지고 있다. TCP는 IP와 함께 사용되어 연결형 서비스를 지원한다.&lt;/p&gt;
+
+&lt;p&gt;1대1 통신 방식이고 서로 연결된 이후 통신을 할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;그리고 연결을 하기위해 연결수립과정에서 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3 way handshake&lt;/code&gt;를 통해 연결을 설정하고 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;4 way handshake&lt;/code&gt;를 통해 연결을 해제한다.&lt;/p&gt;
+
+&lt;p&gt;프로토콜 내에 흐름제어 및 혼잡제어 방식이 있고 높은 신뢰성을 보장한다.&lt;/p&gt;
+
+&lt;p&gt;하지만 이러한 많은 추가적인 기능 때문에 UDP보다 속도가 느리다.&lt;/p&gt;
+
+&lt;p&gt;그래서 TCP는 연속성보다 신뢰성있는 전송이 중요할 때에 사용되는 프로토콜로 파일전송과 같은 경우에 사용할 수 있다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;udp&quot;&gt;UDP&lt;/h2&gt;
+
+&lt;p&gt;UDP는 User Datagram Protocol로 TCP의 전송단위인 패킷과는 다른 Datagram이라는 단위로 데이터를 전송하게 된다. TCP와 다르게 비녕결형 프로토콜이다.&lt;/p&gt;
+
+&lt;p&gt;정보를 주고 받을때 정보를 보내거나 받는다는 신호절차를 거치지 않고, 오류제어는 checksum 비트로 선택적으로 할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;여러 제어기능이 존재하지 않기 때문에 신뢰성이 낮지만 속도가 빠르다. 따라서 신뢰성보다 연속성이 중요한 서비스에 사용된다.(스트리밍, 음성 등)&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;tcp와-udp의-비교&quot;&gt;TCP와 UDP의 비교&lt;/h2&gt;
+
+&lt;p&gt;표로 보기좋게 정리된 자료가 있어서 Reference에서 가져왔다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://imgur.com/GSPZosC.jpg&quot; alt=&quot;tcp_udp&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+
+&lt;p&gt;https://mangkyu.tistory.com/15&lt;/p&gt;
+</description>
+        <pubDate>Thu, 19 May 2022 00:00:00 +0900</pubDate>
+        <link>/til/cs/TCP_UDP/</link>
+        <guid isPermaLink="true">/til/cs/TCP_UDP/</guid>
+        
+        <category>Network</category>
+        
+        
+        <category>til</category>
+        
+        <category>cs</category>
+        
+      </item>
     
       <item>
         <title>서브넷</title>
