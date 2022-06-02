@@ -1,0 +1,81 @@
+I"<h1 id="포워딩과-리다이렉트">포워딩과 리다이렉트</h1>
+
+<p>포워딩(Forwarding)과 리다이렉트(Redirect)는 현재 작업하는 웹페이지에서 다른 페이지로 이동하는 방법의 종류로 다른 방식으로 동작하게 된다.</p>
+
+<p>두 방식의 차이점을 간단히 알아본다.</p>
+
+<hr />
+
+<h2 id="포워딩">포워딩</h2>
+
+<ul>
+  <li>
+    <p>웹 컨테이터(Web Container) 차원에서 페이지 이동을 의미한다.</p>
+  </li>
+  <li>
+    <p>동일 웹 컨테이너에서 관리하는 페이지로만 이동이 가능하다.</p>
+  </li>
+  <li>
+    <p>웹 브라우저의 URL 정보는 변경되지 않으므로 클라이언트는 다른 페이지로 이동했는지 알 수 없다.</p>
+  </li>
+  <li>
+    <p>포워딩은 클라이언트와 통신 없이 서버에서만 처리되며 리다이렉트보다 나은 성능을 보여준다.</p>
+  </li>
+  <li>
+    <p>현재 페이지와 포워딩에 의해 호출된 페이지는 Request와 Response 객체를 공유한다.</p>
+  </li>
+</ul>
+
+<p><img src="https://imgur.com/7dLuiz9.jpg" alt="fw" />
+https://vividev.tistory.com/47
+—</p>
+
+<h2 id="리다이렉트">리다이렉트</h2>
+
+<ul>
+  <li>
+    <p>웹 브라우저에게 다른 페이지로 이동하라고 명령한다.</p>
+  </li>
+  <li>
+    <p>해당 명령에 브라우저가 웹 컨테이너의 응답을 받은 후 다시 요청을 보내는 경우 새로운 URL을 포함한다.</p>
+  </li>
+  <li>
+    <p>다른 웹 컨테이너의 페이지로 이동이 가능하다.</p>
+  </li>
+  <li>
+    <p>웹 컨테이너에서는 Request와 Response 객체가 새롭게 생성된다.</p>
+  </li>
+  <li>
+    <p>추가적으로 발생하는 처리에 의해 포워딩보다는 느리다.</p>
+  </li>
+</ul>
+
+<p><img src="https://imgur.com/3aXYMqK.jpg" alt="rd" />
+https://vividev.tistory.com/47</p>
+
+<hr />
+
+<h2 id="spring에서의-리다이렉트--포워딩">Spring에서의 (리다이렉트 &amp; 포워딩)</h2>
+<ul>
+  <li>Controller 메소드가 실행되고 View 경로를 리턴하면 기본이 포워딩 방식이므로 글 등록 후에 목록 화면이 출력되도 브라우저의 URL은 변경되지 않는다.</li>
+</ul>
+
+<p>http://localhost:8080/BoardWeb/insertBoard.do</p>
+
+<p>따라서 포워딩이 아니라 리다이렉트를 원할 때는 ‘redirect:’ 라는 접두사를 붙여야 한다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"/insetBoard.do"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">insertBoard</span><span class="o">(</span><span class="nc">BoardVo</span> <span class="n">vo</span><span class="o">,</span> <span class="nc">BoardDAO</span> <span class="n">boardDAO</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">boardDAO</span><span class="o">.</span><span class="na">insertBoard</span><span class="o">(</span><span class="n">vo</span><span class="o">);</span>
+    <span class="k">return</span> <span class="s">"redirect:getBoardList.do"</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>위 소스는 글 등록 처리 후에 “getBoardList.do”로 리다이렉트 되어, 최종 URL은 다음처럼 변경된다.</p>
+
+<p>http://localhost:8080/BoardWeb/getBoardList.do</p>
+
+<hr />
+
+<h2 id="reference">Reference</h2>
+<p>https://choitaetae.tistory.com/92
+https://vividev.tistory.com/47</p>
+:ET
