@@ -2,6 +2,54 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
     <url>
+      <loc>/til/cs/%EC%9D%B8%EB%8D%B1%EC%8A%A4/</loc>
+      
+        <lastmod>2022-06-11T00:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>/til/cs/database%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94%EC%9D%B4%EC%9C%A0/</loc>
+      
+        <lastmod>2022-06-10T00:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
+      <loc>/til/cs/%EC%84%B8%EC%85%98%EA%B3%BC%EC%BF%A0%ED%82%A4/</loc>
+      
+        <lastmod>2022-06-07T00:00:00+09:00</lastmod>
+      
+
+      
+        <changefreq>weekly</changefreq>
+      
+
+      
+          <priority>0.5</priority>
+      
+
+    </url>
+  
+    <url>
       <loc>/til/cs/%EC%95%94%ED%98%B8%ED%99%94_%EB%8C%80%EC%B9%AD%ED%82%A4_%EB%B9%84%EB%8C%80%EC%B9%AD%ED%82%A4/</loc>
       
         <lastmod>2022-06-02T00:00:00+09:00</lastmod>
