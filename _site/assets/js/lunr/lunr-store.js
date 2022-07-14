@@ -148,4 +148,16 @@ var store = [{
         "tags": ["DB"],
         "url": "/til/cs/%EC%9D%B8%EB%8D%B1%EC%8A%A4/",
         "teaser": null
+      },{
+        "title": "스트래티지 패턴",
+        "excerpt":"스트래티지 패턴 스트래티지 패턴(Strategy Pattern)은 목적을 달성하기 위해 일을 수행하는 방식, 비즈니스 규칙, 문제를 해결하는 알고리즘을 쉽게 바꿀 수 있도록 해주는 디자인 패턴이다. 다음 그림은 스트래티지 패턴의 일반적인 클래스 다이어그램을 나타낸다. 여기서 보면 Strategy 클래스는 인터페이스나 추상 클래스로 외부에서 동일한 방식으로 알고리즘을 호출하는 방법을 명시한다. ConcreteStrategyA, B, C는 스트래티지 패턴에서...","categories": ["designPattern","cs"],
+        "tags": ["designPattern"],
+        "url": "/designpattern/cs/%EC%8A%A4%ED%8A%B8%EB%9E%98%ED%8B%B0%EC%A7%80-%ED%8C%A8%ED%84%B4/",
+        "teaser": null
+      },{
+        "title": "SOLID 객체지향 원칙",
+        "excerpt":"SOLID 원칙 SOLID, 객체지향 5원칙은 SRP 단일책임원칙, OCP 개방 폐쇄원칙, LSP 리스코프 치환 원칙, ISP 인터페이스 분리 원칙, DIP 의존성 역전 원칙 5가지 로 구성되어있다. 단일 책임 원칙 SRP, 단일 책임 원칙은 객체가 단 하나의 책임만 가져야 한다는 의미다. 예측하지 못한 변경사항이 발생했을때, 유연하고 확장성 있도록 시스템을 설계한다면 영향을 덜...","categories": ["designPattern","cs"],
+        "tags": ["designPattern"],
+        "url": "/designpattern/cs/SOLID/",
+        "teaser": null
       }]
