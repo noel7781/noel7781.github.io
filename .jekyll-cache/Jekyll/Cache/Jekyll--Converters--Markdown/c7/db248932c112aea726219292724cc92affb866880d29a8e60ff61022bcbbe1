@@ -1,0 +1,226 @@
+I" W<h1 id="커맨드-패턴">커맨드 패턴</h1>
+<p>커맨드 패턴은 이벤트가 발생했을 때 실행될 기능이 다양하면서도 변경이 필요한 경우에 이벤트를 발생시키는 클래스를 변경하지 않고 재사용하고자 할 때 유용하다.</p>
+
+<hr />
+
+<p>커맨드 패턴을 버튼 만들기를 통해 알아보자.</p>
+
+<p>눌리면 특정 기능을 수행하는 버튼이 있다. 버튼을 눌렀을 때 램프의 불이 켜지는 프로그램을 생각해보면 누를 <code class="language-plaintext highlighter-rouge">Button</code> 클래스, 불을 켜는 기능을 제공하는 <code class="language-plaintext highlighter-rouge">Lamp</code>클래스가 필요하다. 그리고 버튼이 눌렸을때 램프를 켜려면 <code class="language-plaintext highlighter-rouge">Button</code>클래스는 <code class="language-plaintext highlighter-rouge">Lamp</code>객체를 참조해야한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Lamp</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">turnOn</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Lamp on"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Button</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Lamp</span> <span class="n">lamp</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Button</span><span class="o">(</span><span class="nc">Lamp</span> <span class="n">lamp</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">lamp</span> <span class="o">=</span> <span class="n">lamp</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">pressed</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">lamp</span><span class="o">.</span><span class="na">turnOn</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Lamp</span> <span class="n">lamp</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Lamp</span><span class="o">();</span>
+        <span class="nc">Button</span> <span class="n">lampButton</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Button</span><span class="o">(</span><span class="n">lamp</span><span class="o">);</span>
+        <span class="n">lampButton</span><span class="o">.</span><span class="na">pressed</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>여기서 버튼을 눌렀을 때 램프가 켜지는 대신 다른 기능을 실행하려면 어떻게 해야할까? 불이 들어오는 대신 알람이 시작되게 한다거나 처음 버튼을 눌렀을 때는 램프를 켜고, 두번째 눌렀을때는 알람을 동작하게 하려면 말이다.</p>
+
+<p>램프를 켜는 대신 알람을 시작하게 하려면 우선 <code class="language-plaintext highlighter-rouge">pressed()</code> 메서드를 수정해야 한다. 
+그럼 이제 <code class="language-plaintext highlighter-rouge">Button</code>클래스는 더이상 <code class="language-plaintext highlighter-rouge">Lamp</code>객체를 가지지 않고 <code class="language-plaintext highlighter-rouge">Alarm</code>이라는 새로운 객체를 가질것이다.
+그러나, 버튼을 눌렀을 때 새로운 기능으로 변경하는 경우 메서드 전체를 변경해야 하므로 OCP를 위반하는 것이다.</p>
+
+<p>버튼을 누르는 동작에 따라 다른 기능을 실행하는 경우도 마찬가지이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="nc">Mode</span> <span class="o">{</span> <span class="no">LAMP</span><span class="o">,</span> <span class="no">ALARM</span> <span class="o">};</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Button</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Lamp</span> <span class="n">lamp</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Alarm</span> <span class="n">alarm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Mode</span> <span class="n">mode</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Button</span><span class="o">(</span><span class="nc">Lamp</span> <span class="n">lamp</span><span class="o">,</span> <span class="nc">Alarm</span> <span class="n">alarm</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">lamp</span> <span class="o">=</span> <span class="n">lamp</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">alarm</span> <span class="o">=</span> <span class="n">alarm</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMode</span><span class="o">(</span><span class="nc">Mode</span> <span class="n">mode</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">mode</span> <span class="o">=</span> <span class="n">mode</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">pressed</span><span class="o">(){</span>
+        <span class="k">switch</span><span class="o">(</span><span class="n">mode</span><span class="o">){</span>
+            <span class="k">case</span> <span class="nl">LAMP:</span>
+                <span class="n">lamp</span><span class="o">.</span><span class="na">turnOn</span><span class="o">();</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="k">case</span> <span class="nl">ALARM:</span>
+                <span class="n">alarm</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+                <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이 경우 역시 버튼을 눌렀을 때 기능을 변경하기 위해 Button 클래스의 코드를 수정했다. <code class="language-plaintext highlighter-rouge">Button</code>클래스에 새로운 기능을 추가할 때마다 매번 코드를 수정해야 한다면 이 클래스는 재사용하기 어렵다.</p>
+
+<h2 id="해결책">해결책</h2>
+<p>새로운 기능을 추가하거나 변경하더라고 <code class="language-plaintext highlighter-rouge">Button</code>클래스를 그대로 사용하려면 <code class="language-plaintext highlighter-rouge">pressed()</code> 메서드에서 구체적인 기능을 직접 구현하는 대신에, 버튼을 눌렀을 때 실행될 기능을 클래스 외부에서 제공받아 캡슐화 해 <code class="language-plaintext highlighter-rouge">pressed()</code>메서드에서 호출하는 방법을 사용할 수 있다.
+<img src="https://imgur.com/VEgo1ki.jpg" alt="diagram" /></p>
+
+<p>Button 클래스는 램프 켜기 또는 알람 동작의 기능을 수행할 때 <code class="language-plaintext highlighter-rouge">turnOn()</code> 메서드나 <code class="language-plaintext highlighter-rouge">start()</code>를 직접 호출하지 않는다. 대신 미리 약속된 <code class="language-plaintext highlighter-rouge">Command</code> 인터페이스의 <code class="language-plaintext highlighter-rouge">execute()</code>메서드를 호출한다. 그리고 Command를 implement한 클래스의 execute메서드에 램프를 키거나, 알람을 시작하는 메서드를 만든다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Command</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">execute</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AlarmOnCommand</span> <span class="kd">implements</span> <span class="nc">Command</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Alarm</span> <span class="n">alarm</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">AlarmOnCommand</span><span class="o">(</span><span class="nc">Alarm</span> <span class="n">alarm</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">alarm</span> <span class="o">=</span> <span class="n">alarm</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">alarm</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LampOnCommand</span> <span class="kd">implements</span> <span class="nc">Command</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Lamp</span> <span class="n">lamp</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">LampOnCommand</span><span class="o">(</span><span class="nc">Lamp</span> <span class="n">lamp</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">lamp</span> <span class="o">=</span> <span class="n">lamp</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">lamp</span><span class="o">.</span><span class="na">turnOn</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Alarm</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">start</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Alarming.."</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Lamp</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">turnOn</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Lamp on"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Button</span> <span class="o">{</span>
+
+
+    <span class="kd">private</span> <span class="nc">Command</span> <span class="n">command</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Button</span><span class="o">(</span><span class="nc">Command</span> <span class="n">command</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">command</span> <span class="o">=</span> <span class="n">command</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCommand</span><span class="o">(</span><span class="nc">Command</span> <span class="n">newCommand</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">command</span> <span class="o">=</span> <span class="n">newCommand</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">pressed</span><span class="o">(){</span>
+        <span class="n">command</span><span class="o">.</span><span class="na">execute</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Lamp</span> <span class="n">lamp</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Lamp</span><span class="o">();</span>
+        <span class="nc">Command</span> <span class="n">lampOnCommand</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LampOnCommand</span><span class="o">(</span><span class="n">lamp</span><span class="o">);</span>
+
+        <span class="nc">Button</span> <span class="n">button1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Button</span><span class="o">(</span><span class="n">lampOnCommand</span><span class="o">);</span>
+        <span class="n">button1</span><span class="o">.</span><span class="na">pressed</span><span class="o">();</span>
+
+        <span class="nc">Alarm</span> <span class="n">alarm</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Alarm</span><span class="o">();</span>
+        <span class="nc">Command</span> <span class="n">alarmOnCommand</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AlarmOnCommand</span><span class="o">(</span><span class="n">alarm</span><span class="o">);</span>
+
+        <span class="nc">Button</span> <span class="n">button2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Button</span><span class="o">(</span><span class="n">alarmOnCommand</span><span class="o">);</span>
+        <span class="n">button2</span><span class="o">.</span><span class="na">pressed</span><span class="o">();</span>
+
+        <span class="n">button2</span><span class="o">.</span><span class="na">setCommand</span><span class="o">(</span><span class="n">lampOnCommand</span><span class="o">);</span>
+        <span class="n">button2</span><span class="o">.</span><span class="na">pressed</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Lamp on
+Alarming..
+Lamp on
+</code></pre></div></div>
+
+<p>이렇게 버튼을 눌렀을 때 필요한 기능은 <code class="language-plaintext highlighter-rouge">Command</code>인터페이스를 구현한 클래스의 객체를 Button객체에 설정해서 실행할 수 있다. 따라서 <code class="language-plaintext highlighter-rouge">Button</code>클래스는 기능의 변화가 생겨도 소스코드를 변경하지 않으면서 다양한 동작을 구현할 수 있게 된다.</p>
+
+<p>여기서 램프의 전원을 끄는 기능을 버튼에 추가하고 싶다고 해보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LampOffCommand</span> <span class="kd">implements</span> <span class="nc">Command</span> <span class="o">{</span>
+    
+    <span class="kd">private</span> <span class="nc">Lamp</span> <span class="n">lamp</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">LampOffCommand</span><span class="o">(</span><span class="nc">Lamp</span> <span class="n">lamp</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">lamp</span> <span class="o">=</span> <span class="n">lamp</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">lamp</span><span class="o">.</span><span class="na">turnOff</span><span class="o">();</span>       
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Lamp</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">turnOn</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Lamp on"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">turnOff</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Lamp on"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Lamp</span> <span class="n">lamp</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Lamp</span><span class="o">();</span>
+        <span class="nc">Command</span> <span class="n">lampOnCommand</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LampOnCommand</span><span class="o">(</span><span class="n">lamp</span><span class="o">);</span>
+        <span class="nc">Command</span> <span class="n">lampOffCommand</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LampOffCommand</span><span class="o">(</span><span class="n">lamp</span><span class="o">);</span>
+
+        <span class="nc">Button</span> <span class="n">button1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Button</span><span class="o">(</span><span class="n">lampOnCommand</span><span class="o">);</span>
+        <span class="n">button1</span><span class="o">.</span><span class="na">pressed</span><span class="o">();</span>
+
+        <span class="n">button1</span><span class="o">.</span><span class="na">setCommand</span><span class="o">(</span><span class="n">lampOffCommand</span><span class="o">);</span>
+        <span class="n">button1</span><span class="o">.</span><span class="na">pressed</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Lamp on
+Lamp off
+</code></pre></div></div>
+
+<p>다음과 같이 기능을 추가해도 Button클래스의 변화는 하나도 없다.
+재사용을 목적을 두고 클래스를 설계한다면, 커맨드 패턴을 사용하면 좋을것 같다.</p>
+:ET

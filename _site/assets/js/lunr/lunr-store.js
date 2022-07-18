@@ -160,4 +160,22 @@ var store = [{
         "tags": ["designPattern"],
         "url": "/designpattern/cs/SOLID/",
         "teaser": null
+      },{
+        "title": "Singleton",
+        "excerpt":"싱글턴패턴 싱글턴 패턴은 하나의 인스턴스만을 만들고자 할 때 사용할 수 있는 디자인 패턴이다. 가장 간단하게 구현하자면 다음과 같이 나타낼 수 있다. public class Printer { private static Printer printer = null; private Printer() {} public static Printer getPrinter() { if(printer == null) { printer = new Printer(); } return printer;...","categories": ["designPattern","cs"],
+        "tags": ["designPattern"],
+        "url": "/designpattern/cs/Singleton/",
+        "teaser": null
+      },{
+        "title": "statePattern",
+        "excerpt":"스테이트 패턴 스테이트, 상태란 객체가 시스템에 존재하는 동안 객체가 가질수 있는 어떤 조건이나 상황을 표현한다. 형광등의 예제를 통해 스테이트 패턴을 한번 알아보자. 가장 기초적으로 형광등을 키고 끄는 행위를 상태 변화에 사용한다고 생각해보자. 이 상태를 표시하는데 상수를 사용하는것이 크게 문제가 있다고 생각되지 않을것이다. private static int ON = 0; private static...","categories": ["designPattern","cs"],
+        "tags": ["designPattern"],
+        "url": "/designpattern/cs/StatePattern/",
+        "teaser": null
+      },{
+        "title": "commandPattern",
+        "excerpt":"커맨드 패턴 커맨드 패턴은 이벤트가 발생했을 때 실행될 기능이 다양하면서도 변경이 필요한 경우에 이벤트를 발생시키는 클래스를 변경하지 않고 재사용하고자 할 때 유용하다. 커맨드 패턴을 버튼 만들기를 통해 알아보자. 눌리면 특정 기능을 수행하는 버튼이 있다. 버튼을 눌렀을 때 램프의 불이 켜지는 프로그램을 생각해보면 누를 Button 클래스, 불을 켜는 기능을 제공하는 Lamp클래스가...","categories": ["designPattern","cs"],
+        "tags": ["designPattern"],
+        "url": "/designpattern/cs/commandPattern/",
+        "teaser": null
       }]

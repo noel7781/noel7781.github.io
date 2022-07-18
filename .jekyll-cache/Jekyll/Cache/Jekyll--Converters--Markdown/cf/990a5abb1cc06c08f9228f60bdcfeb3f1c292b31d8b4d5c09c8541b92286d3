@@ -1,0 +1,121 @@
+I"4
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/designpattern/cs/commandPattern/">commandPattern</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.07.18
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#cs" class="page__taxonomy-item-category" rel="tag">CS </a><span class="sep"> </span>--><!-- <a href="/categories/#designpattern" class="page__taxonomy-item-category" rel="tag">DESIGNPATTERN </a>-->
+                    
+                    
+                    <a href="/tags/#designpattern" class="page__taxonomy-item-tag" rel="tag">designPattern</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/designpattern/cs/StatePattern/">statePattern</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.07.18
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#cs" class="page__taxonomy-item-category" rel="tag">CS </a><span class="sep"> </span>--><!-- <a href="/categories/#designpattern" class="page__taxonomy-item-category" rel="tag">DESIGNPATTERN </a>-->
+                    
+                    
+                    <a href="/tags/#designpattern" class="page__taxonomy-item-tag" rel="tag">designPattern</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/designpattern/cs/Singleton/">Singleton</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.07.18
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#cs" class="page__taxonomy-item-category" rel="tag">CS </a><span class="sep"> </span>--><!-- <a href="/categories/#designpattern" class="page__taxonomy-item-category" rel="tag">DESIGNPATTERN </a>-->
+                    
+                    
+                    <a href="/tags/#designpattern" class="page__taxonomy-item-tag" rel="tag">designPattern</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/designpattern/cs/SOLID/">SOLID 객체지향 원칙</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.07.13
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#cs" class="page__taxonomy-item-category" rel="tag">CS </a><span class="sep"> </span>--><!-- <a href="/categories/#designpattern" class="page__taxonomy-item-category" rel="tag">DESIGNPATTERN </a>-->
+                    
+                    
+                    <a href="/tags/#designpattern" class="page__taxonomy-item-tag" rel="tag">designPattern</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+
+<div class="list__item">
+    <article class="archive-item">
+        <div>
+            <span>
+              <a href="/designpattern/cs/%EC%8A%A4%ED%8A%B8%EB%9E%98%ED%8B%B0%EC%A7%80-%ED%8C%A8%ED%84%B4/">스트래티지 패턴</a>
+            </span>
+            <small> 
+              <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"> </i> 2022.07.13
+              <!--Archive page 용-: (post -> page)-->
+<!--page__taxonomy.html에서 가져 옴-->
+        
+        <span class="page__taxonomy">
+            <span itemprop="keywords"><!-- <a href="/categories/#cs" class="page__taxonomy-item-category" rel="tag">CS </a><span class="sep"> </span>--><!-- <a href="/categories/#designpattern" class="page__taxonomy-item-category" rel="tag">DESIGNPATTERN </a>-->
+                    
+                    
+                    <a href="/tags/#designpattern" class="page__taxonomy-item-tag" rel="tag">designPattern</a>
+                
+            </span>
+        </span>
+            </small>
+        </div>
+      </article>
+</div>
+:ET

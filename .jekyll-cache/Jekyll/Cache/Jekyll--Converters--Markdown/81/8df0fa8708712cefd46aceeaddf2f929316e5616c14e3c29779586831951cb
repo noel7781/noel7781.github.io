@@ -1,0 +1,182 @@
+I"gB<h1 id="싱글턴패턴">싱글턴패턴</h1>
+<p>싱글턴 패턴은 하나의 인스턴스만을 만들고자 할 때 사용할 수 있는 디자인 패턴이다.</p>
+
+<p>가장 간단하게 구현하자면 다음과 같이 나타낼 수 있다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Printer</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Printer</span> <span class="n">printer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nf">Printer</span><span class="o">()</span> <span class="o">{}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">Printer</span> <span class="nf">getPrinter</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">printer</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">printer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Printer</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">printer</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(</span><span class="nc">String</span> <span class="n">str</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>사용하는 사람에게 생성자를 사용하지 못하게  private로 선언하고, 객체 내에서 단 한번만 인스턴스를 생성하고, 생성된 인스턴스를 반환시켜주는 형태로 만들 수 있다.</p>
+
+<p>단일 스레드에서 작업할 때는 이렇게 작성해도 문제가 없다. 하지만 이렇게 하는 경우  다중 스레드에서 인스턴스가 1개이상 생성되는 경우가 있다.</p>
+
+<p>이런 race condition은 기존에 운영체제 부분에서 많이 다뤘으니 생략하는데, 이러한 경쟁조건이 생기는 경우 의도한 바와 다르게 여러 인스턴스가 생길 수 있다.</p>
+
+<p>명확하게 확인하기 위해 고의적으로 <code class="language-plaintext highlighter-rouge">print == null</code> 인 경우 1ms동안 정지하였다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Printer</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Printer</span> <span class="n">printer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nf">Printer</span><span class="o">()</span> <span class="o">{}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">Printer</span> <span class="nf">getPrinter</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">printer</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="o">}</span>
+            <span class="n">printer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Printer</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">printer</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(</span><span class="nc">String</span> <span class="n">str</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">User</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Printer</span> <span class="n">printer</span> <span class="o">=</span> <span class="nc">Printer</span><span class="o">.</span><span class="na">getPrinter</span><span class="o">();</span>
+        <span class="n">printer</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">+</span> <span class="s">" print using "</span> <span class="o">+</span> <span class="n">printer</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">+</span> <span class="s">"."</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>그러면 결과가 다음과 같이 나오게 된다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4-thread print using SingletonPattern.Printer@23ff3c92.
+3-thread print using SingletonPattern.Printer@5463113d.
+5-thread print using SingletonPattern.Printer@353fdb89.
+2-thread print using SingletonPattern.Printer@35dd8ea8.
+1-thread print using SingletonPattern.Printer@43cc9a51.
+</code></pre></div></div>
+<p>보다시피 모두 다른 객체를 생성하였다.</p>
+
+<p>지금은 아무 행동을 하지 않는 클래스라 상관 없지만, counter변수를 가지는 인스턴스일 경우 원하는대로 동작하지 않을것이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Printer</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Printer</span> <span class="n">printer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nf">Printer</span><span class="o">()</span> <span class="o">{}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">Printer</span> <span class="nf">getPrinter</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">printer</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="o">}</span>
+            <span class="n">printer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Printer</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">printer</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(</span><span class="nc">String</span> <span class="n">str</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">counter</span><span class="o">++;</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str</span><span class="o">+</span><span class="n">counter</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1-thread print using SingletonPattern.Printer@602bc562.1
+4-thread print using SingletonPattern.Printer@7927a829.1
+5-thread print using SingletonPattern.Printer@50b2315d.1
+3-thread print using SingletonPattern.Printer@65cb7916.1
+2-thread print using SingletonPattern.Printer@19ed0e49.1
+</code></pre></div></div>
+<p>실행할때마다 counter을 뒤에 출력했는데, 5를 예상하겠지만 1이 나와 버린다.</p>
+
+<h2 id="해결책">해결책</h2>
+<ul>
+  <li>정적 변수에 인스턴스를 만들어 바로 초기화하는 방법
+이 방법은 <code class="language-plaintext highlighter-rouge">printer</code>라는 정적변수에 Printer 인스턴스를 만들어 초기화 시키는 방법이다.
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Printer</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Printer</span> <span class="n">printer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Printer</span><span class="o">();</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="nf">Printer</span><span class="o">()</span> <span class="o">{}</span>
+
+  <span class="kd">public</span> <span class="kd">static</span> <span class="nc">Printer</span> <span class="nf">getPrinter</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">printer</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(</span><span class="nc">String</span> <span class="n">str</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">counter</span><span class="o">++;</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str</span><span class="o">+</span><span class="n">counter</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5-thread print using SingletonPattern.Printer@435c2b34.5
+3-thread print using SingletonPattern.Printer@435c2b34.3
+1-thread print using SingletonPattern.Printer@435c2b34.3
+2-thread print using SingletonPattern.Printer@435c2b34.4
+4-thread print using SingletonPattern.Printer@435c2b34.3
+</code></pre></div></div>
+<p>실행시키면 counter의 경합이 여전히 일어나지만 하나의 객체만 생성됨을 확인할 수 있다.</p>
+
+<ul>
+  <li>인스턴스를 만드는 메서드를 동기화시키는 방법
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Printer</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Printer</span> <span class="n">printer</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="kd">private</span> <span class="nf">Printer</span><span class="o">()</span> <span class="o">{}</span>
+
+  <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kd">static</span> <span class="nc">Printer</span> <span class="nf">getPrinter</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">if</span><span class="o">(</span><span class="n">printer</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+          <span class="n">printer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Printer</span><span class="o">();</span>
+      <span class="o">}</span>
+      <span class="k">return</span> <span class="n">printer</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(</span><span class="nc">String</span> <span class="n">str</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">counter</span><span class="o">++;</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str</span><span class="o">+</span><span class="n">counter</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5-thread print using SingletonPattern.Printer@172ae304.3
+4-thread print using SingletonPattern.Printer@172ae304.3
+1-thread print using SingletonPattern.Printer@172ae304.4
+3-thread print using SingletonPattern.Printer@172ae304.5
+2-thread print using SingletonPattern.Printer@172ae304.3
+</code></pre></div></div>
+
+<p>두번째 방법도 마찬가지로 하나의 객체만 생성됨을 알 수있다. 하지만 두 방법 모두 counter변수가 이상한데 그 이유는 counter변수에 동시접근하는 코드에서 race condition이 있기 때문이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">(</span><span class="nc">String</span> <span class="n">str</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">counter</span><span class="o">++;</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">str</span><span class="o">+</span><span class="n">counter</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>다음과 같이 수정하면 두 방법 모두 문제를 해결할 수 있다.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2-thread print using SingletonPattern.Printer@504340d1.1
+3-thread print using SingletonPattern.Printer@504340d1.2
+4-thread print using SingletonPattern.Printer@504340d1.3
+1-thread print using SingletonPattern.Printer@504340d1.4
+5-thread print using SingletonPattern.Printer@504340d1.5
+</code></pre></div></div>
+:ET
