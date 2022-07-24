@@ -1,0 +1,1164 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>observerPattern - noel7781</title>
+<meta name="description" content="옵저버 패턴">
+
+
+  <meta name="author" content="조성진">
+  
+  <meta property="article:author" content="조성진">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="noel7781">
+<meta property="og:title" content="observerPattern">
+<meta property="og:url" content="/designpattern/cs/ObserverPattern/">
+
+
+  <meta property="og:description" content="옵저버 패턴">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-07-21T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-07-21T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/designpattern/cs/ObserverPattern/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "조성진",
+      "url": "/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="noel7781 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}	  
+    });
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          noel7781 Archive
+          <span class="site-subtitle">공부 기록 보관소</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/posts/">연도별 포스트</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">조성진</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>졸업</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:noel7781@naver.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+    <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">33</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+        <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
+        <span class="nav__sub-title">프로그래밍 언어</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">Problem Solving</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        <span class="nav__sub-title">CS</span>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/cs" class="">CS (32)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/designPattern" class="">디자인 패턴 (8)</a></li>
+                    
+                
+            </ul>
+        <span class="nav__sub-title">TIL</span>
+            <ul>
+                
+                    
+                        <li><a href="/categories/today_i_learned" class="">TIL (25)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+      </li>
+  </ul>
+</nav>
+  
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="observerPattern">
+    <meta itemprop="description" content="옵저버 패턴">
+    <meta itemprop="datePublished" content="2022-07-21T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-07-21T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="/designpattern/cs/ObserverPattern/" class="u-url" itemprop="url">observerPattern
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#옵저버-패턴">옵저버 패턴</a><ul><li><a href="#문제점">문제점</a></li><li><a href="#해결책">해결책</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="옵저버-패턴">옵저버 패턴</h1>
+
+<p><em>옵서버 패턴</em>(observer pattern)은  객체의 상태 변화를 관찰하는 관찰자들, 즉 옵저버들의 목록을 객체에 등록하여 상태 변화가 있을 때마다  메서드  등을 통해 객체가 직접 목록의 각 옵저버에게 통지하도록 하는 디자인패턴 이다. 주로 분산 이벤트 핸들링 시스템을 구현하는 데 사용된다.  발행/구독 모델로 알려져 있기도 하다.
+<img src="https://commons.wikimedia.org/wiki/File:Observer.svg" alt="observer_pattern" /></p>
+
+<blockquote>
+  <p>옵저버 패턴은 데이터 패턴을 통보하는 클래스(Subject) 와 통보 받는 클래스(Observer)로 구성하는데, Subject 클래스와 Observer 인터페이스로 일반화하여 데이터 변경을 통보하는 클래스는 통보 대상 클래스나 객체에 대한 의존성을 없앨 수 있다. 결과적으로 옵저버 패턴은 통보 대상 클래스나 대상 객체의 변경에도 Concrete Subject클래스를 수정없이 그대로 사용할 수 있다.</p>
+</blockquote>
+
+<p>옵저버 패턴을 이해하기 위해 코드로 정리를 해보자.
+ScoreRecord클래스는 입력된 점수를 저장하는 클래스이고, DataSheetView는 점수를 목록의 형태로 출력하는 클래스이다. 점수가 입력되면 ScoreRecord클래스의 addScore 메서드가 실행되고 이때 성적을 출력하는데, ScoreRecord 클래스가 DataSheetView 객체를 참조해야한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataSheetView</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">viewCount</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">DataSheetView</span><span class="o">(</span><span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span><span class="o">,</span> <span class="kt">int</span> <span class="n">viewCount</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">scoreRecord</span> <span class="o">=</span> <span class="n">scoreRecord</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">viewCount</span> <span class="o">=</span> <span class="n">viewCount</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">scoreRecord</span><span class="o">.</span><span class="na">getScoreRecord</span><span class="o">();</span>
+        <span class="n">displayScores</span><span class="o">(</span><span class="n">record</span><span class="o">,</span> <span class="n">viewCount</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">displayScores</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">record</span><span class="o">,</span> <span class="kt">int</span> <span class="n">viewCount</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"List of "</span> <span class="o">+</span> <span class="n">viewCount</span> <span class="o">+</span> <span class="s">" entries: "</span><span class="o">);</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">viewCount</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">record</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">record</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">+</span> <span class="s">" "</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ScoreRecord</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">scores</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;();</span>
+    <span class="kd">private</span> <span class="nc">DataSheetView</span> <span class="n">dataSheetView</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDataSheetView</span><span class="o">(</span><span class="nc">DataSheetView</span> <span class="n">dataSheetView</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dataSheetView</span> <span class="o">=</span> <span class="n">dataSheetView</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addScore</span><span class="o">(</span><span class="kt">int</span> <span class="n">score</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">scores</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">score</span><span class="o">);</span>
+        <span class="n">dataSheetView</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getScoreRecord</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">scores</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ScoreRecord</span><span class="o">();</span>
+
+        <span class="nc">DataSheetView</span> <span class="n">dataSheetView</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataSheetView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">setDataSheetView</span><span class="o">(</span><span class="n">dataSheetView</span><span class="o">);</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="o">;</span> <span class="n">index</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">score</span> <span class="o">=</span> <span class="n">index</span> <span class="o">*</span> <span class="mi">10</span><span class="o">;</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Adding "</span> <span class="o">+</span> <span class="n">score</span><span class="o">);</span>
+
+            <span class="n">scoreRecord</span><span class="o">.</span><span class="na">addScore</span><span class="o">(</span><span class="n">score</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="문제점">문제점</h2>
+<p>통보받는 대상이 바뀌었다고 생각해보자. 더이상 점수의 리스트가 필요한것이 아니라, 입력받은 점수들 중 최댓값, 최솟값들만 필요하게 요구사항이 바뀌었다. 또는 점수의 리스트도 필요하고 최댓값, 최솟값들도 필요하도록 바뀔수도 있다.</p>
+
+<p>최댓값, 최솟값을 출력하기 위한 MinMaxView클래스가 필요할것이고, ScoreRecord에서는 더이상 DataSheetView클래스가 아닌 MinMaxView클래스에 의존하게 될것이다.</p>
+
+<p>이는 다시한번 <code class="language-plaintext highlighter-rouge">OCP</code>에 위배된다. 점수가 입력되었을때 특정 클래스에 고정적으로 통보하도록 코드가 작성되었는데, 필요한 데이터가 바뀌면서 ScoreRecord클래스의 변경이 불가피하기 때문이다.</p>
+
+<p>아래의 코드는 최댓값, 최솟값을 얻는 코드이고 ScoreRecord의 코드가 어떻게 바뀌었는지 주석을 통해 보여준다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MinMaxView</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">MinMaxView</span><span class="o">(</span><span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">scoreRecord</span> <span class="o">=</span> <span class="n">scoreRecord</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">scoreRecord</span><span class="o">.</span><span class="na">getScoreRecord</span><span class="o">();</span>
+        <span class="n">displayMinMax</span><span class="o">(</span><span class="n">record</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">displayMinMax</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">record</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">min</span> <span class="o">=</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">record</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">record</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Min: "</span> <span class="o">+</span> <span class="n">min</span> <span class="o">+</span> <span class="s">" Max: "</span> <span class="o">+</span> <span class="n">max</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ScoreRecord</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">scores</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;();</span>
+<span class="c1">//    private DataSheetView dataSheetView;</span>
+    <span class="kd">private</span> <span class="nc">MinMaxView</span> <span class="n">minMaxView</span><span class="o">;</span>
+
+<span class="c1">//    public void setDataSheetView(DataSheetView dataSheetView) {</span>
+<span class="c1">//        this.dataSheetView = dataSheetView;</span>
+<span class="c1">//    }</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setStatisticsView</span><span class="o">(</span><span class="nc">MinMaxView</span> <span class="n">minMaxView</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">minMaxView</span> <span class="o">=</span> <span class="n">minMaxView</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addScore</span><span class="o">(</span><span class="kt">int</span> <span class="n">score</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">scores</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">score</span><span class="o">);</span>
+<span class="c1">//        dataSheetView.update();</span>
+        <span class="n">minMaxView</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getScoreRecord</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">scores</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ScoreRecord</span><span class="o">();</span>
+
+        <span class="nc">MinMaxView</span> <span class="n">minMaxView</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MinMaxView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">);</span>
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">setStatisticsView</span><span class="o">(</span><span class="n">minMaxView</span><span class="o">);</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="o">;</span> <span class="n">index</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">score</span> <span class="o">=</span> <span class="n">index</span> <span class="o">*</span> <span class="mi">10</span><span class="o">;</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Adding "</span> <span class="o">+</span> <span class="n">score</span><span class="o">);</span>
+
+            <span class="n">scoreRecord</span><span class="o">.</span><span class="na">addScore</span><span class="o">(</span><span class="n">score</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>그리고 이 아래의 코드들은 최댓값, 최솟값 뿐만 아니라 데이터의 리스트도 정보의 변화를 통보받고 싶은 경우에 작성되는 코드이다. 여전히 <code class="language-plaintext highlighter-rouge">OCP</code> 를 위반하고 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ScoreRecord</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">scores</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;();</span>
+
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">DataSheetView</span><span class="o">&gt;</span> <span class="n">dataSheetViews</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="kd">private</span> <span class="nc">MinMaxView</span> <span class="n">minMaxView</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addDataSheetView</span><span class="o">(</span><span class="nc">DataSheetView</span> <span class="n">dataSheetView</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">dataSheetViews</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">dataSheetView</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setStatisticsView</span><span class="o">(</span><span class="nc">MinMaxView</span> <span class="n">minMaxView</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">minMaxView</span> <span class="o">=</span> <span class="n">minMaxView</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addScore</span><span class="o">(</span><span class="kt">int</span> <span class="n">score</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">scores</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">score</span><span class="o">);</span>
+        <span class="k">for</span><span class="o">(</span><span class="nc">DataSheetView</span> <span class="nl">dataSheetView:</span> <span class="n">dataSheetViews</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">dataSheetView</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">minMaxView</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getScoreRecord</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">scores</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ScoreRecord</span><span class="o">();</span>
+
+        <span class="nc">DataSheetView</span> <span class="n">dataSheetView3</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataSheetView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+        <span class="nc">DataSheetView</span> <span class="n">dataSheetView5</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataSheetView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+        <span class="nc">MinMaxView</span> <span class="n">minMaxView</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MinMaxView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">);</span>
+
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">addDataSheetView</span><span class="o">(</span><span class="n">dataSheetView3</span><span class="o">);</span>
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">addDataSheetView</span><span class="o">(</span><span class="n">dataSheetView5</span><span class="o">);</span>
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">setStatisticsView</span><span class="o">(</span><span class="n">minMaxView</span><span class="o">);</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="o">;</span> <span class="n">index</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">score</span> <span class="o">=</span> <span class="n">index</span> <span class="o">*</span> <span class="mi">10</span><span class="o">;</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Adding "</span> <span class="o">+</span> <span class="n">score</span><span class="o">);</span>
+
+            <span class="n">scoreRecord</span><span class="o">.</span><span class="na">addScore</span><span class="o">(</span><span class="n">score</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="해결책">해결책</h2>
+
+<p><code class="language-plaintext highlighter-rouge">OCP</code> 문제를 해결하려면 점수 변경시 통보 대상이 변경되더라도, ScoreRecord클래스를 그대로 재사용할 수 있어야 한다.
+따라서 ScoreRecord클래스에서 변화하는 부분을 찾아내어, 이를 일반화 시켜야 한다.</p>
+
+<p>ScoreRecord 클래스에서는 통보 대상인 객체를 참조하는 것을 관리해야 하며 addScore 메서드는 각 통보 대상인 객체의 update 메서드를 호출할 필요가 있다. 이런 통보 대상 객체의 관리와 각 객체의 update 메서드를 호출하는 기능은 성적 변경뿐만 아니라 임의의 데이터가 변경되었을 때 이에 관심을 가지는 모든 대상 객체에 통보하는 경우에도 동일하게 발생하는 기능이다. 따라서 이러한 공통 기능을 상위 클래스 및 인터페이스로 일반화하고 이를 활용해 ScoreRecord를 구현하는 방식으로 설계를 변경하는게 좋다.</p>
+
+<p>구현하는 방법으로는,</p>
+<ol>
+  <li>상태의 변경에 관심이 있는 대상 객체를 관리하는 기능을 구현하는 <code class="language-plaintext highlighter-rouge">Subject</code>라는 클래스를 정의한다. 이 클래스에서는 attach나 detach 메서드로 상태의 변경에 관심이 있는 객체를 추가하거나 제거할 수 있다. 위의 예시에서는 DataSheetView 클래스와 MinMaxView클래스는 성적 변경을 수신받는 클래스이므로 Observer 인터페이스를 구현해 상태 변경을 받을 수 있도록 할 수 있다.</li>
+  <li>ScoreRecord 클래스의 addScore메서드가 호출되면 자신의 점수를 저장한 후 Subject 클래스의 notifyObservers 메서드를 호출해 옵저버들에게 점수의 변경을 토옵한다. 그러면 Subject 클래스는 Observer 인터페이스를 통해 DataSheetView와 MinMaxView 객체의 update 메서드를 호출한다.</li>
+</ol>
+
+<p>즉, 변화에 관심이 있는 클래스들은 Observer 인터페이스를 구현하고, Concrete Subject의 변화가 생겼을때, Subject 클래스를 상속받은 Concrete Subject에서 변화를 통보할 수 있도록 코드를 작성할 수 있다.</p>
+
+<p>다음 코드들은 Observer와 Subject들을 설정하는 과정이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Observer</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Subject</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Observer</span><span class="o">&gt;</span> <span class="n">observers</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">attach</span><span class="o">(</span><span class="nc">Observer</span> <span class="n">observer</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">observers</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">observer</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">detach</span><span class="o">(</span><span class="nc">Observer</span> <span class="n">observer</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">observers</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">observer</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">notifyObservers</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">for</span><span class="o">(</span><span class="nc">Observer</span> <span class="nl">o:</span> <span class="n">observers</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">o</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ScoreRecord</span> <span class="kd">extends</span> <span class="nc">Subject</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">scores</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;();</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addScore</span><span class="o">(</span><span class="kt">int</span> <span class="n">score</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">scores</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">score</span><span class="o">);</span>
+        <span class="n">notifyObservers</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">getScoreRecord</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">scores</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataSheetView</span> <span class="kd">implements</span> <span class="nc">Observer</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">viewCount</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">DataSheetView</span><span class="o">(</span><span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span><span class="o">,</span> <span class="kt">int</span> <span class="n">viewCount</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">scoreRecord</span> <span class="o">=</span> <span class="n">scoreRecord</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">viewCount</span> <span class="o">=</span> <span class="n">viewCount</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">scoreRecord</span><span class="o">.</span><span class="na">getScoreRecord</span><span class="o">();</span>
+        <span class="n">displayScores</span><span class="o">(</span><span class="n">record</span><span class="o">,</span> <span class="n">viewCount</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">displayScores</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">record</span><span class="o">,</span> <span class="kt">int</span> <span class="n">viewCount</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"List of "</span> <span class="o">+</span> <span class="n">viewCount</span> <span class="o">+</span> <span class="s">" entries: "</span><span class="o">);</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">viewCount</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">record</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">record</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">+</span> <span class="s">" "</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MinMaxView</span> <span class="kd">implements</span> <span class="nc">Observer</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">MinMaxView</span><span class="o">(</span><span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">scoreRecord</span> <span class="o">=</span> <span class="n">scoreRecord</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">scoreRecord</span><span class="o">.</span><span class="na">getScoreRecord</span><span class="o">();</span>
+        <span class="n">displayMinMax</span><span class="o">(</span><span class="n">record</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">displayMinMax</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">record</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">min</span> <span class="o">=</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">record</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">record</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Min: "</span> <span class="o">+</span> <span class="n">min</span> <span class="o">+</span> <span class="s">" Max: "</span> <span class="o">+</span> <span class="n">max</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ScoreRecord</span><span class="o">();</span>
+
+        <span class="nc">DataSheetView</span> <span class="n">dataSheetView3</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataSheetView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+        <span class="nc">DataSheetView</span> <span class="n">dataSheetView5</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataSheetView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+        <span class="nc">MinMaxView</span> <span class="n">minMaxView</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MinMaxView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">);</span>
+
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">attach</span><span class="o">(</span><span class="n">dataSheetView3</span><span class="o">);</span>
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">attach</span><span class="o">(</span><span class="n">dataSheetView5</span><span class="o">);</span>
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">attach</span><span class="o">(</span><span class="n">minMaxView</span><span class="o">);</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="o">;</span> <span class="n">index</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">score</span> <span class="o">=</span> <span class="n">index</span> <span class="o">*</span> <span class="mi">10</span><span class="o">;</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Adding "</span> <span class="o">+</span> <span class="n">score</span><span class="o">);</span>
+
+            <span class="n">scoreRecord</span><span class="o">.</span><span class="na">addScore</span><span class="o">(</span><span class="n">score</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>여기서 점수의 총합과 평균을 알고싶어 하는 점수를 구독하려는 새로운 객체가 존재한다면, Observer클래스와 update 메서드만 구현해준다면 Subject에서 attach로 변화가 발생할 경우 통보받을 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StatisticsView</span> <span class="kd">implements</span> <span class="nc">Observer</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">StatisticsView</span><span class="o">(</span><span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">scoreRecord</span> <span class="o">=</span> <span class="n">scoreRecord</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">record</span> <span class="o">=</span> <span class="n">scoreRecord</span><span class="o">.</span><span class="na">getScoreRecord</span><span class="o">();</span>
+        <span class="n">displayStatistics</span><span class="o">(</span><span class="n">record</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">displayStatistics</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">record</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="nl">score:</span> <span class="n">record</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sum</span> <span class="o">+=</span> <span class="n">score</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"sum: "</span> <span class="o">+</span> <span class="n">sum</span> <span class="o">+</span> <span class="s">" Average: "</span> <span class="o">+</span> <span class="n">sum</span><span class="o">/</span><span class="n">record</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ScoreRecord</span> <span class="n">scoreRecord</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ScoreRecord</span><span class="o">();</span>
+
+        <span class="nc">DataSheetView</span> <span class="n">dataSheetView3</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataSheetView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+        <span class="nc">DataSheetView</span> <span class="n">dataSheetView5</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DataSheetView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+        <span class="nc">MinMaxView</span> <span class="n">minMaxView</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MinMaxView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">);</span>
+        <span class="nc">StatisticsView</span> <span class="n">statisticsView</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StatisticsView</span><span class="o">(</span><span class="n">scoreRecord</span><span class="o">);</span>
+
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">attach</span><span class="o">(</span><span class="n">dataSheetView3</span><span class="o">);</span>
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">attach</span><span class="o">(</span><span class="n">dataSheetView5</span><span class="o">);</span>
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">attach</span><span class="o">(</span><span class="n">minMaxView</span><span class="o">);</span>
+        <span class="n">scoreRecord</span><span class="o">.</span><span class="na">attach</span><span class="o">(</span><span class="n">statisticsView</span><span class="o">);</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">index</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="o">;</span> <span class="n">index</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">score</span> <span class="o">=</span> <span class="n">index</span> <span class="o">*</span> <span class="mi">10</span><span class="o">;</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Adding "</span> <span class="o">+</span> <span class="n">score</span><span class="o">);</span>
+
+            <span class="n">scoreRecord</span><span class="o">.</span><span class="na">addScore</span><span class="o">(</span><span class="n">score</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#designpattern" class="page__taxonomy-item p-category" rel="tag">designPattern</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#cs" class="page__taxonomy-item p-category" rel="tag">cs</a><span class="sep">, </span>
+    
+      <a href="/categories/#designpattern" class="page__taxonomy-item p-category" rel="tag">designPattern</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-07-21">July 21, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=observerPattern%20%2Fdesignpattern%2Fcs%2FObserverPattern%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fdesignpattern%2Fcs%2FObserverPattern%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fdesignpattern%2Fcs%2FObserverPattern%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/designpattern/cs/DecoratorPattern/" class="pagination--pager" title="decoratorPattern
+">이전</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/designpattern/cs/DecoratorPattern/" rel="permalink">decoratorPattern
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">데코레이터 패턴
+데코레이터 패턴은 주어진 상황 및 용도에 따라 어떤 객체에 책임(기능)을 동적으로 추가하는 패턴을 말한다. 기본 기능을 가지고 있는 클래스를 하나 만들어주고 추가할 수 있는 기능들을 추가하기 편하도록 설계하는 방식이다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/designpattern/cs/TemplateMethodPattern/" rel="permalink">templateMethodPattern
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">템플릿 메서드 패턴
+템플릿 메서드 패턴은 전체적으로는 동일하면서 부분적으로는 다른 구문으로 구성된 메서드의 코드 중복을 최소화할 때 유용하다. 다른 관점에서 보면 동일한 기능을 상위 클래스에서 정의하면서 확장/변화가 필요한 부분만 서브 클래스에서 구현할 수 있도록 한다.
+전체적인 ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/designpattern/cs/commandPattern/" rel="permalink">commandPattern
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">커맨드 패턴
+커맨드 패턴은 이벤트가 발생했을 때 실행될 기능이 다양하면서도 변경이 필요한 경우에 이벤트를 발생시키는 클래스를 변경하지 않고 재사용하고자 할 때 유용하다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/designpattern/cs/StatePattern/" rel="permalink">statePattern
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">스테이트 패턴
+스테이트, 상태란 객체가 시스템에 존재하는 동안 객체가 가질수 있는 어떤 조건이나 상황을 표현한다.
+형광등의 예제를 통해 스테이트 패턴을 한번 알아보자.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="검색어를 입력하세요..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/noel7781" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 조성진. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'noel7781/noel7781.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

@@ -178,4 +178,22 @@ var store = [{
         "tags": ["designPattern"],
         "url": "/designpattern/cs/commandPattern/",
         "teaser": null
+      },{
+        "title": "templateMethodPattern",
+        "excerpt":"템플릿 메서드 패턴 템플릿 메서드 패턴은 전체적으로는 동일하면서 부분적으로는 다른 구문으로 구성된 메서드의 코드 중복을 최소화할 때 유용하다. 다른 관점에서 보면 동일한 기능을 상위 클래스에서 정의하면서 확장/변화가 필요한 부분만 서브 클래스에서 구현할 수 있도록 한다. 전체적인 알고리즘 코드를 재사용하는 데 유용하다. 엘리베이터 제어 시스템의 예시를 통해 템플릿 메서드 패턴을 공부할것이다....","categories": ["designPattern","cs"],
+        "tags": ["designPattern"],
+        "url": "/designpattern/cs/TemplateMethodPattern/",
+        "teaser": null
+      },{
+        "title": "decoratorPattern",
+        "excerpt":"데코레이터 패턴 데코레이터 패턴은 주어진 상황 및 용도에 따라 어떤 객체에 책임(기능)을 동적으로 추가하는 패턴을 말한다. 기본 기능을 가지고 있는 클래스를 하나 만들어주고 추가할 수 있는 기능들을 추가하기 편하도록 설계하는 방식이다. 데코레이터 패턴을 사용하는 경우는 기본 기능에 추가할 수 있는 기능의 종류가 많은 경우 추가 기능을 Decorator 클래스로 정의한 후...","categories": ["designPattern","cs"],
+        "tags": ["designPattern"],
+        "url": "/designpattern/cs/DecoratorPattern/",
+        "teaser": null
+      },{
+        "title": "observerPattern",
+        "excerpt":"옵저버 패턴 옵서버 패턴(observer pattern)은 객체의 상태 변화를 관찰하는 관찰자들, 즉 옵저버들의 목록을 객체에 등록하여 상태 변화가 있을 때마다 메서드 등을 통해 객체가 직접 목록의 각 옵저버에게 통지하도록 하는 디자인패턴 이다. 주로 분산 이벤트 핸들링 시스템을 구현하는 데 사용된다. 발행/구독 모델로 알려져 있기도 하다. 옵저버 패턴은 데이터 패턴을 통보하는 클래스(Subject)...","categories": ["designPattern","cs"],
+        "tags": ["designPattern"],
+        "url": "/designpattern/cs/ObserverPattern/",
+        "teaser": null
       }]

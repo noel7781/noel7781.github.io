@@ -1,0 +1,156 @@
+I"!:<h1 id="데코레이터-패턴">데코레이터 패턴</h1>
+<p>데코레이터 패턴은 주어진 상황 및 용도에 따라 어떤 객체에 책임(기능)을 동적으로 추가하는 패턴을 말한다. 기본 기능을 가지고 있는 클래스를 하나 만들어주고 추가할 수 있는 기능들을 추가하기 편하도록 설계하는 방식이다.</p>
+
+<p>데코레이터 패턴을 사용하는 경우는 기본 기능에 추가할 수 있는 기능의 종류가 많은 경우 추가 기능을 Decorator 클래스로 정의한 후 필요한 Decorator 객체를 조합함으로써 추가 기능의 조합을 설계하는 방식이다. 예를들어 기본 도로 표시 기능에 차선 표시, 교통량 표시, 교차로 표시, 단속카메라 표시 4가지 추가기능이 있을때 이 추가기능들을 추가할 수 있는 모든 조합은 15가지나 된다. 15개의 클래스를 구현하지 않고, 4가지의 클래스만 구현하고 객체의 형태로 조립함으로써 추가 기능을 구현할 수 있다.</p>
+
+<p>좀더 자세한 상황과 코드를 통해 데코레이터 패턴을 이해해보자.</p>
+
+<p>도로를 표시할 수 있는 기본 기능을 가진 RoadDisplay 클래스와 도로 표시에 차선을 표시하는 RoadDisplayWithLane 클래스를 설계할 수 있다. 이때 RoadDisplayWithLane 클래스는 RoadDisplay와 마찬가지로 도로 표시 기능을 제공하므로 RoadDisplay의 하위클래스로 설계한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RoadDisplay</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"기본 도로 표시"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RoadDisplayWithLane</span> <span class="kd">extends</span> <span class="nc">RoadDisplay</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+        <span class="n">drawLane</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">drawLane</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"차선 표시"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">RoadDisplay</span> <span class="n">road</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoadDisplay</span><span class="o">();</span>
+        <span class="n">road</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+        
+        <span class="nc">RoadDisplay</span> <span class="n">roadWithLane</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoadDisplayWithLane</span><span class="o">();</span>
+        <span class="n">roadWithLane</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이렇게 작성한다면 요구사항을 만족시킬수 있다.</p>
+
+<h2 id="문제점">문제점</h2>
+<p>여기서 차선 표시 기능만을 추가하는게 아니라 교통량 표시를 추가하는 기능도 추가하고 싶다고 생각해보자.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RoadDisplayWithTraffic</span> <span class="kd">extends</span> <span class="nc">RoadDisplay</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+        <span class="n">drawTraffic</span><span class="o">();</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">drawTraffic</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"교통량 표시"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>다음과 같은  클래스가 추가될것이다.
+교통량표시 + 차선표시 기능을 원한다고하면, 예를들어 RoadDisplayWithLaneAndTraffic같은 클래스를 또 만들어야한다.
+기능을 조합하기 위해
+2가지 기능이면 3가지 클래스를, 3가지 기능이면 7가지 클래스를, 4가지 기능이면 15가지의 클래스를 추가적으로 선언해야 한다.
+기능이 점차 늘어날수록 만들어야 하는 클래스의 갯수는 엄청 많아지고, 관리하기 쉽지 않을것이라고 예상할 수 있다.</p>
+
+<h2 id="해결책">해결책</h2>
+
+<p>기본기능만 이용하는 경우 RoadDisplay 클래스의 객체를 생성하면 충분하다. 그외의 기능이 추가될때는 <code class="language-plaintext highlighter-rouge">...Decorator</code> 클래스를 사용하여 기능을 추가한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Display</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">draw</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">DisplayDecorator</span> <span class="kd">extends</span> <span class="nc">Display</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Display</span> <span class="n">decoratedDisplay</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">DisplayDecorator</span><span class="o">(</span><span class="nc">Display</span> <span class="n">decoratedDisplay</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">decoratedDisplay</span> <span class="o">=</span> <span class="n">decoratedDisplay</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">decoratedDisplay</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RoadDisplay</span> <span class="kd">extends</span> <span class="nc">Display</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"기본 도로 표시"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LaneDecorator</span> <span class="kd">extends</span> <span class="nc">DisplayDecorator</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="nf">LaneDecorator</span><span class="o">(</span><span class="nc">Display</span> <span class="n">decoratedDisplay</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">decoratedDisplay</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+        <span class="n">drawLane</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">drawLane</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"\t차선 표시"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TrafficDecorator</span> <span class="kd">extends</span> <span class="nc">DisplayDecorator</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">TrafficDecorator</span><span class="o">(</span><span class="nc">Display</span> <span class="n">decoratedDisplay</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">decoratedDisplay</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">draw</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+        <span class="n">drawTraffic</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">drawTraffic</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"\t교통량 표시"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Display</span> <span class="n">road</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoadDisplay</span><span class="o">();</span>
+        <span class="n">road</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+
+        <span class="nc">Display</span> <span class="n">roadWithLane</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LaneDecorator</span><span class="o">(</span><span class="k">new</span> <span class="nc">RoadDisplay</span><span class="o">());</span>
+        <span class="n">roadWithLane</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+
+        <span class="nc">Display</span> <span class="n">roadWithTraffic</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TrafficDecorator</span><span class="o">(</span><span class="k">new</span> <span class="nc">RoadDisplay</span><span class="o">());</span>
+        <span class="n">roadWithTraffic</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+
+        <span class="nc">Display</span> <span class="n">roadWithLaneAndTraffic</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TrafficDecorator</span><span class="o">(</span><span class="k">new</span> <span class="nc">LaneDecorator</span><span class="o">(</span><span class="k">new</span> <span class="nc">RoadDisplay</span><span class="o">()));</span>
+        <span class="n">roadWithLaneAndTraffic</span><span class="o">.</span><span class="na">draw</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>기본 도로 표시
+기본 도로 표시
+	차선 표시
+기본 도로 표시
+	교통량 표시
+기본 도로 표시
+	차선 표시
+	교통량 표시
+</code></pre></div></div>
+
+<p>이렇게 추가적인 클래스를 만들 필요 없이 기능을 추가할 수 있다.</p>
+:ET

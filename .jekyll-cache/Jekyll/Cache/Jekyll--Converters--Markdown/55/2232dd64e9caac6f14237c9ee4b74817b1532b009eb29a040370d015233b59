@@ -1,0 +1,289 @@
+I")p<h1 id="템플릿-메서드-패턴">템플릿 메서드 패턴</h1>
+<p>템플릿 메서드 패턴은 전체적으로는 동일하면서 부분적으로는 다른 구문으로 구성된 메서드의 코드 중복을 최소화할 때 유용하다. 다른 관점에서 보면 동일한 기능을 상위 클래스에서 정의하면서 확장/변화가 필요한 부분만 서브 클래스에서 구현할 수 있도록 한다.
+전체적인 알고리즘 코드를 재사용하는 데 유용하다.</p>
+
+<p>엘리베이터 제어 시스템의 예시를 통해 템플릿 메서드 패턴을 공부할것이다.</p>
+
+<p><img src="https://imgur.com/M1YD1hH.jpg" alt="img" />
+다음과 같은 논리대로 코드를 작성하면 아래와 같다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Door</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">DoorStatus</span> <span class="n">doorStatus</span><span class="o">;</span>
+    
+    <span class="kd">public</span> <span class="nf">Door</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">doorStatus</span> <span class="o">=</span> <span class="nc">DoorStatus</span><span class="o">.</span><span class="na">CLOSED</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="nc">DoorStatus</span> <span class="nf">getDoorStatus</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">doorStatus</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">close</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">doorStatus</span> <span class="o">=</span> <span class="nc">DoorStatus</span><span class="o">.</span><span class="na">CLOSED</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">open</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">doorStatus</span> <span class="o">=</span> <span class="nc">DoorStatus</span><span class="o">.</span><span class="na">OPENED</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HyundaiMotor</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Door</span> <span class="n">door</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">HyundaiMotor</span><span class="o">(</span><span class="nc">Door</span> <span class="n">door</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">door</span> <span class="o">=</span> <span class="n">door</span><span class="o">;</span>
+        <span class="n">motorStatus</span> <span class="o">=</span> <span class="nc">MotorStatus</span><span class="o">.</span><span class="na">STOPPED</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">moveHyundaiMotor</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Hyundai motor을 구동시킴</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">MotorStatus</span> <span class="nf">getMotorStatus</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">motorStatus</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">setMotorStatus</span><span class="o">(</span><span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">motorStatus</span> <span class="o">=</span> <span class="n">motorStatus</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">move</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">MotorStatus</span> <span class="n">motorStatus</span> <span class="o">=</span> <span class="n">getMotorStatus</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">motorStatus</span> <span class="o">==</span> <span class="nc">MotorStatus</span><span class="o">.</span><span class="na">MOVING</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nc">DoorStatus</span> <span class="n">doorStatus</span> <span class="o">=</span> <span class="n">door</span><span class="o">.</span><span class="na">getDoorStatus</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">doorStatus</span> <span class="o">==</span> <span class="nc">DoorStatus</span><span class="o">.</span><span class="na">OPENED</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">door</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="n">moveHyundaiMotor</span><span class="o">(</span><span class="n">direction</span><span class="o">);</span>
+        <span class="n">setMotorStatus</span><span class="o">(</span><span class="nc">MotorStatus</span><span class="o">.</span><span class="na">MOVING</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Door</span> <span class="n">door</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Door</span><span class="o">();</span>
+        <span class="nc">HyundaiMotor</span> <span class="n">hyundaiMotor</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HyundaiMotor</span><span class="o">(</span><span class="n">door</span><span class="o">);</span>
+        <span class="n">hyundaiMotor</span><span class="o">.</span><span class="na">move</span><span class="o">(</span><span class="nc">Direction</span><span class="o">.</span><span class="na">UP</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="문제점">문제점</h2>
+<p>현재는 현대 모터를 사용하여 엘리베이터 제어 시스템을 사용하고 있는데, 이것을 LG 모터를 이용하여 구동시키려면 HyundaiMotor 클래스를 복사한 후 LG 모터에 맞게 수정할 필요가 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LGMotor</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Door</span> <span class="n">door</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">LGMotor</span><span class="o">(</span><span class="nc">Door</span> <span class="n">door</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">door</span> <span class="o">=</span> <span class="n">door</span><span class="o">;</span>
+        <span class="n">motorStatus</span> <span class="o">=</span> <span class="nc">MotorStatus</span><span class="o">.</span><span class="na">STOPPED</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">moveLGMotor</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// LG motor을 구동시킴</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">MotorStatus</span> <span class="nf">getMotorStatus</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">motorStatus</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">setMotorStatus</span><span class="o">(</span><span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">motorStatus</span> <span class="o">=</span> <span class="n">motorStatus</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">move</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">MotorStatus</span> <span class="n">motorStatus</span> <span class="o">=</span> <span class="n">getMotorStatus</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">motorStatus</span> <span class="o">==</span> <span class="nc">MotorStatus</span><span class="o">.</span><span class="na">MOVING</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nc">DoorStatus</span> <span class="n">doorStatus</span> <span class="o">=</span> <span class="n">door</span><span class="o">.</span><span class="na">getDoorStatus</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">doorStatus</span> <span class="o">==</span> <span class="nc">DoorStatus</span><span class="o">.</span><span class="na">OPENED</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">door</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="n">moveLGMotor</span><span class="o">(</span><span class="n">direction</span><span class="o">);</span>
+        <span class="n">setMotorStatus</span><span class="o">(</span><span class="nc">MotorStatus</span><span class="o">.</span><span class="na">MOVING</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>HyundaiMotor 클래스와 LGMotor클래스를 비교하면 거의 대부분 같음을 알 수 있다. 생성자나, 함수 호출하는 이름등이 각 회사의 이름에 따라 바뀌는 정도이다. 즉, 두개의 클래스는 많은 중복 코드를 가진다. 중복 코드를 많이 가질수록 유지보수성을 악화시키므로 바람직하지 않다.
+다른 회사, 가령 SamsungMotor클래스를 만든다고 해도 클래스 코드의 대부분이 동일할 것이다.</p>
+
+<p>따라서 HyundaiMotor클래스와 LGMotor클래스의 중복 코드를 뽑아내 새로운 클래스로 만들고 구체적인 클래스들이 이 클래스를 상속받도록 바꿔 중복코드 문제를 피할 수 있다.</p>
+
+<p>이러한 설계를 바탕으로 다시 작성한 코드는 다음과 같다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Motor</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Door</span> <span class="n">door</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Motor</span><span class="o">(</span><span class="nc">Door</span> <span class="n">door</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">door</span> <span class="o">=</span> <span class="n">door</span><span class="o">;</span>
+        <span class="n">motorStatus</span> <span class="o">=</span> <span class="nc">MotorStatus</span><span class="o">.</span><span class="na">STOPPED</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">public</span> <span class="nc">MotorStatus</span> <span class="nf">getMotorStatus</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">motorStatus</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setMotorStatus</span><span class="o">(</span><span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">motorStatus</span> <span class="o">=</span> <span class="n">motorStatus</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HyundaiMotor</span> <span class="kd">extends</span> <span class="nc">Motor</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Door</span> <span class="n">door</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">HyundaiMotor</span><span class="o">(</span><span class="nc">Door</span> <span class="n">door</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">door</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">moveHyundaiMotor</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Hyundai motor을 구동시킴</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">move</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">MotorStatus</span> <span class="n">motorStatus</span> <span class="o">=</span> <span class="n">getMotorStatus</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">motorStatus</span> <span class="o">==</span> <span class="nc">MotorStatus</span><span class="o">.</span><span class="na">MOVING</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nc">DoorStatus</span> <span class="n">doorStatus</span> <span class="o">=</span> <span class="n">door</span><span class="o">.</span><span class="na">getDoorStatus</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">doorStatus</span> <span class="o">==</span> <span class="nc">DoorStatus</span><span class="o">.</span><span class="na">OPENED</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">door</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="n">moveHyundaiMotor</span><span class="o">(</span><span class="n">direction</span><span class="o">);</span>
+        <span class="n">setMotorStatus</span><span class="o">(</span><span class="nc">MotorStatus</span><span class="o">.</span><span class="na">MOVING</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LGMotor</span> <span class="kd">extends</span> <span class="nc">Motor</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Door</span> <span class="n">door</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">LGMotor</span><span class="o">(</span><span class="nc">Door</span> <span class="n">door</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">door</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">moveLGMotor</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// LG motor을 구동시킴</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">move</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">MotorStatus</span> <span class="n">motorStatus</span> <span class="o">=</span> <span class="n">getMotorStatus</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">motorStatus</span> <span class="o">==</span> <span class="nc">MotorStatus</span><span class="o">.</span><span class="na">MOVING</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nc">DoorStatus</span> <span class="n">doorStatus</span> <span class="o">=</span> <span class="n">door</span><span class="o">.</span><span class="na">getDoorStatus</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">doorStatus</span> <span class="o">==</span> <span class="nc">DoorStatus</span><span class="o">.</span><span class="na">OPENED</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">door</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="n">moveLGMotor</span><span class="o">(</span><span class="n">direction</span><span class="o">);</span>
+        <span class="n">setMotorStatus</span><span class="o">(</span><span class="nc">MotorStatus</span><span class="o">.</span><span class="na">MOVING</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>조금의 중복코드는 해소했으나, move메서드 또한 중복되는점이 아직 많이 존재한다.</p>
+
+<h2 id="해결책">해결책</h2>
+<p>move 메서드 처럼 완전히 중복되지는 않지만 부분적으로 중복되는 경우에도 상속을 활용해 코드 중복을 피할 수 있다. 즉, move 메서드 안의 moveHyundaiMotor() 과 moveLGMotor을 제외하면 코드가 동일하므로, move 메서드를 상위 Motor 클래스로 이동시키고 다른 구문, 즉 moveHyundaiMotor과 MoveLGMotor 메서드의 호출 부분을 하위클래스에서 오버라이드 하는 방식으로 중복을 최소화 할 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Motor</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Door</span> <span class="n">door</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Motor</span><span class="o">(</span><span class="nc">Door</span> <span class="n">door</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">door</span> <span class="o">=</span> <span class="n">door</span><span class="o">;</span>
+        <span class="n">motorStatus</span> <span class="o">=</span> <span class="nc">MotorStatus</span><span class="o">.</span><span class="na">STOPPED</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">public</span> <span class="nc">MotorStatus</span> <span class="nf">getMotorStatus</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">motorStatus</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setMotorStatus</span><span class="o">(</span><span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">motorStatus</span> <span class="o">=</span> <span class="n">motorStatus</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">move</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">MotorStatus</span> <span class="n">motorStatus</span> <span class="o">=</span> <span class="n">getMotorStatus</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">motorStatus</span> <span class="o">==</span> <span class="nc">MotorStatus</span><span class="o">.</span><span class="na">MOVING</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nc">DoorStatus</span> <span class="n">doorStatus</span> <span class="o">=</span> <span class="n">door</span><span class="o">.</span><span class="na">getDoorStatus</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">doorStatus</span> <span class="o">==</span> <span class="nc">DoorStatus</span><span class="o">.</span><span class="na">OPENED</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">door</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="n">moveMotor</span><span class="o">(</span><span class="n">direction</span><span class="o">);</span>
+        <span class="n">setMotorStatus</span><span class="o">(</span><span class="nc">MotorStatus</span><span class="o">.</span><span class="na">MOVING</span><span class="o">);</span>
+    <span class="o">}</span>
+    
+    <span class="kd">protected</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">moveMotor</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HyundaiMotor</span> <span class="kd">extends</span> <span class="nc">Motor</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Door</span> <span class="n">door</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">HyundaiMotor</span><span class="o">(</span><span class="nc">Door</span> <span class="n">door</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">door</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">moveMotor</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Hyundai motor을 구동시킴</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LGMotor</span> <span class="kd">extends</span> <span class="nc">Motor</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Door</span> <span class="n">door</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">MotorStatus</span> <span class="n">motorStatus</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">LGMotor</span><span class="o">(</span><span class="nc">Door</span> <span class="n">door</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">door</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">moveMotor</span><span class="o">(</span><span class="nc">Direction</span> <span class="n">direction</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// LG motor을 구동시킴</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>중복 코드를 제거하면 유지보수 측면에서도 좋고 코드도 간결하게 바꿀수 있다.</p>
+
+<hr />
+
+<p>템플릿 메서드 패턴은 전체적으로는 동일하면서 부분적으로는 다른 구문으로 구성된 메서드의 코드 중복을 최소화할 때 유용하다. 다른 관점에서 보면 동일한 기능을 상위 클래스에서 정의하면서 확장/변화가 필요한 부분만 서브 클래스에서 구현할 수 있도록 한다.</p>
+
+<p>앞선 예제처럼 Motor 클래스의 move 메서드는 HyundaiMotor와 LGMotor에서 동일한 기능을 구현하면서 각 하위 클래스에서 구체적으로 정의할 필요가 있는 부분만 각 하위 클래스에서 오버라이드 되도록 한다. 이러한 경우 Motor 클래스의 move 메서드를 템플릿 메서드라고 하고, move 메서드에서 호출되면서 하위 클래스에서 오버라이드 될 필요가 있는 moveMotor 메서드를 primitive 또는 hook 메서드라고 부른다.</p>
+
+<p>즉 공통인 부분은 상위 클래스에서 템플릿 메서드로 작성을 하고, 개별적인 부분들은 primive(hook)으로 작성하여 코드의 중복을 줄일 수 있다.</p>
+
+<p>이런식으로 코드를 작성하는 방식을 템플릿 메서드 패턴이라고 한다.</p>
+:ET
