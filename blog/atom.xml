@@ -2,11 +2,19 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://noel7781.github.io/blog</id>
     <title>test Blog</title>
-    <updated>2021-08-26T00:00:00.000Z</updated>
+    <updated>2023-07-29T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://noel7781.github.io/blog"/>
     <subtitle>test Blog</subtitle>
     <icon>https://noel7781.github.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Truncation Example]]></title>
+        <id>https://noel7781.github.io/blog/2023/07/29/truncate</id>
+        <link href="https://noel7781.github.io/blog/2023/07/29/truncate"/>
+        <updated>2023-07-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[All these will be part of the blog post summary.]]></summary>
+        <content type="html"><![CDATA[<p>All these will be part of the blog post summary.</p><p>Even this.</p><p>But anything from here on down will not be.</p><p>Not this.</p><p>Or this.</p>]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Welcome]]></title>
         <id>https://noel7781.github.io/blog/welcome</id>
@@ -38,6 +46,24 @@
             <uri>https://sebastienlorber.com</uri>
         </author>
         <category label="docusaurus" term="docusaurus"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Welcome Docusaurus v2]]></title>
+        <id>https://noel7781.github.io/blog/welcome-docusaurus-v2</id>
+        <link href="https://noel7781.github.io/blog/welcome-docusaurus-v2"/>
+        <updated>2019-09-05T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[This is my first post on Docusaurus 2.]]></summary>
+        <content type="html"><![CDATA[<p>Welcome to this blog. This blog is created with <a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer"><strong>Docusaurus 2</strong></a>.</p><p>This is my first post on Docusaurus 2.</p><p>A whole bunch of exploration to follow.</p>]]></content>
+        <author>
+            <name>Joel Marcey</name>
+            <uri>https://github.com/JoelMarcey</uri>
+        </author>
+        <author>
+            <name>Sébastien Lorber</name>
+            <uri>https://sebastienlorber.com</uri>
+        </author>
+        <category label="hello" term="hello"/>
+        <category label="docusaurus-v2" term="docusaurus-v2"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Long Blog Post]]></title>
