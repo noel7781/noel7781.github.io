@@ -6,8 +6,8 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-    title: "test",
-    tagline: "Dinosaurs are cool",
+    title: "noel7781",
+    // tagline: "Dinosaurs are cool",
     favicon: "img/favicon.ico",
 
     // Set the production url of your site here
@@ -23,7 +23,7 @@ const config = {
     trailingSlash: false,
     deploymentBranch: "gh-pages",
 
-    onBrokenLinks: "log",
+    onBrokenLinks: "throw",
     onBrokenMarkdownLinks: "warn",
 
     // Even if you don't use internalization, you can use this field to set useful
@@ -39,10 +39,15 @@ const config = {
             "classic",
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
-                docs: {
-                    sidebarPath: require.resolve("./sidebars.js"),
-                },
+                // docs: {
+                //     sidebarPath: require.resolve("./sidebars.js"),
+                // },
+                docs: false,
                 blog: {
+                    routeBasePath: "/",
+                    blogSidebarTitle: "모든 포스트",
+                    blogSidebarCount: "ALL",
+                    blogTitle: "블로그",
                     showReadingTime: true,
                     readingTime: ({content, frontMatter, defaultReadingTime}) =>
                         defaultReadingTime({content, options: {wordsPerMinute: 300}}),
@@ -60,19 +65,19 @@ const config = {
             // Replace with your project's social card
             image: "img/docusaurus-social-card.jpg",
             navbar: {
-                title: "Todos",
-                logo: {
-                    alt: "My Site Logo",
-                    src: "img/logo.svg",
-                },
+                title: "Blog",
+                // logo: {
+                //     alt: "My Site Logo",
+                //     src: "img/logo.svg",
+                // },
                 items: [
-                    {
-                        type: "docSidebar",
-                        sidebarId: "tutorialSidebar",
-                        position: "left",
-                        label: "Tutorial",
-                    },
-                    {to: "/blog", label: "Blog", position: "left"},
+                    // {
+                    //     type: "docSidebar",
+                    //     sidebarId: "tutorialSidebar",
+                    //     position: "left",
+                    //     label: "Tutorial",
+                    // },
+                    {to: "/books", label: "Books", position: "left"},
                     {
                         href: "https://github.com/noel7781",
                         label: "GitHub",
@@ -80,20 +85,20 @@ const config = {
                     },
                 ],
             },
-            footer: {
-                style: "dark",
-                links: [
-                    {
-                        title: "More",
-                        items: [
-                            {
-                                label: "GitHub",
-                                href: "https://github.com/noel7781",
-                            },
-                        ],
-                    },
-                ],
-            },
+            // footer: {
+            //     style: "dark",
+            //     links: [
+            //         {
+            //             title: "More",
+            //             items: [
+            //                 {
+            //                     label: "GitHub",
+            //                     href: "https://github.com/noel7781",
+            //                 },
+            //             ],
+            //         },
+            //     ],
+            // },
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
