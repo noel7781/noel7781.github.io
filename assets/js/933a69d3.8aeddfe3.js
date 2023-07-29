@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkblog=self.webpackChunkblog||[]).push([[7813],{1853:t=>{t.exports=JSON.parse('{"label":"Getting Started !","permalink":"/docs/tags/getting-started","allTagsPath":"/docs/tags","count":1,"items":[{"id":"doc-with-tags","title":"A doc with tags","description":"Create a doc page with rich content.","permalink":"/docs/greeting"}]}')}}]);
